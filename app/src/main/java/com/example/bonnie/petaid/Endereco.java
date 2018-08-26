@@ -1,0 +1,97 @@
+package com.example.bonnie.petaid;
+
+public class Endereco {
+    private int idEndereco;
+    private String end;
+    private String complemento;
+    private String complemento2;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String cep;
+
+    public Endereco() {
+    }
+
+    public Endereco(int idEndereco, String end, String complemento, String complemento2, String bairro, String cidade, String uf, String cep) {
+        this.idEndereco = idEndereco;
+        this.end = end;
+        this.complemento = complemento;
+        this.complemento2 = complemento2;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.cep = cep;
+    }
+
+    @Override
+    public String toString() {
+        return end+", " + complemento+", " + bairro + ", " + cidade + ", " + uf + ", " + cep;
+
+    }
+
+    public int getIdEndereco() {
+
+        return idEndereco;
+    }
+
+    public void setIdEndereco(int idEndereco) {
+        this.idEndereco = idEndereco;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getComplemento2() {
+        return complemento2;
+    }
+
+    public void setComplemento2(String complemento2) {
+        this.complemento2 = complemento2;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+}

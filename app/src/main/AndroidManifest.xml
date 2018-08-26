@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.bonnie.petaid">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".PetAidApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".QuestionUser">
+            <intent-filter>
+                <action android:name="android.projekt.TesteTCC.Tela_Incial" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LoginVolActivity" />
+        <activity android:name=".CadastroVol" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"
+            android:theme="@style/AppTheme.NoActionBar" />
+        android:name=".PerfilVol"
+        android:label="@string/title_activity_perfil_vol"
+        android:theme="@style/AppTheme" />
+        <activity android:name=".MenuVol" />
+        <activity
+            android:name=".PerfilVol"
+            android:label="@string/title_activity_perfil_vol"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>
