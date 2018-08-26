@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".PerfilVol"
+    tools:showIn="@layout/activity_perfil_vol"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+
+        <EditText
+            android:id="@+id/nomeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+
+        <EditText
+            android:id="@+id/telefoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent"
+            android:enabled="false"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_edit" />
+    </RelativeLayout>
+
+
+</LinearLayout>

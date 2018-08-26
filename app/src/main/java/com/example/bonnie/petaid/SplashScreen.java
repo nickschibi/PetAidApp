@@ -33,7 +33,9 @@ public class SplashScreen extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this); // se possui conta no google cadastrada
         if (account != null) {
             ((PetAidApplication) this.getApplication()).setEmailSignUser(account.getEmail());
-            if (verificausuario(account.getEmail())) {                                       // verifica se o usuario é cadastrado pelo email
+            String tipoUsuario = verificaUsuario(account.getEmail());
+            if (!tipoUsuario.equals("nada")) {                                              // verifica se o usuario é cadastrado pelo email
+                ((PetAidApplication) this.getApplication()).setTypeUser(tipoUsuario);
                 Intent i = new Intent(SplashScreen.this, MapsActivity.class); // se sim, vai para a tela principal
                 startActivity(i);
             } else {
@@ -49,20 +51,17 @@ public class SplashScreen extends AppCompatActivity {
     }
 
 
-    public boolean verificausuario(String email) {
+    public String verificaUsuario(String email) {
 
         try {
             String url = getString(R.string.web_service_url) + "user/" + email;
             String s = new SplashScreen.ConsomeServico().execute(url).get();
-            if(!s.isEmpty()) {
-                return true;
-            }
-            else{
-                return false;
-            }
+
+            return s;
+
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "nada";
         }
 
     }

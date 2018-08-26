@@ -7,7 +7,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.button.MaterialButton;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MapsActivity.this, QuestionUser.class);
+                Intent i = new Intent(MapsActivity.this, PerfilVol.class);
                 startActivity(i);
             }
         });
@@ -89,6 +88,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }).execute(trazEnderecos);
 
     }
+
+      
+
 
     //Consome Serviço
 
