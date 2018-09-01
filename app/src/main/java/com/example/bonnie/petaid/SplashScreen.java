@@ -47,14 +47,19 @@ public class SplashScreen extends AppCompatActivity {
                     if (account != null) {
                         ((PetAidApplication) SplashScreen.this.getApplication()).setEmailSignUser(account.getEmail());
                         String tipoUsuario = verificaUsuario(account.getEmail());
-                        if (!tipoUsuario.equals("nada")) {                                              // verifica se o usuario é cadastrado pelo email
+                        if (tipoUsuario.equals("vol") || tipoUsuario.equals("ong")) {                                              // verifica se o usuario é cadastrado pelo email
                             ((PetAidApplication) SplashScreen.this.getApplication()).setTypeUser(tipoUsuario);
                             Intent i = new Intent(SplashScreen.this, MapsActivity.class); // se sim, vai para a tela principal
                             startActivity(i);
-                        } else {
+                        } else if(tipoUsuario.equals("nada")) {
                             Intent i = new Intent(SplashScreen.this, CadastroVol.class); // se não, vai para a tela de cadastro
                             i.putExtra("email", account.getEmail());
                             startActivity(i);
+                        } else { //erro
+
+                                    runOnUiThread(()->Toast.makeText(SplashScreen.this,"Erro ao conectar-se com servidor", Toast.LENGTH_LONG).show());
+                                    
+
                         }
                     } else {
                         Intent i = new Intent(SplashScreen.this, QuestionUser.class); // Se não tem nem a conta do google cadastrada vai para tela de pergunta
@@ -78,8 +83,8 @@ public class SplashScreen extends AppCompatActivity {
             String s = new SplashScreen.ConsomeServico().execute(url).get();
 
             return s;
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return "nada";
         }
@@ -104,7 +109,7 @@ public class SplashScreen extends AppCompatActivity {
                 return resultado;
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
+                return "erro";
             }
         }
 
