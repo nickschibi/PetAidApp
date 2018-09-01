@@ -5,12 +5,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
 import java.io.IOException;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -24,29 +21,52 @@ public class SplashScreen extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
+
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this); // se possui conta no google cadastrada
-        if (account != null) {
-            ((PetAidApplication) this.getApplication()).setEmailSignUser(account.getEmail());
-            String tipoUsuario = verificaUsuario(account.getEmail());
-            if (!tipoUsuario.equals("nada")) {                                              // verifica se o usuario é cadastrado pelo email
-                ((PetAidApplication) this.getApplication()).setTypeUser(tipoUsuario);
-                Intent i = new Intent(SplashScreen.this, MapsActivity.class); // se sim, vai para a tela principal
-                startActivity(i);
-            } else {
-                Intent i = new Intent(SplashScreen.this, CadastroVol.class); // se não, vai para a tela de cadastro
-                i.putExtra("email", account.getEmail());
-                startActivity(i);
+        Thread timeThread = new Thread(){
+            public void run(){
+                try {
+                    sleep(3000);
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                finally {
+                    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(SplashScreen.this); // se possui conta no google cadastrada
+                    if (account != null) {
+                        ((PetAidApplication) SplashScreen.this.getApplication()).setEmailSignUser(account.getEmail());
+                        String tipoUsuario = verificaUsuario(account.getEmail());
+                        if (!tipoUsuario.equals("nada")) {                                              // verifica se o usuario é cadastrado pelo email
+                            ((PetAidApplication) SplashScreen.this.getApplication()).setTypeUser(tipoUsuario);
+                            Intent i = new Intent(SplashScreen.this, MapsActivity.class); // se sim, vai para a tela principal
+                            startActivity(i);
+                        } else {
+                            Intent i = new Intent(SplashScreen.this, CadastroVol.class); // se não, vai para a tela de cadastro
+                            i.putExtra("email", account.getEmail());
+                            startActivity(i);
+                        }
+                    } else {
+                        Intent i = new Intent(SplashScreen.this, QuestionUser.class); // Se não tem nem a conta do google cadastrada vai para tela de pergunta
+                        startActivity(i);
+                    }
+
+                }
+
             }
-        } else {
-            Intent i = new Intent(SplashScreen.this, QuestionUser.class); // Se não tem nem a conta do google cadastrada vai para tela de pergunta
-            startActivity(i);
-        }
+        };
+        timeThread.start();
+
 
     }
 

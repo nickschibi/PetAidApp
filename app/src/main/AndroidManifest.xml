@@ -45,6 +45,10 @@
             android:name=".PerfilVol"
             android:label="@string/title_activity_perfil_vol"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NavDrawer"
+            android:label="@string/title_activity_nav_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

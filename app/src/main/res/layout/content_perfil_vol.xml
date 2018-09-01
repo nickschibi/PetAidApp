@@ -18,6 +18,7 @@
 
 
         <EditText
+            android:textColor="@color/text_color_secundary"
             android:id="@+id/nomeEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -38,6 +39,7 @@
 
 
         <EditText
+            android:textColor="@color/text_color_secundary"
             android:id="@+id/telefoneEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -59,6 +61,7 @@
         android:background="@color/colorPrimary">
 
         <EditText
+            android:textColor="@color/text_color_secundary"
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"

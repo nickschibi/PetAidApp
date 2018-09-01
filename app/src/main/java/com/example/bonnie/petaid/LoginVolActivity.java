@@ -30,10 +30,7 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_vol);
         getSupportActionBar().hide();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
@@ -72,6 +69,7 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
 
             // Signed in successfully, show authenticated UI.
             Intent i = new Intent(LoginVolActivity.this, CadastroVol.class);
+            i.putExtra("email", account.getEmail());
             startActivity(i);
 
         } catch (ApiException e) {
@@ -85,6 +83,11 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected  void onStart(){
         super.onStart();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account!=null){

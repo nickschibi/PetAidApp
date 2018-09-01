@@ -6,19 +6,19 @@ public class Voluntario {
     private String nome_voluntario;
     private String email;
     private String telefone_voluntario;
-    private String senha_login;
+
 
     public Voluntario() {
 
     }
 
-    public Voluntario(String nome_voluntario, String email, String telefone_voluntario,
-                      String senha_login) {
+    public Voluntario(String nome_voluntario, String email, String telefone_voluntario
+                      ) {
         super();
         this.nome_voluntario = nome_voluntario;
         this.email = email;
         this.telefone_voluntario = telefone_voluntario;
-        this.senha_login = senha_login;
+
     }
 
     public int getId_voluntario() {
@@ -44,12 +44,6 @@ public class Voluntario {
     }
     public void setTelefone_voluntario(String telefone_voluntario) {
         this.telefone_voluntario = telefone_voluntario;
-    }
-    public String getSenha_login() {
-        return senha_login;
-    }
-    public void setSenha_login(String senha_login) {
-        this.senha_login = senha_login;
     }
 
 }

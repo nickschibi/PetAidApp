@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -49,6 +50,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -87,11 +95,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }).execute(trazEnderecos);
 
+
+
     }
-
-      
-
-
     //Consome Serviço
 
     private interface PosExecucao{

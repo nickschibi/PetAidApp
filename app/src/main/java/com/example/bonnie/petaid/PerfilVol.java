@@ -1,15 +1,28 @@
 package com.example.bonnie.petaid;
 
 import android.app.Application;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -17,15 +30,24 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public class PerfilVol extends AppCompatActivity {
+
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
     private Voluntario voluntario;
     private EditText nome;
     private EditText email;
     private EditText telefone;
+    private Button backBtn;
+    private Button deleteBtn;
+    private EditText nomediag;
+    private EditText telefonediag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +57,25 @@ public class PerfilVol extends AppCompatActivity {
         nome = findViewById(R.id.nomeEditText);
         email = findViewById(R.id.emailEditText);
         telefone = findViewById(R.id.telefoneEditText);
+        backBtn = findViewById(R.id.backbtn);
+        deleteBtn = findViewById(R.id.deletbtn);
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialogExcluir();
+
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PerfilVol.this, MapsActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         String trazVoluntario = getString(R.string.web_service_url) + "voluntario?email=" + ((PetAidApplication)this.getApplication()).getEmailSignUser();
@@ -52,7 +93,7 @@ public class PerfilVol extends AppCompatActivity {
                 }
 
             }
-        }).execute(trazVoluntario);
+        }, "get").execute(trazVoluntario);
 
 
 
@@ -60,9 +101,8 @@ public class PerfilVol extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
+            updateVoluntario();
 
             }
         });
@@ -76,18 +116,33 @@ public class PerfilVol extends AppCompatActivity {
     private class ConsomeServico extends AsyncTask<String, Void, String> {
 
         private PerfilVol.PosExecucao posExecucao;
+        private String metodo;
+        private String requestBody;
 
-        public ConsomeServico(PerfilVol.PosExecucao posExecucao){
+        public ConsomeServico(PerfilVol.PosExecucao posExecucao, String metodo){
             this.posExecucao = posExecucao;
+            this.metodo = metodo;
+        }
+
+        public ConsomeServico(PerfilVol.PosExecucao posExecucao, String metodo, String requestBody){
+            this.posExecucao = posExecucao;
+            this.metodo = metodo;
+            this.requestBody = requestBody;
         }
 
         @Override
         protected String doInBackground(String... url) {
             OkHttpClient client = new OkHttpClient();
-            Request request =
-                    new Request.Builder()
-                            .url(url[0])
-                            .build();
+            Request request = null;
+            if(metodo.equals("get")){
+                request = new Request.Builder().url(url[0]).build();
+            } else if (metodo.equals("delete")){
+                request = new Request.Builder().url(url[0]).delete().build();
+            }else if (metodo.equals("put")){
+                RequestBody body = RequestBody.create(JSON, requestBody);
+                request = new Request.Builder().url(url[0]).put(body).build();
+            }
+
             okhttp3.Response response = null;
             try {
                 response = client.newCall(request).execute();
@@ -106,4 +161,90 @@ public class PerfilVol extends AppCompatActivity {
 
     }
 
+    public AlertDialog alerta;
+    private void dialogExcluir(){
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialog);
+        builder.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.confirmaExcluir)+ "</font>"))
+                .setPositiveButton(R.string.excluir, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                        String deletaVoluntario = getString(R.string.web_service_url) + "voluntario/" + voluntario.getId_voluntario();
+                        new ConsomeServico(new PosExecucao() {
+                            @Override
+                            public void executa(String resultado) {
+                                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build();
+                                GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(PerfilVol.this, gso);
+                                googleSignInClient.revokeAccess();
+                                googleSignInClient.signOut();
+                                Toast.makeText(PerfilVol.this, "Cadastro excluido", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(PerfilVol.this, SplashScreen.class);
+                                startActivity(i);
+
+                            }
+                        }, "delete").execute(deletaVoluntario);
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        alerta.cancel();
+                    }
+                });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
+    }
+
+    void  updateVoluntario(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialog);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialogupdate, null);
+        builder.setView(dialogView);
+        builder.setTitle("Atulização de Dados");
+        builder.setMessage("");
+        nomediag = dialogView.findViewById(R.id.nomeEditTextDiag);
+        nomediag.setText(voluntario.getNome_voluntario());
+        telefonediag = dialogView.findViewById(R.id.telefoneEditTextDiag);
+        telefonediag.setText(voluntario.getTelefone_voluntario());
+
+
+        builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if (Utils.isCampoVazio(nomediag.getText().toString()) || Utils.isCampoVazio(telefonediag.getText().toString())) {
+                    Toast.makeText(PerfilVol.this, "Campos vazio(s), favor preenchê-lo(s)", Toast.LENGTH_LONG).show();
+                } else {
+                    voluntario.setNome_voluntario(nomediag.getText().toString());
+                    voluntario.setTelefone_voluntario(telefonediag.getText().toString());
+                    String atualizaVoluntario = getString(R.string.web_service_url) + "voluntario/" + voluntario.getId_voluntario();
+                    Gson gson = new Gson();
+
+                    new ConsomeServico(new PosExecucao() {
+                        @Override
+                        public void executa(String resultado) {
+                            nome.setText(voluntario.getNome_voluntario());
+                            telefone.setText(voluntario.getTelefone_voluntario());
+                            Toast.makeText(PerfilVol.this, "Sucesso nas Alterações ", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, "put", gson.toJson(voluntario)).execute(atualizaVoluntario);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+
+            }
+        });
+
+
+        builder.show();
+    }
+
 }
+
+

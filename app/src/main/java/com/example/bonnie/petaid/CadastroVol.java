@@ -1,5 +1,6 @@
 package com.example.bonnie.petaid;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -24,7 +25,6 @@ public class CadastroVol extends AppCompatActivity {
     private EditText nome;
     private EditText email;
     private EditText telefone;
-    private EditText senha;
     private String requestJson;
 
     public static final MediaType JSON
@@ -37,7 +37,6 @@ public class CadastroVol extends AppCompatActivity {
         nome =  findViewById(R.id.nomeEditText);
         email = findViewById(R.id.emailEditText);
         telefone = findViewById(R.id.telefoneEditText);
-        senha = findViewById(R.id.senhaEditText);
         btnSave = findViewById(R.id.saveButton);
 
         Bundle bundle = getIntent().getExtras();
@@ -74,14 +73,6 @@ public class CadastroVol extends AppCompatActivity {
                     validaCampos = false;
                     telefone.requestFocus();
                 }
-                if( Utils.isCampoVazio(senha.getText().toString())){
-                    validaCampos = false;
-                    nome.requestFocus();
-                }
-                if(!Utils.isPass(senha.getText().toString())){
-                    validaCampos = false;
-                    senha.requestFocus();
-                }
                 if(!Utils.isEmailValido(email.getText().toString())) {
                     validaCampos = false;
                     email.requestFocus();
@@ -97,8 +88,8 @@ public class CadastroVol extends AppCompatActivity {
                 else {
                     Voluntario voluntario = new Voluntario(nome.getText().toString(),
                             email.getText().toString(),
-                            telefone.getText().toString(),
-                            senha.getText().toString());
+                            telefone.getText().toString());
+
 
                     Gson gs = new Gson();
                     String jsonInString = gs.toJson(voluntario);
@@ -153,6 +144,8 @@ public class CadastroVol extends AppCompatActivity {
             //this.posExecucao.executa(resultado);
             if(codigo == 200){
                 Toast.makeText(CadastroVol.this, "Cadastro feito com sucesso!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(CadastroVol.this, MapsActivity.class);
+                startActivity(i);
 
             }
 
