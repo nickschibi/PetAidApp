@@ -12,7 +12,9 @@
         android:textColor="@color/text_color_secundary"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginBottom="4dp"
+        android:digits="abcdefghijklmnopqrstuvxzwy ABCDEFGHIJKLMNOPQRSTUVXZWY"
+        android:maxLength="100"/>
     <EditText
         android:id="@+id/telefoneEditTextDiag"
         android:inputType="number"
@@ -23,5 +25,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:maxLength="15"
+        android:digits="() 1234567890-"/>
 </LinearLayout>

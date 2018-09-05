@@ -6,6 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +17,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -42,7 +47,29 @@ public class CadastroVol extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         email.setText(bundle.getString("email"));
 
+        telefone.addTextChangedListener(new PhoneNumberFormattingTextWatcher() {
+            int length_before = 0;
+            private boolean mFormatting;
 
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Make sure to ignore calls to afterTextChanged caused by the work done below
+                if (!mFormatting) {
+                    mFormatting = true;
+                    String l = Locale.getDefault().getCountry();
+
+                    String num =s.toString();
+                    String data = PhoneNumberUtils.formatNumber(num, l);
+                    if(data!=null)
+                    {
+                        s.clear();
+                        s.append(data);
+                    }
+                    mFormatting = false;
+                }
+            }
+        });
 
 
 //        new CadastroVol.ConsomeServico(new CadastroVol.PosExecucao() {
@@ -70,6 +97,10 @@ public class CadastroVol extends AppCompatActivity {
                     nome.requestFocus();
                 }
                 if(!Utils.isPhone(telefone.getText().toString())){
+                    validaCampos = false;
+                    telefone.requestFocus();
+                }
+                if(!Utils.isTelefone(telefone.getText().toString())){
                     validaCampos = false;
                     telefone.requestFocus();
                 }

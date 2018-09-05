@@ -27,7 +27,9 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColorHint="@color/colorAccent"
-                android:backgroundTint="@color/colorAccent"/>
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="100"
+                android:digits="abcdefghijklmnopqrstuvxzwy ABCDEFGHIJKLMNOPQRSTUVXZWY"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -50,9 +52,11 @@
                 android:hint="@string/telefone"
                 android:inputType="phone"
                 android:maxLines="1"
+                android:digits="() 1234567890-"
                 android:singleLine="true"
                 android:textColorHint="@color/colorAccent"
-                android:backgroundTint="@color/colorAccent"/>
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="15"/>
 
         </android.support.design.widget.TextInputLayout>
 

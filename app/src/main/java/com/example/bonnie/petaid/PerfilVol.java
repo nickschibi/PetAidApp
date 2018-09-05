@@ -12,6 +12,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -210,13 +214,62 @@ public class PerfilVol extends AppCompatActivity {
         telefonediag = dialogView.findViewById(R.id.telefoneEditTextDiag);
         telefonediag.setText(voluntario.getTelefone_voluntario());
 
+        telefonediag.addTextChangedListener(new PhoneNumberFormattingTextWatcher() {
+            int length_before = 0;
+            private boolean mFormatting;
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Make sure to ignore calls to afterTextChanged caused by the work done below
+                if (!mFormatting) {
+                    mFormatting = true;
+                    String l = Locale.getDefault().getCountry();
+
+                    String num =s.toString();
+                    String data = PhoneNumberUtils.formatNumber(num, l);
+                    if(data!=null)
+                    {
+                        s.clear();
+                        s.append(data);
+                    }
+                    mFormatting = false;
+                }
+            }});
+
+
+
 
         builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
-                if (Utils.isCampoVazio(nomediag.getText().toString()) || Utils.isCampoVazio(telefonediag.getText().toString())) {
-                    Toast.makeText(PerfilVol.this, "Campos vazio(s), favor preenchê-lo(s)", Toast.LENGTH_LONG).show();
-                } else {
+                boolean validaCampos = true; // okay
+
+                if( Utils.isCampoVazio(nomediag.getText().toString())){
+                    validaCampos = false;
+                    nome.requestFocus();
+                }
+                if( !Utils.isName(nomediag.getText().toString())){
+                    validaCampos = false;
+                    nome.requestFocus();
+                }
+                if(!Utils.isPhone(telefonediag.getText().toString())){
+                    validaCampos = false;
+                    telefone.requestFocus();
+                }
+                if(!Utils.isTelefone(telefonediag.getText().toString())){
+                    validaCampos = false;
+                    telefone.requestFocus();
+                }
+                if(!Utils.isEmailValido(email.getText().toString())) {
+                    validaCampos = false;
+                    email.requestFocus();
+                }
+                if(validaCampos == false){
+
+                    Toast.makeText(PerfilVol.this, R.string.camposInvalidos, Toast.LENGTH_SHORT).show();
+                }
+                 else {
                     voluntario.setNome_voluntario(nomediag.getText().toString());
                     voluntario.setTelefone_voluntario(telefonediag.getText().toString());
                     String atualizaVoluntario = getString(R.string.web_service_url) + "voluntario/" + voluntario.getId_voluntario();

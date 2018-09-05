@@ -58,7 +58,7 @@ public class SplashScreen extends AppCompatActivity {
                         } else { //erro
 
                                     runOnUiThread(()->Toast.makeText(SplashScreen.this,"Erro ao conectar-se com servidor", Toast.LENGTH_LONG).show());
-                                    
+
 
                         }
                     } else {
