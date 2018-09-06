@@ -1,18 +1,19 @@
-package com.example.bonnie.petaid;
+package com.example.bonnie.petaid.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.bonnie.petaid.model.Endereco;
+import com.example.bonnie.petaid.R;
+import com.example.bonnie.petaid.presenter.MapsPresenter;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,35 +23,27 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, MapsPresenter.View{
 
     private GoogleMap mMap;
     private List<Endereco> enderecos;
     private SlidingUpPanelLayout slidingUpPanelLayout;
-    private String url;
     private TextView nomeFantasiaTextView;
     private Button btn;
-
+    private MapsPresenter presenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new MapsPresenter(this, this);
         setContentView(R.layout.activity_maps);
-
-
     }
 
     @Override
@@ -70,75 +63,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MapsActivity.this, PerfilVol.class);
+                Intent i = new Intent(MapsActivity.this, PerfilVolActivity.class);
                 startActivity(i);
             }
         });
 
         enderecos = new ArrayList<>();
-
-        String trazEnderecos = getString(R.string.web_service_url) + "endereco/";
-        new ConsomeServico(new PosExecucao() {
-            @Override
-            public void executa(String resultado) {
-                enderecos.clear();
-                Type foundListType = new TypeToken<ArrayList<Endereco>>(){}.getType();
-                ArrayList<Endereco> e = new Gson().fromJson(resultado,foundListType);
-                if(e != null) {
-                    enderecos.addAll(e);
-                }
-                try {
-                    pegaGeoLocalizacao();
-                }
-                catch(IOException msg){
-                }
-            }
-        }).execute(trazEnderecos);
-
-
-
-    }
-    //Consome Serviço
-
-    private interface PosExecucao{
-        void executa(String resultado);
-    }
-
-    private class ConsomeServico extends AsyncTask<String, Void, String> {
-
-        private PosExecucao posExecucao;
-
-        public ConsomeServico(PosExecucao posExecucao){
-            this.posExecucao = posExecucao;
-        }
-
-        @Override
-        protected String doInBackground(String... url) {
-            OkHttpClient client = new OkHttpClient();
-            Request request =
-                    new Request.Builder()
-                            .url(url[0])
-                            .build();
-            okhttp3.Response response = null;
-            try {
-                response = client.newCall(request).execute();
-                String resultado = response.body().string();
-                return resultado;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String resultado) {
-            this.posExecucao.executa(resultado);
-        }
-
+        presenter.getEnderecos(enderecos);
     }
 
     // Mapa
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -157,19 +91,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(update);
     }
 
-    public void  pegaGeoLocalizacao () throws IOException {
+    @Override
+    public void  poeMarcadoresEnderecos() throws IOException {
 
         int height = 200;
         int width = 200;
+
+        double lat = 0;
+        double lng = 0;
 
         for (Endereco e: enderecos) {
             Geocoder gc = new Geocoder(this);
             List<Address> list = gc.getFromLocationName(e.toString(), 1);
             Address address = list.get(0);
 
-            double lat = address.getLatitude();
-            double lng = address.getLongitude();
-            goToLocationZoom(lat, lng, 10);
+            lat = address.getLatitude();
+            lng = address.getLongitude();
 
             BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.pata, null);
             Bitmap b = bitmapdraw.getBitmap();
@@ -183,28 +120,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Marker marker = mMap.addMarker(options);
             marker.setTag(e);
         }
+        goToLocationZoom(lat, lng, 10);
+    }
+
+    @Override
+    public void setaOrganizacaoSlidingPanel(String nomeFantasia) {
+        nomeFantasiaTextView.setText(nomeFantasia);
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker){
-
-        Endereco e = (Endereco)marker.getTag();
-
-       String trazOng = getString(R.string.web_service_url) + "organizacao?id_endereco=" + e.getIdEndereco();
-
-       new ConsomeServico(new PosExecucao() {
-           @Override
-           public void executa(String resultado) {
-
-               Type foundListType = new TypeToken<ArrayList<Organizacao>>(){}.getType();
-              ArrayList<Organizacao> organizacoes= new Gson().fromJson(resultado,foundListType);
-                Organizacao o = organizacoes.get(0);
-               nomeFantasiaTextView.setText(o.getNome_fantasia());
-               slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-           }
-       }).execute(trazOng);
-
-
+        Endereco endereco = (Endereco)marker.getTag();
+        presenter.getOrganizacaoByEndereco(endereco);
 
         return true;
     }

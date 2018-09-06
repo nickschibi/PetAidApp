@@ -1,26 +1,22 @@
-package com.example.bonnie.petaid;
+package com.example.bonnie.petaid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bonnie.petaid.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 
 public class LoginVolActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView naoTemCadastro;
-    private Button sign;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "LoginVol";
@@ -68,7 +64,7 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            Intent i = new Intent(LoginVolActivity.this, CadastroVol.class);
+            Intent i = new Intent(LoginVolActivity.this, CadastroVolActivity.class);
             i.putExtra("email", account.getEmail());
             startActivity(i);
 
@@ -91,7 +87,7 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account!=null){
-            Intent i = new Intent(LoginVolActivity.this, CadastroVol.class);
+            Intent i = new Intent(LoginVolActivity.this, CadastroVolActivity.class);
             i.putExtra("email", account.getEmail());
             startActivity(i);
         }

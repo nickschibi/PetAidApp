@@ -36,5 +36,9 @@
     <string name="confirmaExcluir">Deseja realmente excluir seu cadastro?</string>
     <string name="excluir">Excluir</string>
     <string name="cancel">Cancelar</string>
+    <string name="cadastroSucesso">"Cadastro feito com sucesso!"</string>
     <string name="title_activity_nav_drawer">NavDrawer</string>
+    <string name="cadastroErro">Erro no cadastro do usuário!</string>
+
+
 </resources>

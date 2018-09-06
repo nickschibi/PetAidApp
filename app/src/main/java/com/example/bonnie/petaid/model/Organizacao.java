@@ -1,4 +1,4 @@
-package com.example.bonnie.petaid;
+package com.example.bonnie.petaid.model;
 
 public class Organizacao {
 

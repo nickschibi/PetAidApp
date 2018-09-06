@@ -1,4 +1,4 @@
-package com.example.bonnie.petaid;
+package com.example.bonnie.petaid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class QuestionUser extends AppCompatActivity {
+import com.example.bonnie.petaid.R;
+
+public class QuestionUserActivity extends AppCompatActivity {
     private Button btnVol;
 
 
@@ -20,7 +22,7 @@ public class QuestionUser extends AppCompatActivity {
         btnVol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(QuestionUser.this, LoginVolActivity.class);
+                Intent i = new Intent(QuestionUserActivity.this, LoginVolActivity.class);
                 startActivity(i);
 
             }

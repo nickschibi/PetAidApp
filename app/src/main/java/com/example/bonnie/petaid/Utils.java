@@ -1,13 +1,8 @@
 package com.example.bonnie.petaid;
 
-import android.content.Context;
-import android.telephony.PhoneNumberUtils;
-import android.telephony.TelephonyManager;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

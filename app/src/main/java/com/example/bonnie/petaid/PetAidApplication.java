@@ -15,7 +15,6 @@ public class PetAidApplication extends Application {
     }
 
     public String getTypeUser() {
-
         return typeUser;
     }
 

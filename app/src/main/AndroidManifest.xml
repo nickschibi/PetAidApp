@@ -12,29 +12,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuestionUser">
+        <activity android:name=".activities.QuestionUserActivity">
             <intent-filter>
                 <action android:name="android.projekt.TesteTCC.Tela_Incial" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginVolActivity" />
-        <activity android:name=".CadastroVol" />
+        <activity android:name=".activities.LoginVolActivity" />
+        <activity android:name=".activities.CadastroVolActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/AppTheme.NoActionBar" />
         android:name=".PerfilVol"
@@ -42,7 +42,7 @@
         android:theme="@style/AppTheme" />
         <activity android:name=".MenuVol" />
         <activity
-            android:name=".PerfilVol"
+            android:name=".activities.PerfilVolActivity"
             android:label="@string/title_activity_perfil_vol"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
