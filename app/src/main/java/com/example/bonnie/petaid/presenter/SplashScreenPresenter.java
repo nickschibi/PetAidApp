@@ -20,11 +20,14 @@ public class SplashScreenPresenter {
         try {
             String url = contexto.getString(R.string.web_service_url) + "user/" + email;
             String s = new ConsomeServico(url, ConsomeServico.Metodo.GET).executaSincrono();
+            if(s == null){
+                s = "erro";
+            }
             return s;
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "nada";
+            return "erro";
         }
 
     }

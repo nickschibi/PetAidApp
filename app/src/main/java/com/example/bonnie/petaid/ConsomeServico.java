@@ -2,6 +2,8 @@ package com.example.bonnie.petaid;
 
 import android.os.AsyncTask;
 import java.io.IOException;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -85,12 +87,13 @@ public class ConsomeServico extends AsyncTask<String, Void, String> {
         this.execute(url);
     }
 
-    public String executaSincrono(){
+    public String executaSincrono() throws ExecutionException, InterruptedException,CancellationException {
         String resultado = null;
         try {
             resultado = this.execute(url).get();
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
         return resultado;
     }

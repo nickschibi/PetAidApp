@@ -10,7 +10,7 @@ import com.example.bonnie.petaid.R;
 
 public class QuestionUserActivity extends AppCompatActivity {
     private Button btnVol;
-
+    private Button btnOng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,14 @@ public class QuestionUserActivity extends AppCompatActivity {
 
             }
         });
-
+        btnOng= findViewById(R.id.btnOng);
+        btnOng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(QuestionUserActivity.this, CadastroOngActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 }

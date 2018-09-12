@@ -48,7 +48,15 @@
         <activity
             android:name=".NavDrawer"
             android:label="@string/title_activity_nav_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.CadastroOngActivity"
+            android:label="@string/title_activity_cadastro_ong"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.CadastroOngActivity"
+            android:label="@string/title_activity_cadastro_ong"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
