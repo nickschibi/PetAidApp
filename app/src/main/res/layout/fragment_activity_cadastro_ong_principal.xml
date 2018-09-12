@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".activities.fragment_activity_cadastro_ong_principal"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/razaoSocialEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/razaoSocial"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="100"
+                    android:digits="abcdefghijklmnopqrstuvxzwy ABCDEFGHIJKLMNOPQRSTUVXZWY"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/nomeFantasiaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/nomeFantasia"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:digits="abcdefghijklmnopqrstuvxzwy ABCDEFGHIJKLMNOPQRSTUVXZWY"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="15"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/cnpjEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/cnpj"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:digits="/-1234567890."
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/email"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:paddingTop="1dp"
+                    android:id="@+id/descricaoOngEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:hint="@string/descricao"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLines="20"
+                    android:maxLength="399"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:lines="5"
+                    android:gravity="top"
+
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/siteEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/site"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="200"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/facebookEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/facebook"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:maxLength="45"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/instagramEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/instagram"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:maxLength="40"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"/>
+
+            </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+
+</ScrollView>
