@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.fragment_activity_cadastro_ong_enderecos">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.CadastroOngEnderecosActivity">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/enderecosListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Enderecos"
-        android:textColor="@color/colorAccent"
-        android:textSize="20dp"/>
+        android:layout_height="wrap_content">
+
+    </ListView>
+
 
 </FrameLayout>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.CadastroLocalActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/logradouroEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/logradouro"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="200"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/numeroCasaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/numerocasa"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="10"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/complementoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/complemento"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="200"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/bairroEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/bairro"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="100"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/cidadeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/cidade"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="200"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/ufEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/cidade"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="2"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/cepEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/cidade"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="8"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/responsavelEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/nomeResponsavel"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="200"
+                android:inputType="text"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVXWYZ abcdefghijklmnopqrstuvxwyz"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/telefoneResponsavelEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/telefone"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="200"
+                android:inputType="phone"
+                android:digits="0123456789() -"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/numDocumentoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/documento"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="200"
+                    android:inputType="text"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVXWYZ abcdefghijklmnopqrstuvxwyz"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/bancoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/banco"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="100"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/agenciaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/agencia"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="10"
+                    android:inputType="number"
+                    />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/contaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/conta"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:maxLength="12"
+                    android:inputType="number"
+                    />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <CheckBox android:id="@+id/larCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lar"
+            />
+        <CheckBox android:id="@+id/resgateCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resgate"
+            />
+        <CheckBox android:id="@+id/vetCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vet"
+            />
+        <CheckBox android:id="@+id/advogadoCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/advogado"
+            />
+        <CheckBox android:id="@+id/remedioCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remedio"
+            />
+        <CheckBox android:id="@+id/racaoCaoCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/racaocao"
+            />
+        <CheckBox android:id="@+id/racaoGatoCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/racaogato"
+            />
+
+        <CheckBox android:id="@+id/areiaCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/areiagato"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/observacaoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/observacao"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="300"
+
+                />
+        </android.support.design.widget.TextInputLayout>
+
+       </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</ScrollView>

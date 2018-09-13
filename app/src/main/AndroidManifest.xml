@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginVolActivity" />
+        <activity android:name=".activities.LoginOngActivity" />
         <activity android:name=".activities.CadastroVolActivity" />
 
         <meta-data
@@ -57,6 +58,30 @@
             android:name=".activities.CadastroOngActivity"
             android:label="@string/title_activity_cadastro_ong"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.CadastroLocalActivity"
+            android:label="@string/title_activity_cadastro_local"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_perfil_ong"
+            android:label="@string/title_activity_perfil_ong"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.activity_cadastro_ong2"
+            android:label="@string/title_activity_cadastro_ong2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity_cadastro_ong_enderecos2"
+            android:label="@string/title_activity_cadastro_ong_enderecos2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.CadastroOngActivity"
+            android:label="@string/title_activity_cadastro_ong"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.CadastroOngEnderecosActivity"
+            android:label="@string/title_activity_cadastro_ong_enderecos"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

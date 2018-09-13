@@ -141,6 +141,30 @@
     <string name="site">Página Web</string>
     <string name="facebook">Facebook</string>
     <string name="instagram">Instagram</string>
+    <string name="title_activity_cadastro_local">CadastroLocalActivity</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="numerocasa">Número</string>
+    <string name="complemento">Complemento</string>
+    <string name="bairro">bairro</string>
+    <string name="cidade">Cidade</string>
+    <string name="nomeResponsavel">Nome Responsável</string>
+    <string name="documento">cpf/cnpj</string>
+    <string name="banco">Banco</string>
+    <string name="agencia">Agência</string>
+    <string name="conta">Conta</string>
+    <string name="lar">Lar Temporário</string>
+    <string name="resgate">Resgate</string>
+    <string name="vet">Veterinário</string>
+    <string name="advogado">Advogado(a)</string>
+    <string name="remedio">Medicação</string>
+    <string name="racaocao">Ração p/ Cães</string>
+    <string name="racaogato">Ração para Gatos</string>
+    <string name="areiagato">Areia p/ gatos</string>
+    <string name="observacao">Observações</string>
+    <string name="title_activity_perfil_ong">activity_perfil_ong</string>
+    <string name="title_activity_cadastro_ong2">activity_cadastro_ong2</string>
+    <string name="title_activity_cadastro_ong_enderecos2">activity_cadastro_ong_enderecos2</string>
+    <string name="title_activity_cadastro_ong_enderecos">CadastroOngEnderecosActivity</string>
 
 
 </resources>

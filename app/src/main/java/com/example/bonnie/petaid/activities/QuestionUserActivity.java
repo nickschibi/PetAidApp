@@ -31,7 +31,7 @@ public class QuestionUserActivity extends AppCompatActivity {
         btnOng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(QuestionUserActivity.this, CadastroOngActivity.class);
+                Intent i = new Intent(QuestionUserActivity.this, LoginOngActivity.class);
                 startActivity(i);
             }
         });
