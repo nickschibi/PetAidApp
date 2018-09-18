@@ -50,7 +50,7 @@
                     android:singleLine="true"
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
-                    android:maxLength="10"
+                    android:maxLength="5"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -124,7 +124,7 @@
                     android:id="@+id/ufEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="@string/cidade"
+                    android:hint="@string/uf"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColorHint="@color/colorAccent"
@@ -144,7 +144,7 @@
                     android:id="@+id/cepEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="@string/cidade"
+                    android:hint="@string/cep"
                     android:maxLines="1"
                     android:inputType="number"
                     android:singleLine="true"

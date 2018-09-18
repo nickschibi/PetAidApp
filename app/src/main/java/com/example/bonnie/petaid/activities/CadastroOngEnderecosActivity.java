@@ -19,11 +19,15 @@ public class CadastroOngEnderecosActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Bundle bundle = getIntent().getExtras();
+        int idOrganizacao = bundle.getInt("idOrganizacao");
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CadastroOngEnderecosActivity.this, CadastroLocalActivity.class);
+                intent.putExtra("idOrganizacao", idOrganizacao);
                 startActivity(intent);
             }
         });

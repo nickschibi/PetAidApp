@@ -112,4 +112,15 @@ public class Organizacao {
         this.instagram = instagram;
     }
 
+    public Organizacao(String nm_cnpj, String razao_social, String nome_fantasia, String email, String descricao, String site, String facebook, String instagram) {
+        this.nm_cnpj = nm_cnpj;
+        this.razao_social = razao_social;
+        this.nome_fantasia = nome_fantasia;
+        this.email = email;
+        this.descricao = descricao;
+        this.site = site;
+        this.facebook = facebook;
+        this.instagram = instagram;
+        this.senha_login = "";
+    }
 }

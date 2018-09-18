@@ -19,7 +19,8 @@
     <string name="telefone">Telefone:</string>
     <string name="email">E-mail:</string>
     <string name="senha">Senha:</string>
-    <string name="web_service_url">http://54.186.55.250:9090/</string>
+    <!--<string name="web_service_url">http://54.186.55.250:9090/</string>-->
+    <string name="web_service_url">http://192.168.1.191:9090/</string>
     <string name="title_activity_maps">Map</string>
     <string name="nomeFantasia">Nome Fantasia</string>
     <string name="razaoSocial">Razão Social</string>
@@ -145,10 +146,10 @@
     <string name="logradouro">Logradouro</string>
     <string name="numerocasa">Número</string>
     <string name="complemento">Complemento</string>
-    <string name="bairro">bairro</string>
+    <string name="bairro">Bairro</string>
     <string name="cidade">Cidade</string>
     <string name="nomeResponsavel">Nome Responsável</string>
-    <string name="documento">cpf/cnpj</string>
+    <string name="documento">CPF/CNPJ</string>
     <string name="banco">Banco</string>
     <string name="agencia">Agência</string>
     <string name="conta">Conta</string>
@@ -165,6 +166,9 @@
     <string name="title_activity_cadastro_ong2">activity_cadastro_ong2</string>
     <string name="title_activity_cadastro_ong_enderecos2">activity_cadastro_ong_enderecos2</string>
     <string name="title_activity_cadastro_ong_enderecos">CadastroOngEnderecosActivity</string>
+    <string name="aviso">O cadastro é dividido em duas etapas (Informações Basicas e Informações dos Endereços), é importante que preencha os campos com informações verídicas.</string>
+    <string name="uf">UF</string>
+    <string name="cep">CEP</string>
 
 
 </resources>

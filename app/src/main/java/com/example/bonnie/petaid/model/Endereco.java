@@ -3,8 +3,8 @@ package com.example.bonnie.petaid.model;
 public class Endereco {
     private int idEndereco;
     private String end;
+    private String numCasa;
     private String complemento;
-    private String complemento2;
     private String bairro;
     private String cidade;
     private String uf;
@@ -13,11 +13,21 @@ public class Endereco {
     public Endereco() {
     }
 
-    public Endereco(int idEndereco, String end, String complemento, String complemento2, String bairro, String cidade, String uf, String cep) {
+    public Endereco(String end, String numCasa, String complemento, String bairro, String cidade, String uf, String cep) {
+        this.end = end;
+        this.numCasa = numCasa;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.cep = cep;
+    }
+
+    public Endereco(int idEndereco, String end, String numCasa, String complemento2, String bairro, String cidade, String uf, String cep) {
         this.idEndereco = idEndereco;
         this.end = end;
+        this.numCasa = numCasa;
         this.complemento = complemento;
-        this.complemento2 = complemento2;
         this.bairro = bairro;
         this.cidade = cidade;
         this.uf = uf;
@@ -26,7 +36,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return end+", " + complemento+", " + bairro + ", " + cidade + ", " + uf + ", " + cep;
+        return end+", " + numCasa+", " + bairro + ", " + cidade + ", " + uf + ", " + cep;
 
     }
 
@@ -47,20 +57,20 @@ public class Endereco {
         this.end = end;
     }
 
+    public String getNumcasa() {
+        return numCasa;
+    }
+
+    public void setNumCasa(String numCasa) {
+        this.numCasa = numCasa;
+    }
+
     public String getComplemento() {
         return complemento;
     }
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
-    }
-
-    public String getComplemento2() {
-        return complemento2;
-    }
-
-    public void setComplemento2(String complemento2) {
-        this.complemento2 = complemento2;
     }
 
     public String getBairro() {
