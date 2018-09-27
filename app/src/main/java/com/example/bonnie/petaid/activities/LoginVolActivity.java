@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -64,8 +65,8 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            Intent i = new Intent(LoginVolActivity.this, CadastroVolActivity.class);
-            i.putExtra("email", account.getEmail());
+            ((PetAidApplication) LoginVolActivity.this.getApplication()).setEmailSignUser(account.getEmail());
+            Intent i = new Intent(LoginVolActivity.this, QuestionUserActivity.class);
             startActivity(i);
 
         } catch (ApiException e) {
@@ -87,8 +88,8 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account!=null){
-            Intent i = new Intent(LoginVolActivity.this, CadastroVolActivity.class);
-            i.putExtra("email", account.getEmail());
+            ((PetAidApplication) LoginVolActivity.this.getApplication()).setEmailSignUser(account.getEmail());
+            Intent i = new Intent(LoginVolActivity.this, QuestionUserActivity.class);
             startActivity(i);
         }
 

@@ -20,21 +20,6 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <Button
-                android:id="@+id/backbtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/back" />
-
-            <Button
-                android:id="@+id/deletbtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/delete"
-                android:gravity="right"
-                android:layout_marginLeft="292dp"/>
-
-
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <include layout="@layout/content_cadastro_local" />

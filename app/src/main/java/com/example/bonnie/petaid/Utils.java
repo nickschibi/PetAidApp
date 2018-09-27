@@ -53,6 +53,8 @@ public class Utils {
 
     public static boolean isCNPJ(String CNPJ){
 
+         CNPJ.replaceAll("[^0-9]", "");
+
         // considera-se erro CNPJ's formados por uma sequencia de numeros iguais
         if (CNPJ.equals("00000000000000") || CNPJ.equals("11111111111111") ||
                 CNPJ.equals("22222222222222") || CNPJ.equals("33333333333333") ||
@@ -118,6 +120,26 @@ public class Utils {
                 CNPJ.substring(12, 14));
     }
 
+
+    public static boolean isEstado(String uf){
+        String estado = uf;
+        String Estados[] = {"AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT","PA","PB","PE","PI","PR","RJ","RN","RO","RR",
+                "RS","SC","SE","SP","TO"};
+        int status = 0;
+        System.out.println("Entre com seu estado: ");
+
+        for(String x : Estados)
+        {
+            if(estado .equals(x))
+                status = 1;
+        }
+        if(status == 1)
+            return  true;
+        else
+           return false;
+    }
 }
+
+
 
 

@@ -42,6 +42,8 @@ public class PerfilVolActivity extends AppCompatActivity implements PerfilVolPre
         setContentView(R.layout.activity_perfil_vol);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("");
+
         nome = findViewById(R.id.nomeEditText);
         email = findViewById(R.id.emailEditText);
         telefone = findViewById(R.id.telefoneEditText);

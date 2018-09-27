@@ -1,69 +1,82 @@
 package com.example.bonnie.petaid.model;
 
 public class Local {
-    private int id_local;
-    private String nome_responsavel;
+    private int idLocal;
+    private String nomeResponsavel;
 
-    private int id_organizacao;
-    private int id_endereco;
-    private String telefone_local;
+    private int idOrganizacao;
+    private int idEndereco;
+    private String telefoneLocal;
+    private Endereco endereco;
 
-    public Local(int id_local, String nome_responsavel, int id_organizacao, int id_endereco,String telefone_local) {
-        this.id_local = id_local;
-        this.nome_responsavel = nome_responsavel;
-        this.telefone_local = telefone_local;
-        this.id_organizacao = id_organizacao;
-        this.id_endereco = id_endereco;
+    public Local(int idLocal, String nomeResponsavel, int idOrganizacao, int idEndereco,String telefoneLocal) {
+        this.idLocal = idLocal;
+        this.nomeResponsavel = nomeResponsavel;
+        this.telefoneLocal = telefoneLocal;
+        this.idOrganizacao = idOrganizacao;
+        this.idEndereco = idEndereco;
     }
 
     public Local(){
 
     };
 
-    public Local(String nome_responsavel, int id_organizacao, int id_endereco,String telefone_local) {
-        this.nome_responsavel = nome_responsavel;
-        this.telefone_local = telefone_local;
-        this.id_organizacao = id_organizacao;
-        this.id_endereco = id_endereco;
+    public Local(String nomeResponsavel, int idOrganizacao, int idEndereco,String telefoneLocal) {
+        this.nomeResponsavel = nomeResponsavel;
+        this.telefoneLocal = telefoneLocal;
+        this.idOrganizacao = idOrganizacao;
+        this.idEndereco = idEndereco;
     }
 
-    public int getId_local() {
-        return id_local;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setId_local(int id_local) {
-        this.id_local = id_local;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
-    public String getNome_responsavel() {
-        return nome_responsavel;
+    public int getIdLocal() {
+        return idLocal;
     }
 
-    public void setNome_responsavel(String nome_responsavel) {
-        this.nome_responsavel = nome_responsavel;
+    public void setIdLocal(int idLocal) {
+        this.idLocal = idLocal;
     }
 
-    public String getTelefone_local() {
-        return telefone_local;
+    public String getNomeResponsavel() {
+        return nomeResponsavel;
     }
 
-    public void setTelefone_local(String telefone_local) {
-        this.telefone_local = telefone_local;
+    public void setNomeResponsavel(String nomeResponsavel) {
+        this.nomeResponsavel = nomeResponsavel;
     }
 
-    public int getId_organizacao() {
-        return id_organizacao;
+    public String getTelefoneLocal() {
+        return telefoneLocal;
     }
 
-    public void setId_organizacao(int id_organizacao) {
-        this.id_organizacao = id_organizacao;
+    public void setTelefoneLocal(String telefoneLocal) {
+        this.telefoneLocal = telefoneLocal;
     }
 
-    public int getId_endereco() {
-        return id_endereco;
+    public int getIdOrganizacao() {
+        return idOrganizacao;
     }
 
-    public void setId_endereco(int id_endereco) {
-        this.id_endereco = id_endereco;
+    public void setIdOrganizacao(int idOrganizacao) {
+        this.idOrganizacao = idOrganizacao;
+    }
+
+    public int getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(int idEndereco) {
+        this.idEndereco = idEndereco;
+    }
+
+    public String toString(){
+        return this.getNomeResponsavel() + "," + this.getIdEndereco() + "," + this.getTelefoneLocal();
     }
 }

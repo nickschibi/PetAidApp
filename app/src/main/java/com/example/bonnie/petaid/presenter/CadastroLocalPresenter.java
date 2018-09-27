@@ -3,13 +3,16 @@ package com.example.bonnie.petaid.presenter;
 import android.app.Activity;
 
 import com.example.bonnie.petaid.ConsomeServico;
+import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.model.Endereco;
 import com.example.bonnie.petaid.model.Local;
+import com.example.bonnie.petaid.model.Voluntario;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class CadastroLocalPresenter {
     private Endereco endereco;
@@ -45,70 +48,75 @@ public class CadastroLocalPresenter {
                             if(returnCode == 200){
                                 Type foundType = new TypeToken<Local>(){}.getType();
                                 local = new Gson().fromJson(resultado,foundType);
-                                view.exibeToastSucesso();
+                                view.exibeToastSucesso(idOrganizacao);
 
                             } else {
-                                view.exibeToastErro();
+                                view.exibeToastErro(idOrganizacao);
                             }
                         }
                     }).executa();
 
                 } else {
-                    view.exibeToastErro();
+                    view.exibeToastErro(idOrganizacao);
                 }
+            }
+        }).executa();
+
+
+
+    }
+    public void trazLocal(int idLocal){
+        String trazVoluntario = contexto.getString(R.string.web_service_url) + "local/" +idLocal;
+        new ConsomeServico(trazVoluntario, ConsomeServico.Metodo.GET, new ConsomeServico.PosExecucao() {
+            @Override
+            public void executa(String resultado, int returnCode) {
+                Type foundType = new TypeToken<Local>(){}.getType();
+                local = new Gson().fromJson(resultado,foundType);
+                view.preencheCampos(local);
             }
         }).executa();
     }
 
-
-    public void cadastraEndereco(String logradouro ,String numCasa, String complemento, String bairro, String cidade,String uf, String cep){
-
-        endereco = new Endereco(logradouro, numCasa ,complemento,bairro,cidade,uf,cep);
-
+    public void  atualizaEnderecoLocal(int idEndereco, int idLocal, String logradouro ,String numCasa, String complemento, String bairro, String cidade,String uf, String cep,
+                                       String nomeResponsavel ,int idOrganizacao, String telefoneLocal){
+        endereco = new Endereco(idEndereco, logradouro, numCasa ,complemento,bairro,cidade,uf,cep);
         String requestBody = new Gson().toJson(endereco);
-        String urlEndereco = contexto.getString(R.string.web_service_url) + "endereco";
-        new ConsomeServico(urlEndereco, ConsomeServico.Metodo.POST, requestBody, new ConsomeServico.PosExecucao() {
+        String urlEndereco = contexto.getString(R.string.web_service_url) + "endereco/"+ endereco.getIdEndereco();
+        Gson gson = new Gson();
+
+        new ConsomeServico(urlEndereco, ConsomeServico.Metodo.PUT, gson.toJson(endereco), new ConsomeServico.PosExecucao() {
             @Override
             public void executa(String resultado, int returnCode) {
                 if(returnCode == 200){
-                    Type foundType = new TypeToken<Endereco>(){}.getType();
-                    endereco = new Gson().fromJson(resultado,foundType);
-                    view.exibeToastSucesso();
+                    local = new Local( idLocal, nomeResponsavel , idOrganizacao,  endereco.getIdEndereco(),  telefoneLocal);
+                    String requestBody = new Gson().toJson(local);
+                    String urlLocal = contexto.getString(R.string.web_service_url) + "local/"+ local.getIdLocal();
+                    Gson gson = new Gson();
+                    new ConsomeServico(urlLocal, ConsomeServico.Metodo.PUT, gson.toJson(local), new ConsomeServico.PosExecucao() {
+                        @Override
+                        public void executa(String resultado, int returnCode) {
+                            if(returnCode == 200){
+                                view.exibeToastSucesso(idOrganizacao);
+
+                            } else {
+                                view.exibeToastErro(idOrganizacao);
+                            }
+                        }
+                    }).executa();
 
                 } else {
-                    view.exibeToastErro();
+                    view.exibeToastErro(idOrganizacao);
                 }
             }
         }).executa();
 
-    }
+        }
 
-
-    public void cadastraLocal(String nomeResponsavel ,int idOrganizacao, int idEndereco, String telefoneLocal){
-
-       local = new Local( nomeResponsavel , idOrganizacao,  idEndereco,  telefoneLocal);
-
-        String requestBody = new Gson().toJson(local);
-        String urlLocal = contexto.getString(R.string.web_service_url) + "local";
-        new ConsomeServico(urlLocal, ConsomeServico.Metodo.POST, requestBody, new ConsomeServico.PosExecucao() {
-            @Override
-            public void executa(String resultado, int returnCode) {
-                if(returnCode == 200){
-                    Type foundType = new TypeToken<Local>(){}.getType();
-                    local = new Gson().fromJson(resultado,foundType);
-                    view.exibeToastSucesso();
-
-                } else {
-                    view.exibeToastErro();
-                }
-            }
-        }).executa();
-
-    }
 
 
     public interface View{
-        void exibeToastSucesso();
-        void exibeToastErro();
+        void preencheCampos(Local local);
+        void exibeToastSucesso(int idOrganizacao);
+        void exibeToastErro(int idOrganizacao);
     }
 }

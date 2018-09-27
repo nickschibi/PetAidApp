@@ -63,7 +63,7 @@
             android:label="@string/title_activity_cadastro_local"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity_perfil_ong"
+            android:name=".activities.PerfilOngActivity"
             android:label="@string/title_activity_perfil_ong"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -81,7 +81,7 @@
         <activity
             android:name=".activities.CadastroOngEnderecosActivity"
             android:label="@string/title_activity_cadastro_ong_enderecos"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

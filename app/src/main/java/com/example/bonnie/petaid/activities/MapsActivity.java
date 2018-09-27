@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.model.Endereco;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.presenter.MapsPresenter;
@@ -63,7 +64,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MapsActivity.this, PerfilVolActivity.class);
+                String userType = ((PetAidApplication) MapsActivity.this.getApplication()).getTypeUser();
+                Intent i = null;
+                if(userType.equals("vol")){
+                    i = new Intent(MapsActivity.this, PerfilVolActivity.class);
+                } else {
+                    i = new Intent(MapsActivity.this, CadastroOngActivity.class);
+                }
                 startActivity(i);
             }
         });

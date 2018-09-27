@@ -11,7 +11,9 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.Utils;
 import com.example.bonnie.petaid.presenter.CadastroVolPresenter;
@@ -32,6 +34,10 @@ public class CadastroVolActivity extends AppCompatActivity implements CadastroVo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new CadastroVolPresenter(this,this);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+
+
 
         setContentView(R.layout.activity_cadastro_vol);
         nome =  findViewById(R.id.nomeEditText);
@@ -39,8 +45,7 @@ public class CadastroVolActivity extends AppCompatActivity implements CadastroVo
         telefone = findViewById(R.id.telefoneEditText);
         btnSave = findViewById(R.id.saveButton);
 
-        Bundle bundle = getIntent().getExtras();
-        email.setText(bundle.getString("email"));
+        email.setText(((PetAidApplication) CadastroVolActivity.this.getApplication()).getEmailSignUser());
 
         telefone.addTextChangedListener(new PhoneNumberFormattingTextWatcher() {
             int length_before = 0;

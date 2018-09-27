@@ -55,7 +55,7 @@ public class MapsPresenter {
                 Type foundListType = new TypeToken<ArrayList<Organizacao>>(){}.getType();
                 ArrayList<Organizacao> organizacoes = new Gson().fromJson(resultado,foundListType);
                 Organizacao o = organizacoes.get(0);
-                view.setaOrganizacaoSlidingPanel(o.getNome_fantasia());
+                view.setaOrganizacaoSlidingPanel(o.getNomeFantasia());
             }
         }).executa();
     }

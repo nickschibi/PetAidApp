@@ -2,12 +2,11 @@ package com.example.bonnie.petaid.model;
 
 public class Organizacao {
 
-    private int id_organizacao;
-    private String nm_cnpj;
-    private String razao_social;
-    private String nome_fantasia;
+    private int idOrganizacao;
+    private String nmCnpj;
+    private String razaoSocial;
+    private String nomeFantasia;
     private String email;
-    private String senha_login;
     private String descricao;
     private String site;
     private String facebook;
@@ -17,36 +16,36 @@ public class Organizacao {
 
     }
 
-    public int getId_organizacao() {
-        return id_organizacao;
+    public int getIdOrganizacao() {
+        return idOrganizacao;
     }
 
-    public void setId_organizacao(int id_organizacao) {
-        this.id_organizacao = id_organizacao;
+    public void setIdOrganizacao(int idOrganizacao) {
+        this.idOrganizacao = idOrganizacao;
     }
 
-    public String getNm_cnpj() {
-        return nm_cnpj;
+    public String getNmCnpj() {
+        return nmCnpj;
     }
 
-    public void setNm_cnpj(String nm_cnpj) {
-        this.nm_cnpj = nm_cnpj;
+    public void setNmCnpj(String nmCnpj) {
+        this.nmCnpj = nmCnpj;
     }
 
-    public String getRazao_social() {
-        return razao_social;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setRazao_social(String razao_social) {
-        this.razao_social = razao_social;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
-    public String getNome_fantasia() {
-        return nome_fantasia;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setNome_fantasia(String nome_fantasia) {
-        this.nome_fantasia = nome_fantasia;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
     public String getEmail() {
@@ -55,14 +54,6 @@ public class Organizacao {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha_login() {
-        return senha_login;
-    }
-
-    public void setSenha_login(String senha_login) {
-        this.senha_login = senha_login;
     }
 
     public String getDescricao() {
@@ -97,30 +88,28 @@ public class Organizacao {
         this.instagram = instagram;
     }
 
-    public Organizacao(int id_organizacao, String nm_cnpj, String razao_social, String nome_fantasia, String email,
-                       String senha_login, String descricao, String site, String facebook, String instagram) {
+    public Organizacao(int idOrganizacao, String razaoSocial, String nomeFantasia, String nmCnpj, String email,
+                       String descricao, String site, String facebook, String instagram) {
         super();
-        this.id_organizacao = id_organizacao;
-        this.nm_cnpj = nm_cnpj;
-        this.razao_social = razao_social;
-        this.nome_fantasia = nome_fantasia;
+        this.idOrganizacao = idOrganizacao;
+        this.razaoSocial = razaoSocial;
+        this.nomeFantasia = nomeFantasia;
+        this.nmCnpj = nmCnpj;
         this.email = email;
-        this.senha_login = senha_login;
         this.descricao = descricao;
         this.site = site;
         this.facebook = facebook;
         this.instagram = instagram;
     }
 
-    public Organizacao(String nm_cnpj, String razao_social, String nome_fantasia, String email, String descricao, String site, String facebook, String instagram) {
-        this.nm_cnpj = nm_cnpj;
-        this.razao_social = razao_social;
-        this.nome_fantasia = nome_fantasia;
+    public Organizacao(String razaoSocial, String nomeFantasia, String nmCnpj, String email, String descricao, String site, String facebook, String instagram) {
+        this.razaoSocial = razaoSocial;
+        this.nomeFantasia = nomeFantasia;
+        this.nmCnpj = nmCnpj;
         this.email = email;
         this.descricao = descricao;
         this.site = site;
         this.facebook = facebook;
         this.instagram = instagram;
-        this.senha_login = "";
     }
 }

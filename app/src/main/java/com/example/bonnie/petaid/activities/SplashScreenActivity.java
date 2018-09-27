@@ -50,14 +50,13 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
                             Intent i = new Intent(SplashScreenActivity.this, MapsActivity.class); // se sim, vai para a tela principal
                             startActivity(i);
                         } else if(tipoUsuario.equals("nada")) {
-                            Intent i = new Intent(SplashScreenActivity.this, CadastroOngActivity.class); // se não, vai para a tela de cadastro
-                            i.putExtra("email", account.getEmail());
+                            Intent i = new Intent(SplashScreenActivity.this, QuestionUserActivity.class); // se não, vai para a tela de cadastro
                             startActivity(i);
                         } else { //erro
                             runOnUiThread(()->Toast.makeText(SplashScreenActivity.this,"Erro ao conectar-se com servidor", Toast.LENGTH_LONG).show());
                         }
                     } else {
-                        Intent i = new Intent(SplashScreenActivity.this, QuestionUserActivity.class); // Se não tem nem a conta do google cadastrada vai para tela de pergunta
+                        Intent i = new Intent(SplashScreenActivity.this, LoginVolActivity.class); // Se não tem nem a conta do google cadastrada vai para tela de pergunta
                         startActivity(i);
                     }
 

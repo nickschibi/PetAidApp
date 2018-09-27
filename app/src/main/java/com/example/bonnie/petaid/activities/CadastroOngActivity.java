@@ -1,5 +1,6 @@
 package com.example.bonnie.petaid.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,13 +8,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.Utils;
+import com.example.bonnie.petaid.model.Local;
+import com.example.bonnie.petaid.model.Organizacao;
 import com.example.bonnie.petaid.presenter.CadastroOngPresenter;
 
 public class CadastroOngActivity extends AppCompatActivity implements CadastroOngPresenter.View {
@@ -26,6 +33,9 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
     private EditText facebookEditText;
     private EditText instagramEditText;
     private CadastroOngPresenter presenter;
+    private Organizacao organizacao;
+    private boolean update = false;
+    private Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +45,12 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
         setSupportActionBar(toolbar);
         presenter = new CadastroOngPresenter(this,this);
 
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
 
-        AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroOngActivity.this, R.style.MyDialog);
-        dlg.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.aviso)+ "</font>"));
-        dlg.setNeutralButton("Ok, Entendi", null);
-        dlg.show();
+        String email = ((PetAidApplication) CadastroOngActivity.this.getApplication()).getEmailSignUser();
+
+        boolean isCadastro = getIntent().getBooleanExtra("cadastro", false);
 
         razaoSocialEditText =findViewById(R.id.razaoSocialEditText);
         nomeFantasiaEditText=findViewById(R.id.nomeFantasiaEditText);
@@ -49,8 +60,26 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
         siteEditText=findViewById(R.id.siteEditText);
         facebookEditText=findViewById(R.id.facebookEditText);
         instagramEditText=findViewById(R.id.instagramEditText);
+        btnDelete = findViewById(R.id.deletbtn);
 
+        emailEditText.setText(((PetAidApplication) CadastroOngActivity.this.getApplication()).getEmailSignUser());
 
+        if(!isCadastro && email != null && !email.equals("")){
+            presenter.trazOrganizacao(email);
+        } else {
+            AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroOngActivity.this, R.style.MyDialog);
+            dlg.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.aviso)+ "</font>"));
+            dlg.setNeutralButton("Ok, Entendi", null);
+            dlg.show();
+            btnDelete.setVisibility(View.INVISIBLE);
+        }
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogExcluir();
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -88,18 +117,69 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
                     dlg.show();
                 }
                 else {
-                    presenter.cadastraOrganizacao(razaoSocialEditText.getText().toString(),
-                            nomeFantasiaEditText.getText().toString(),
-                            cnpjEditText.getText().toString(), emailEditText.getText().toString(),
-                            descricaoOngEditText.getText().toString(),siteEditText.getText().toString(),
-                            facebookEditText.getText().toString(),
-                            instagramEditText.getText().toString());
 
+                    if(update == false) {
+                        presenter.cadastraOrganizacao(razaoSocialEditText.getText().toString(),
+                                nomeFantasiaEditText.getText().toString(),
+                                cnpjEditText.getText().toString(),
+                                emailEditText.getText().toString(),
+                                descricaoOngEditText.getText().toString(),
+                                siteEditText.getText().toString(),
+                                facebookEditText.getText().toString(),
+                                instagramEditText.getText().toString());
+                    } else {
+                        presenter.atualizaOrganizacao(organizacao.getIdOrganizacao(),
+                                razaoSocialEditText.getText().toString(),
+                                nomeFantasiaEditText.getText().toString(),
+                                cnpjEditText.getText().toString(),
+                                emailEditText.getText().toString(),
+                                descricaoOngEditText.getText().toString(),
+                                siteEditText.getText().toString(),
+                                facebookEditText.getText().toString(),
+                                instagramEditText.getText().toString());
+                    }
                 }
             }
 
 
         });
+    }
+
+
+    public AlertDialog alerta;
+
+    private void dialogExcluir(){
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialog);
+        builder.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.confirmaExcluir)+ "</font>"))
+                .setPositiveButton(R.string.excluir, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        presenter.excluiOrganizacao();
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        alerta.cancel();
+                    }
+                });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
+    }
+
+    @Override
+    public void preencheCampos(Organizacao organizacao) {
+        this.organizacao = organizacao;
+        razaoSocialEditText.setText(organizacao.getRazaoSocial());
+        nomeFantasiaEditText.setText(organizacao.getNomeFantasia());
+        cnpjEditText.setText(organizacao.getNmCnpj());
+        emailEditText.setText(organizacao.getEmail());
+        descricaoOngEditText.setText(organizacao.getDescricao());
+        siteEditText.setText(organizacao.getSite());
+        facebookEditText.setText(organizacao.getFacebook());
+        instagramEditText.setText(organizacao.getInstagram());
+        update = true;
     }
 
     @Override
@@ -113,5 +193,12 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
     @Override
     public void exibeToastErro() {
         Toast.makeText(CadastroOngActivity.this, getString(R.string.cadastroErro), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void exibeToastExclusao() {
+        Toast.makeText(CadastroOngActivity.this, "Cadastro excluido", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(CadastroOngActivity.this, SplashScreenActivity.class);
+        startActivity(i);
     }
 }

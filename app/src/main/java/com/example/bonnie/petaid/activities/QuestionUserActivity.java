@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
 
 public class QuestionUserActivity extends AppCompatActivity {
@@ -22,16 +23,19 @@ public class QuestionUserActivity extends AppCompatActivity {
         btnVol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(QuestionUserActivity.this, LoginVolActivity.class);
+                ((PetAidApplication) QuestionUserActivity.this.getApplication()).setTypeUser("vol");
+                Intent i = new Intent(QuestionUserActivity.this, CadastroVolActivity.class);
                 startActivity(i);
 
             }
         });
-        btnOng= findViewById(R.id.btnOng);
+        btnOng = findViewById(R.id.btnOng);
         btnOng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(QuestionUserActivity.this, LoginOngActivity.class);
+                ((PetAidApplication) QuestionUserActivity.this.getApplication()).setTypeUser("ong");
+                Intent i = new Intent(QuestionUserActivity.this, CadastroOngActivity.class);
+                i.putExtra("cadastro", true);
                 startActivity(i);
             }
         });
