@@ -45,6 +45,10 @@ public class ConsomeServico extends AsyncTask<String, Void, String> {
         this.requestBody = requestBody;
     }
 
+    public int getReturnCode() {
+        return returnCode;
+    }
+
     @Override
     protected String doInBackground(String... url) {
         OkHttpClient client = new OkHttpClient();

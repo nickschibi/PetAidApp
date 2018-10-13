@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.bonnie.petaid.ConsomeServico;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.model.Endereco;
+import com.example.bonnie.petaid.model.Local;
 import com.example.bonnie.petaid.model.Organizacao;
 import com.example.bonnie.petaid.model.Voluntario;
 import com.google.gson.Gson;
@@ -26,16 +27,16 @@ public class MapsPresenter {
         this.view = view;
     }
 
-    public void getEnderecos(List<Endereco> enderecos){
-        String trazEnderecos = contexto.getString(R.string.web_service_url) + "endereco/";
+     public void getLocais(List<Local> locais){
+        String trazEnderecos = contexto.getString(R.string.web_service_url) + "local/";
         new ConsomeServico(trazEnderecos,  ConsomeServico.Metodo.GET, new ConsomeServico.PosExecucao() {
             @Override
             public void executa(String resultado, int returnCode) {
-                enderecos.clear();
-                Type foundListType = new TypeToken<ArrayList<Endereco>>(){}.getType();
-                ArrayList<Endereco> e = new Gson().fromJson(resultado,foundListType);
-                if(e != null) {
-                    enderecos.addAll(e);
+                locais.clear();
+                Type foundListType = new TypeToken<ArrayList<Local>>(){}.getType();
+                ArrayList<Local> l = new Gson().fromJson(resultado,foundListType);
+                if(l != null) {
+                    locais.addAll(l);
                 }
                 try {
                     view.poeMarcadoresEnderecos();

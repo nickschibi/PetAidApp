@@ -4,22 +4,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.Html;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.bonnie.petaid.MaskWatcher;
 import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.Utils;
-import com.example.bonnie.petaid.model.Local;
 import com.example.bonnie.petaid.model.Organizacao;
 import com.example.bonnie.petaid.presenter.CadastroOngPresenter;
 
@@ -61,6 +58,7 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
         facebookEditText=findViewById(R.id.facebookEditText);
         instagramEditText=findViewById(R.id.instagramEditText);
         btnDelete = findViewById(R.id.deletbtn);
+        cnpjEditText.addTextChangedListener(new MaskWatcher("##.###.###/####-##"));
 
         emailEditText.setText(((PetAidApplication) CadastroOngActivity.this.getApplication()).getEmailSignUser());
 

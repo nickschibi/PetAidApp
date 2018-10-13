@@ -19,8 +19,8 @@
     <string name="telefone">Telefone:</string>
     <string name="email">E-mail:</string>
     <string name="senha">Senha:</string>
-    <string name="web_service_url">http://34.219.202.228:9090/</string>
-    <!--<string name="web_service_url">http://192.168.1.191:9090/</string>-->
+    <!--<string name="web_service_url">http://34.219.202.228:9090/</string>-->
+    <string name="web_service_url">http://192.168.1.191:9090/</string>
     <string name="title_activity_maps">Map</string>
     <string name="nomeFantasia">Nome Fantasia</string>
     <string name="razaoSocial">Razão Social</string>
@@ -83,6 +83,11 @@
     <string name="aviso">O cadastro é dividido em duas etapas (Informações Basicas e Informações dos Endereços), é importante que preencha os campos com informações verídicas.</string>
     <string name="uf">UF</string>
     <string name="cep">CEP</string>
+    <string name="rg">Rg</string>
+    <string name="CPF">CPF</string>
+    <string name="proprietarioConta">Proprietário da Conta</string>
+    <string name="corrente">Conta Corrente</string>
+    <string name="poupanca">Poupança</string>
 
 
 </resources>

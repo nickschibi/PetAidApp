@@ -34,8 +34,6 @@ public class CadastroVolActivity extends AppCompatActivity implements CadastroVo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new CadastroVolPresenter(this,this);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
 
 
 

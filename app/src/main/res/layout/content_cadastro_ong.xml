@@ -63,6 +63,7 @@
                 android:hint="@string/cnpj"
                 android:inputType="phone"
                 android:maxLines="1"
+                android:maxLength="18"
                 android:digits="/-1234567890."
                 android:singleLine="true"
                 android:textColorHint="@color/colorAccent"

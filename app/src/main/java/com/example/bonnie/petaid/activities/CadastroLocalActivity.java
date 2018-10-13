@@ -11,20 +11,28 @@ import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.bonnie.petaid.MaskWatcher;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.Utils;
+import com.example.bonnie.petaid.model.Banco;
+import com.example.bonnie.petaid.model.ContaBancaria;
 import com.example.bonnie.petaid.model.Local;
 import com.example.bonnie.petaid.presenter.CadastroLocalPresenter;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
-public class CadastroLocalActivity extends AppCompatActivity implements CadastroLocalPresenter.View {
+public class CadastroLocalActivity extends AppCompatActivity implements CadastroLocalPresenter.View, AdapterView.OnItemSelectedListener {
     private EditText logradouroEditText;
     private EditText numCasaEditText;
     private EditText complementoEdittext;
@@ -50,6 +58,13 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     private CadastroLocalPresenter presenter;
     private Local local;
     private boolean update = false;
+    private int tipoDoc = 0;
+    private boolean createContaBancaria = false;
+    private Spinner bancoSpinner;
+    private Banco banco;
+    private EditText proprietarioEditText;
+    private int tipoConta = 0;
+    private ContaBancaria contaBancaria;
 
 
 
@@ -73,7 +88,6 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         responsavelEditText = findViewById(R.id.responsavelEditText);
         telefoneResponsavelEditText = findViewById(R.id.telefoneResponsavelEditText);
         numDocumentoEditText = findViewById(R.id.numDocumentoEditText);
-        bancoEditText = findViewById(R.id.bancoEditText);
         agenciaEditText = findViewById(R.id.agenciaEditText);
         contaEditText = findViewById(R.id.contaEditText);
         larCheckBox  = findViewById(R.id.larCheckbox);
@@ -85,6 +99,10 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         racaoGatoCheckBox = findViewById(R.id.racaoGatoCheckbox);
         areiaCheckBox = findViewById(R.id.areiaCheckbox);
         observacaoEdittext = findViewById(R.id.observacaoEditText);
+        bancoSpinner = findViewById(R.id.bancoSpinner);
+        proprietarioEditText = findViewById(R.id.proprietarioEditText);
+
+
 
 
         Bundle bundle = getIntent().getExtras();
@@ -121,6 +139,11 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                     mFormatting = false;
                 }
             }});
+
+
+
+         presenter.trazBancos();
+
 
 
 
@@ -164,6 +187,31 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                     validaCampos = false;
                    telefoneResponsavelEditText.requestFocus();
                 }
+
+                if(Utils.isCampoVazio(numDocumentoEditText.getText().toString())&& Utils.isCampoVazio(agenciaEditText.getText().toString()) && Utils.isCampoVazio(proprietarioEditText.getText().toString())&& Utils.isCampoVazio(contaEditText.getText().toString())){
+                    //validaCampos = true;
+                } else {
+                    if(Utils.isCampoVazio(numDocumentoEditText.getText().toString())){
+                        validaCampos = false;
+                        numDocumentoEditText.requestFocus();
+                    }
+                    else if(Utils.isCampoVazio(agenciaEditText.getText().toString())){
+                        validaCampos= false;
+                        agenciaEditText.requestFocus();
+                    }
+                    else if(Utils.isCampoVazio(contaEditText.getText().toString())) {
+                        validaCampos = false;
+                        contaEditText.requestFocus();
+                    }
+                    else if(Utils.isCampoVazio(proprietarioEditText.getText().toString())){
+                         validaCampos = false;
+                         proprietarioEditText.requestFocus();
+
+                    }else{
+                        createContaBancaria = true;
+                    }
+                }
+
                 if(validaCampos == false){
 
                     AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroLocalActivity.this);
@@ -175,6 +223,8 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                 else {
 
                     if(update == false) {
+
+                        int idBanco = banco.getIdBanco();
                         presenter.cadastraEnderecoLocal(logradouroEditText.getText().toString(),
                                 numCasaEditText.getText().toString(),
                                 complementoEdittext.getText().toString(),
@@ -184,7 +234,11 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                                 cepEditText.getText().toString(),
                                 responsavelEditText.getText().toString(),
                                 idOrganizacao,
-                                telefoneResponsavelEditText.getText().toString());
+                                telefoneResponsavelEditText.getText().toString(), createContaBancaria,numDocumentoEditText.getText().toString(),
+                                agenciaEditText.getText().toString(),
+                                contaEditText.getText().toString(),
+                                proprietarioEditText.getText().toString(),
+                                idBanco, tipoConta);
                     }
 
                     else{
@@ -200,6 +254,8 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                                 responsavelEditText.getText().toString(),
                                 local.getIdOrganizacao(),
                                 telefoneResponsavelEditText.getText().toString());
+
+
                     }
 
 
@@ -221,14 +277,17 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         cepEditText.setText(local.getEndereco().getCep());
         responsavelEditText.setText(local.getNomeResponsavel());
         telefoneResponsavelEditText.setText(local.getTelefoneLocal());
+
+        presenter.trazContaBancaria(local.getIdLocal());
     }
 
     @Override
     public void exibeToastSucesso(int idOrganizacao) {
-        Toast.makeText(this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
+
         Intent intent = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
         intent.putExtra("idOrganizacao", idOrganizacao);
         startActivity(intent);
+        Toast.makeText(this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -236,4 +295,91 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     public void exibeToastErro(int idOrganizacao) {
         Toast.makeText(this, getString(R.string.cadastroErro), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void exibeToasMsg(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void preencheCamposConta(ContaBancaria contaBancaria) {
+        this.contaBancaria = contaBancaria;
+        agenciaEditText.setText(Integer.toString(contaBancaria.getCodAgencia()));
+        contaEditText.setText(Integer.toString(contaBancaria.getCodConta()));
+        proprietarioEditText.setText(contaBancaria.getNomeProprietario());
+        numDocumentoEditText.setText(contaBancaria.getNumDoc());
+
+        ArrayAdapter<Banco> adapter = (ArrayAdapter<Banco>)bancoSpinner.getAdapter();
+        int pos = adapter.getPosition(new Banco(contaBancaria.getIdBanco()));
+        bancoSpinner.setSelection(pos);
+
+        if(contaBancaria.getIdCategoriaConta() == 1){
+            RadioButton btn = findViewById(R.id.radioCorrente);
+            btn.setChecked(true);
+        } else {
+            RadioButton btn = findViewById(R.id.radioPoupanca);
+            btn.setChecked(true);
+        }
+    }
+
+    @Override
+    public void preencheBancos(ArrayList<Banco> bancos){
+        ArrayAdapter<Banco> adapter = new ArrayAdapter<Banco>(this,
+                android.R.layout.simple_spinner_item,bancos);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bancoSpinner.setAdapter(adapter);
+        bancoSpinner.setOnItemSelectedListener(this);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        banco = (Banco)parent.getItemAtPosition(position);
+        }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioCnpj:
+                if (checked)
+                    tipoDoc = 1;
+                    numDocumentoEditText.addTextChangedListener(new MaskWatcher("##.###.###/####-##"));
+                break;
+            case R.id.radioCpf:
+                if (checked)
+                    tipoDoc = 2;
+                    numDocumentoEditText.addTextChangedListener(new MaskWatcher("###.###.###/##"));
+                break;
+        }
+    }
+
+
+    public void onRadioButtonClicked1(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioPoupanca:
+                if (checked)
+                    tipoConta = 2;
+                break;
+            case R.id.radioCorrente:
+                if (checked)
+                    tipoConta = 1;
+                break;
+        }
+    }
+
+
 }

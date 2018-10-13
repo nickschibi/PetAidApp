@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.model.Endereco;
 import com.example.bonnie.petaid.R;
+import com.example.bonnie.petaid.model.Local;
 import com.example.bonnie.petaid.presenter.MapsPresenter;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,11 +34,12 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, MapsPresenter.View{
 
     private GoogleMap mMap;
-    private List<Endereco> enderecos;
+    private List<Local> locais;
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private TextView nomeFantasiaTextView;
     private Button btn;
     private MapsPresenter presenter;
+    private TextView descricaoTextView;
 
 
     @Override
@@ -59,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         slidingUpPanelLayout = findViewById(R.id.sliding_layout);
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         nomeFantasiaTextView = findViewById(R.id.nomeFantasiaTextView);
+        descricaoTextView = findViewById(R.id.descricaoOngTextView);
         btn = findViewById(R.id.btn);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +78,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        enderecos = new ArrayList<>();
-        presenter.getEnderecos(enderecos);
+        locais = new ArrayList<>();
+        presenter.getLocais(locais);
     }
 
     // Mapa
@@ -107,9 +110,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double lat = 0;
         double lng = 0;
 
-        for (Endereco e: enderecos) {
+        for (Local l: locais) {
             Geocoder gc = new Geocoder(this);
-            List<Address> list = gc.getFromLocationName(e.toString(), 1);
+            List<Address> list = gc.getFromLocationName(l.getEndereco().toString(), 1);
             Address address = list.get(0);
 
             lat = address.getLatitude();
@@ -125,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
             Marker marker = mMap.addMarker(options);
-            marker.setTag(e);
+            marker.setTag(l);
         }
         goToLocationZoom(lat, lng, 10);
     }
@@ -138,8 +141,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(final Marker marker){
-        Endereco endereco = (Endereco)marker.getTag();
-        presenter.getOrganizacaoByEndereco(endereco);
+
+        Local local = (Local)marker.getTag();
+        presenter.getOrganizacaoByEndereco(local.getEndereco());
 
         return true;
     }
