@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class CadastroLocalPresenter {
     private Endereco endereco;
@@ -69,7 +70,7 @@ public class CadastroLocalPresenter {
 
     public void cadastraEnderecoLocal(String logradouro ,String numCasa, String complemento, String bairro, String cidade,
                                       String uf, String cep, String nomeResponsavel ,int idOrganizacao, String telefoneLocal,
-                                      boolean createContaBancaria, String numDoc, String agencia, String numContaBancaria, String proprietario, int idBanco, int tipoConta){
+                                      boolean createContaBancaria, String numDoc, String agencia, String numContaBancaria, String proprietario,int tipoDoc, int idBanco, int tipoConta){
 
         endereco = new Endereco(logradouro, numCasa ,complemento,bairro,cidade,uf,cep);
 
@@ -97,7 +98,7 @@ public class CadastroLocalPresenter {
                             String retorno = servico.executaSincrono();
                             int rc = servico.getReturnCode();
                             if(rc != 200){
-                                view.exibeToasMsg("erro ao cadastrar local");
+                                view.exibeToastMsg("erro ao cadastrar local");
                                 break sequenciaChamadas;
                             }
 
@@ -106,21 +107,16 @@ public class CadastroLocalPresenter {
 
                             // Segunda chamada sincrona: cadastro de conta bancaria
                             if(createContaBancaria == true) {
-                                ContaBancaria contaBancaria = new ContaBancaria(Integer.parseInt(agencia), Integer.parseInt(numContaBancaria), proprietario, numDoc, idBanco, tipoConta, local.getIdLocal());
-                                requestBody = new Gson().toJson(contaBancaria);
-                                String urlConta = contexto.getString(R.string.web_service_url) + "contaBancaria";
-                                servico = new ConsomeServico(urlConta, ConsomeServico.Metodo.POST, requestBody);
-                                retorno = servico.executaSincrono();
-                                rc = servico.getReturnCode();
+                               rc = criaContaBancaria(agencia,numContaBancaria,proprietario, tipoDoc, numDoc, idBanco, tipoConta, local.getIdLocal());
                                 if (rc != 200) {
-                                    view.exibeToasMsg("erro ao cadastrar conta bancária");
+                                    view.exibeToastMsg("erro ao cadastrar conta bancária");
                                     break sequenciaChamadas;
-                                }
-                                else{
-                                    view.exibeToastSucesso(idOrganizacao);
                                 }
                             }
                             // Terceira chamada sincrona: cadastro de necessidades
+
+                            // Caso tudo tenha corrido certo, exibe sucesso
+                            view.exibeToastSucesso(idOrganizacao);
                         }
                     }
                     catch (Exception e) {
@@ -151,47 +147,70 @@ public class CadastroLocalPresenter {
         }).executa();
     }
 
-    public void trazContaBancaria(int idLocal){
-        String trazContaBancaria = contexto.getString(R.string.web_service_url) + "contaBancaria?id-local=" +idLocal;
-        new ConsomeServico(trazContaBancaria, ConsomeServico.Metodo.GET,new ConsomeServico.PosExecucao(){
-            @Override
-            public void executa(String resultado, int returnCode) {
-                Type foundType = new TypeToken<List<ContaBancaria>>(){}.getType();
-                ArrayList<ContaBancaria> contasBancarias = new Gson().fromJson(resultado,foundType);
-                view.preencheCamposConta(contasBancarias.get(0));
-            }
-        }).executa();
-    }
-
 
 
 
     public void  atualizaEnderecoLocal(int idEndereco, int idLocal, String logradouro ,String numCasa, String complemento, String bairro, String cidade,String uf, String cep,
-                                       String nomeResponsavel ,int idOrganizacao, String telefoneLocal){
-        endereco = new Endereco(idEndereco, logradouro, numCasa ,complemento,bairro,cidade,uf,cep);
+                                       String nomeResponsavel ,int idOrganizacao, String telefoneLocal, ContaBancaria contaBancaria, String acaoContaBancaria, String numDoc,
+                                       String agencia, String numContaBancaria, String proprietario,int tipoDoc, int idBanco, int tipoConta){
+
+
+        endereco = new Endereco(idEndereco, logradouro, numCasa ,complemento,bairro,cidade,uf,cep );
         String requestBody = new Gson().toJson(endereco);
         String urlEndereco = contexto.getString(R.string.web_service_url) + "endereco/"+ endereco.getIdEndereco();
         Gson gson = new Gson();
-
         new ConsomeServico(urlEndereco, ConsomeServico.Metodo.PUT, gson.toJson(endereco), new ConsomeServico.PosExecucao() {
             @Override
             public void executa(String resultado, int returnCode) {
                 if(returnCode == 200){
-                    local = new Local( idLocal, nomeResponsavel , idOrganizacao,  endereco.getIdEndereco(),  telefoneLocal);
-                    String requestBody = new Gson().toJson(local);
-                    String urlLocal = contexto.getString(R.string.web_service_url) + "local/"+ local.getIdLocal();
-                    Gson gson = new Gson();
-                    new ConsomeServico(urlLocal, ConsomeServico.Metodo.PUT, gson.toJson(local), new ConsomeServico.PosExecucao() {
-                        @Override
-                        public void executa(String resultado, int returnCode) {
-                            if(returnCode == 200){
-                                view.exibeToastSucesso(idOrganizacao);
 
-                            } else {
-                                view.exibeToastErro(idOrganizacao);
+                    Type foundType = new TypeToken<Endereco>(){}.getType();
+                    endereco = new Gson().fromJson(resultado,foundType);
+
+                    try {
+                        sequenciaChamadas:
+                        {
+                            local = new Local( idLocal, nomeResponsavel , idOrganizacao,  endereco.getIdEndereco(),  telefoneLocal);
+                            String requestBody = new Gson().toJson(local);
+                            String urlLocal = contexto.getString(R.string.web_service_url) + "local/"+ local.getIdLocal();
+                            Gson gson = new Gson();
+                            ConsomeServico servico = new ConsomeServico(urlLocal, ConsomeServico.Metodo.PUT,requestBody);
+                            String retorno = servico.executaSincrono();
+                            int rc = servico.getReturnCode();
+                            if(rc != 200){
+                                view.exibeToastMsg("erro ao cadastrar local");
+                                break sequenciaChamadas;
                             }
+                            foundType = new TypeToken<Local>(){}.getType();
+                            local = new Gson().fromJson(retorno,foundType);
+
+                            //segunda chamada
+                            if(acaoContaBancaria.equals("create")){
+                                rc = criaContaBancaria(agencia, numContaBancaria, proprietario, tipoDoc, numDoc, idBanco, tipoConta, idLocal);
+                            }
+                            else if(acaoContaBancaria.equals("update")){
+                                rc = atualizaContaBancaria(contaBancaria.getIdConta(),agencia, numContaBancaria, proprietario, tipoDoc, numDoc, idBanco, tipoConta, idLocal);
+                            }
+
+                            else if(acaoContaBancaria.equals("delete")) {
+                                rc = excluiContaBancaria(contaBancaria.getIdConta());
+                            }
+
+                            if (rc != 200) {
+                                view.exibeToastMsg("erro na conta bancária");
+                                break sequenciaChamadas;
+                            }
+
+
+
+                            // Caso tudo tenha corrido certo, exibe sucesso
+                            view.exibeToastSucesso(idOrganizacao);
                         }
-                    }).executa();
+
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                        // ERRO
+                    }
 
                 } else {
                     view.exibeToastErro(idOrganizacao);
@@ -217,6 +236,55 @@ public class CadastroLocalPresenter {
     }
 
 
+    public void trazContaBancaria(int idLocal){
+        String trazContaBancaria = contexto.getString(R.string.web_service_url) + "contaBancaria?id_local=" +idLocal;
+        new ConsomeServico(trazContaBancaria, ConsomeServico.Metodo.GET,new ConsomeServico.PosExecucao(){
+            @Override
+            public void executa(String resultado, int returnCode) {
+                Type foundType = new TypeToken<List<ContaBancaria>>(){}.getType();
+                ArrayList<ContaBancaria> contasBancarias = new Gson().fromJson(resultado,foundType);
+                if(contasBancarias.size()> 0) {
+
+                    view.preencheCamposConta(contasBancarias.get(0));
+                }
+            }
+        }).executa();
+    }
+
+
+    public int criaContaBancaria( String agencia, String numContaBancaria ,
+                                  String proprietario, int tipoDoc, String numDoc, int idBanco, int tipoConta, int idLocal) throws ExecutionException, InterruptedException {
+        ContaBancaria contaBancaria = new ContaBancaria(Integer.parseInt(agencia), Integer.parseInt(numContaBancaria), proprietario,tipoDoc, numDoc, idBanco, tipoConta, idLocal);
+        String  requestBody = new Gson().toJson(contaBancaria);
+        String urlConta = contexto.getString(R.string.web_service_url) + "contaBancaria";
+        ConsomeServico servico = new ConsomeServico(urlConta, ConsomeServico.Metodo.POST, requestBody);
+        String retorno = servico.executaSincrono();
+        int rc = servico.getReturnCode();
+
+        return rc;
+    }
+
+    public int atualizaContaBancaria(int idConta,String agencia, String numContaBancaria ,
+                                     String proprietario, int tipoDoc, String numDoc, int idBanco, int tipoConta, int idLocal)throws ExecutionException, InterruptedException{
+
+        ContaBancaria contaBancaria = new ContaBancaria(Integer.parseInt(agencia), Integer.parseInt(numContaBancaria), proprietario,tipoDoc, numDoc, idBanco, tipoConta, idLocal);
+        String  requestBody = new Gson().toJson(contaBancaria);
+        String urlConta = contexto.getString(R.string.web_service_url) + "contaBancaria/"+idConta;
+        ConsomeServico servico = new ConsomeServico(urlConta, ConsomeServico.Metodo.PUT, requestBody);
+        String retorno = servico.executaSincrono();
+        int rc = servico.getReturnCode();
+
+        return rc;
+    }
+
+    public int excluiContaBancaria(int idConta)throws ExecutionException, InterruptedException{
+        String urlConta = contexto.getString(R.string.web_service_url) + "contaBancaria/"+idConta;
+        ConsomeServico servico = new ConsomeServico(urlConta, ConsomeServico.Metodo.DELETE);
+        String retorno = servico.executaSincrono();
+        int rc = servico.getReturnCode();
+
+        return rc;
+    }
 
 
     public interface View{
@@ -224,7 +292,7 @@ public class CadastroLocalPresenter {
         void preencheCampos(Local local);
         void exibeToastSucesso(int idOrganizacao);
         void exibeToastErro(int idOrganizacao);
-        void exibeToasMsg(String msg);
+        void exibeToastMsg(String msg);
         void preencheCamposConta(ContaBancaria contaBancaria);
     }
 }

@@ -6,12 +6,16 @@ public class ContaBancaria {
     private int codAgencia;
     private int codConta;
     private String nomeProprietario;
+    private int tipoDoc;
+
+
+
     private String numDoc;
     private int idBanco;
     private int idCategoriaConta;
     private int idLocal;
 
-    public ContaBancaria(int codAgencia, int codConta, String nomeProprietario, String numDoc, int idBanco, int idCategoriaConta, int idLocal) {
+    public ContaBancaria(int codAgencia, int codConta, String nomeProprietario,int tipoDoc, String numDoc, int idBanco, int idCategoriaConta, int idLocal) {
         this.codAgencia = codAgencia;
         this.codConta = codConta;
         this.nomeProprietario = nomeProprietario;
@@ -55,6 +59,14 @@ public class ContaBancaria {
 
     public void setNomeProprietario(String nomeProprietario) {
         this.nomeProprietario = nomeProprietario;
+    }
+
+    public int getTipoDoc() {
+        return tipoDoc;
+    }
+
+    public void setTipoDoc(int tipoDoc) {
+        this.tipoDoc = tipoDoc;
     }
 
     public String getNumDoc() {

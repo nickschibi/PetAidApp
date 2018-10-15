@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class CadastroOngEnderecosPresenter {
     private ArrayList<Local> listaLocais;
@@ -46,22 +47,37 @@ public class CadastroOngEnderecosPresenter {
 
 
     public  void apagaLocal(Local local){
-        String urlEndereco = contexto.getString(R.string.web_service_url) + "endereco/" + local.getEndereco().getIdEndereco();
-        new ConsomeServico(urlEndereco, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
+
+
+//        String urlEndereco = contexto.getString(R.string.web_service_url) + "endereco/" + local.getEndereco().getIdEndereco();
+//        new ConsomeServico(urlEndereco, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
+//            @Override
+//            public void executa(String resultado, int returnCode) {
+//                if(returnCode == 200){
+//                    String urlLocal = contexto.getString(R.string.web_service_url) + "local/" + local.getIdLocal() + "?force=true";
+//                    new ConsomeServico(urlLocal, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
+//                        @Override
+//                        public void executa(String resultado, int returnCode) {
+//                            if(returnCode == 200){
+//                                //TODO
+//                            } else {
+//                                //TODO
+//                            }
+//                        }
+//                    }).executa();
+//                    //TODO
+//                } else {
+//                    //TODO
+//                }
+//            }
+//        }).executa();
+
+
+        String urlLocal = contexto.getString(R.string.web_service_url) + "local/" + local.getIdLocal() + "?force=true";
+        new ConsomeServico(urlLocal, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
             @Override
             public void executa(String resultado, int returnCode) {
                 if(returnCode == 200){
-                    String urlLocal = contexto.getString(R.string.web_service_url) + "local/" + local.getIdLocal();
-                    new ConsomeServico(urlLocal, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
-                        @Override
-                        public void executa(String resultado, int returnCode) {
-                            if(returnCode == 200){
-                                //TODO
-                            } else {
-                                //TODO
-                            }
-                        }
-                    }).executa();
                     //TODO
                 } else {
                     //TODO
@@ -74,6 +90,15 @@ public class CadastroOngEnderecosPresenter {
         void atualizaListaLocais(ArrayList<Local> listaLocais);
         void exibeToastSucesso();
         void exibeToastErro();
+    }
+
+    public void excluiContaBancaria(int idConta)throws ExecutionException, InterruptedException{
+        String urlConta = contexto.getString(R.string.web_service_url) + "contaBancaria/"+idConta;
+        ConsomeServico servico = new ConsomeServico(urlConta, ConsomeServico.Metodo.DELETE);
+        String retorno = servico.executaSincrono();
+        int rc = servico.getReturnCode();
+
+
     }
 
 

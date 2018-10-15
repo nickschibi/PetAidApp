@@ -59,7 +59,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     private Local local;
     private boolean update = false;
     private int tipoDoc = 0;
-    private boolean createContaBancaria = false;
+    private boolean dadosContaBancariaPreenchidos = false;
     private Spinner bancoSpinner;
     private Banco banco;
     private EditText proprietarioEditText;
@@ -115,6 +115,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         if(idLocal!=0){
             update = true;
             presenter.trazLocal(idLocal);
+
         }
 
         telefoneResponsavelEditText.addTextChangedListener(new PhoneNumberFormattingTextWatcher() {
@@ -207,8 +208,17 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                          validaCampos = false;
                          proprietarioEditText.requestFocus();
 
-                    }else{
-                        createContaBancaria = true;
+                    }
+                    else if(tipoDoc == 1 && !Utils.isCNPJ(numDocumentoEditText.getText().toString())){
+                        validaCampos = false;
+                        numDocumentoEditText.requestFocus();
+                    }
+                    else if (tipoDoc == 2 && !Utils.isCPF(numDocumentoEditText.getText().toString())){
+                        validaCampos = false;
+                        numDocumentoEditText.requestFocus();
+                    }
+                    else{
+                        dadosContaBancariaPreenchidos = true;
                     }
                 }
 
@@ -225,6 +235,9 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                     if(update == false) {
 
                         int idBanco = banco.getIdBanco();
+
+                        boolean createContaBancaria = dadosContaBancariaPreenchidos;
+
                         presenter.cadastraEnderecoLocal(logradouroEditText.getText().toString(),
                                 numCasaEditText.getText().toString(),
                                 complementoEdittext.getText().toString(),
@@ -234,15 +247,31 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                                 cepEditText.getText().toString(),
                                 responsavelEditText.getText().toString(),
                                 idOrganizacao,
-                                telefoneResponsavelEditText.getText().toString(), createContaBancaria,numDocumentoEditText.getText().toString(),
+                                telefoneResponsavelEditText.getText().toString(),
+                                createContaBancaria,
+                                numDocumentoEditText.getText().toString(),
                                 agenciaEditText.getText().toString(),
                                 contaEditText.getText().toString(),
                                 proprietarioEditText.getText().toString(),
-                                idBanco, tipoConta);
+                                tipoDoc,
+                                idBanco,
+                                tipoConta);
                     }
 
                     else{
-                        presenter.atualizaEnderecoLocal(local.getIdEndereco(),
+                            int idBanco = banco.getIdBanco();
+
+                            String acaoContaBancaria = "";
+
+                            if(contaBancaria == null && dadosContaBancariaPreenchidos ){
+                                acaoContaBancaria = "create";
+                            } else if (contaBancaria != null && dadosContaBancariaPreenchidos){
+                                acaoContaBancaria = "update";
+                            } else if (contaBancaria != null && !dadosContaBancariaPreenchidos){
+                                acaoContaBancaria = "delete";
+                            }
+
+                            presenter.atualizaEnderecoLocal(local.getIdEndereco(),
                                 local.getIdLocal(),
                                 logradouroEditText.getText().toString(),
                                 numCasaEditText.getText().toString(),
@@ -253,7 +282,15 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                                 cepEditText.getText().toString(),
                                 responsavelEditText.getText().toString(),
                                 local.getIdOrganizacao(),
-                                telefoneResponsavelEditText.getText().toString());
+                                telefoneResponsavelEditText.getText().toString(),
+                                contaBancaria,
+                                acaoContaBancaria,
+                                numDocumentoEditText.getText().toString(),
+                                agenciaEditText.getText().toString(),
+                                contaEditText.getText().toString(),
+                                proprietarioEditText.getText().toString(),
+                                tipoDoc,
+                                idBanco, tipoConta);
 
 
                     }
@@ -297,7 +334,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     }
 
     @Override
-    public void exibeToasMsg(String msg) {
+    public void exibeToastMsg(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -316,9 +353,21 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         if(contaBancaria.getIdCategoriaConta() == 1){
             RadioButton btn = findViewById(R.id.radioCorrente);
             btn.setChecked(true);
+            tipoConta = 1;
         } else {
             RadioButton btn = findViewById(R.id.radioPoupanca);
             btn.setChecked(true);
+            tipoConta = 2;
+        }
+
+        if(contaBancaria.getTipoDoc() == 1){
+            RadioButton btn = findViewById(R.id.radioCnpj);
+            btn.setChecked(true);
+            tipoDoc = 1;
+        } else {
+            RadioButton btn = findViewById(R.id.radioCpf);
+            btn.setChecked(true);
+            tipoDoc = 2;
         }
     }
 
