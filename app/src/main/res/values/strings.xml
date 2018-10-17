@@ -88,6 +88,8 @@
     <string name="proprietarioConta">Proprietário da Conta</string>
     <string name="corrente">Conta Corrente</string>
     <string name="poupanca">Poupança</string>
+    <string name="oqueprecisa">O que precisamos:</string>
+    <string name="voluntariarse">Voluntariar-se</string>
 
 
 </resources>

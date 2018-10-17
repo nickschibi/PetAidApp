@@ -96,57 +96,49 @@ public class CadastroOngPresenter {
 
     public void excluiOrganizacao(){
 
+
         String requestBody = new Gson().toJson(organizacao);
         String urlLocal = contexto.getString(R.string.web_service_url) + "local?id_organizacao=" + organizacao.getIdOrganizacao();
 
         new ConsomeServico(urlLocal, ConsomeServico.Metodo.GET, requestBody, new ConsomeServico.PosExecucao() {
             @Override
             public void executa(String resultado, int returnCode) {
-                if(returnCode == 200){
-                    Type foundType = new TypeToken<List<Local>>(){}.getType();
-                    locais = new Gson().fromJson(resultado,foundType);
-                    for (Local l: locais) {
-
-
-                        String urlEndereco = contexto.getString(R.string.web_service_url) + "endereco/" + l.getEndereco().getIdEndereco();
-                        new ConsomeServico(urlEndereco, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
-                            @Override
-                            public void executa(String resultado, int returnCode) {
-                                if(returnCode == 200){
-                                    String urlLocal = contexto.getString(R.string.web_service_url) + "local/" + l.getIdLocal();
-                                    new ConsomeServico(urlLocal, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
-                                        @Override
-                                        public void executa(String resultado, int returnCode) {
-                                            if(returnCode == 200){
-                                                //TODO
-                                            } else {
-                                                //TODO
-                                            }
-                                        }
-                                    }).executa();
-                                    //TODO
-                                } else {
-                                    //TODO
-                                }
+                if(returnCode == 200) {
+                    Type foundType = new TypeToken<List<Local>>() {
+                    }.getType();
+                    locais = new Gson().fromJson(resultado, foundType);
+                    for (Local l : locais) {
+                        String urlLocal = contexto.getString(R.string.web_service_url) + "local/" + l.getIdLocal() + "?force=true";
+                        ConsomeServico cs = new ConsomeServico(urlLocal, ConsomeServico.Metodo.DELETE);
+                        try {
+                            String retorno = cs.executaSincrono();
+                            int rc = cs.getReturnCode();
+                            if (rc != 200) {
+                                view.exibeToastErro();
+                                break;
                             }
-                        }).executa();
-
-
+                        } catch (Exception e) {
+                        }
                     }
                     String deletaOrganizacao = contexto.getString(R.string.web_service_url) + "organizacao/" + organizacao.getIdOrganizacao();
-                    new ConsomeServico(deletaOrganizacao, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
-                        @Override
-                        public void executa(String resultado, int returnCode) {
+                    ConsomeServico cs = new ConsomeServico(deletaOrganizacao, ConsomeServico.Metodo.DELETE);
+
+                    try {
+                        String retorno = cs.executaSincrono();
+                        if (cs.getReturnCode() == 200) {
                             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build();
                             GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(contexto, gso);
                             googleSignInClient.revokeAccess();
                             googleSignInClient.signOut();
                             view.exibeToastExclusao();
+                        } else {
+                            view.exibeToastErro();
                         }
-                    }).executa();
+                    } catch (Exception e) {
+                        view.exibeToastErro();
+                    }
 
-                } else {
-                    view.exibeToastErro();
+
                 }
             }
         }).executa();
