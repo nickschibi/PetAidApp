@@ -7,6 +7,7 @@ public class Local {
     private int idOrganizacao;
     private int idEndereco;
     private String telefoneLocal;
+    private float mediaNota;
     private Endereco endereco;
 
     public Local(int idLocal, String nomeResponsavel, int idOrganizacao, int idEndereco,String telefoneLocal) {
@@ -50,6 +51,14 @@ public class Local {
 
     public void setNomeResponsavel(String nomeResponsavel) {
         this.nomeResponsavel = nomeResponsavel;
+    }
+
+    public float getMediaNota() {
+        return mediaNota;
+    }
+
+    public void setMediaNota(float mediaNota) {
+        this.mediaNota = mediaNota;
     }
 
     public String getTelefoneLocal() {

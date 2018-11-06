@@ -82,6 +82,20 @@
             android:name=".activities.CadastroOngEnderecosActivity"
             android:label="@string/title_activity_cadastro_ong_enderecos"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".VoluntariosActivity" />
+        <activity android:name=".VoluntariadoActivity" />
+        <activity
+            android:name=".LocalActivity"
+            android:label="@string/title_activity_local"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.NecessidadesActivity"
+            android:label="@string/title_activity_necessidades"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ContaBancariaActivity"
+            android:label="@string/title_activity_conta_bancaria"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

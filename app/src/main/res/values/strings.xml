@@ -19,8 +19,8 @@
     <string name="telefone">Telefone:</string>
     <string name="email">E-mail:</string>
     <string name="senha">Senha:</string>
-    <!--<string name="web_service_url">http://34.219.202.228:9090/</string>-->
-    <string name="web_service_url">http://192.168.1.191:9090/</string>
+    <string name="web_service_url">http://34.219.202.228:9090/</string>
+    <!--<string name="web_service_url">http://192.168.1.191:9090/</string>-->
     <string name="title_activity_maps">Map</string>
     <string name="nomeFantasia">Nome Fantasia</string>
     <string name="razaoSocial">Razão Social</string>
@@ -45,8 +45,8 @@
 
     </string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="tab_text_1">Principal</string>
-    <string name="tab_text_2">Endereços</string>
+    <string name="tab_text_1">Local</string>
+    <string name="tab_text_2">Conta Bancária</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -90,6 +90,10 @@
     <string name="poupanca">Poupança</string>
     <string name="oqueprecisa">O que precisamos:</string>
     <string name="voluntariarse">Voluntariar-se</string>
+    <string name="title_activity_local">LocalActivity</string>
+    <string name="title_activity_necessidades">Necessidades</string>
+    <string name="Outros">Outros</string>
+    <string name="title_activity_conta_bancaria">Conta Bancaria</string>
 
 
 </resources>

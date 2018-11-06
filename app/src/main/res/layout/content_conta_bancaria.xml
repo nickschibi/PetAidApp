@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ContaBancariaActivity"
+    tools:showIn="@layout/activity_conta_bancaria">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioCpf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="@string/CPF"
+                    android:textColor="@color/colorAccent"/>
+
+                <RadioButton
+                    android:id="@+id/radioCnpj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="@string/cnpj"
+                    android:textColor="@color/colorAccent"/>
+
+
+            </RadioGroup>
+        </LinearLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/numDocumentoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/documento"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="200"
+                android:inputType="phone"
+                android:digits="0123456789/.-"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/proprietarioEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/proprietarioConta"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="200"
+                android:inputType="text"
+                android:digits="abcdefghijklmnopqrstuvxzwy ABCDEFGHIJKLMNOPQRSTUVWYXZ"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+<!--tirei metodos onclick provisóriamente-->
+            <RadioButton
+                android:id="@+id/radioPoupanca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked1"
+                android:text="@string/poupanca"
+                android:textColor="@color/colorAccent"/>
+
+            <RadioButton
+                android:id="@+id/radioCorrente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked1"
+                android:text="@string/corrente"
+                android:textColor="@color/colorAccent"/>
+
+
+        </RadioGroup>
+
+
+        <Spinner
+            android:id="@+id/bancoSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/banco"
+            android:textColorHint="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent"
+            android:maxLength="100"
+            android:inputType="text"
+            android:background="@drawable/text_box"
+
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/agenciaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/agencia"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="10"
+                android:inputType="number"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/contaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/conta"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColorHint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:maxLength="12"
+                android:inputType="number"
+                />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
