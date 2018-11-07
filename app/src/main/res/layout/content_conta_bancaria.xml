@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ContaBancariaActivity"
+    tools:context=".activities.ContaBancariaActivity"
     tools:showIn="@layout/activity_conta_bancaria">
 
     <LinearLayout
@@ -115,8 +115,6 @@
             android:backgroundTint="@color/colorAccent"
             android:maxLength="100"
             android:inputType="text"
-            android:background="@drawable/text_box"
-
             />
 
         <android.support.design.widget.TextInputLayout

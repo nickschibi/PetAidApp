@@ -1,7 +1,9 @@
-package com.example.bonnie.petaid;
+package com.example.bonnie.petaid.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.bonnie.petaid.R;
 
 public class VoluntariadoActivity extends AppCompatActivity {
 

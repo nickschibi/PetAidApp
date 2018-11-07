@@ -32,20 +32,16 @@ import com.example.bonnie.petaid.presenter.CadastroLocalPresenter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class CadastroLocalActivity extends AppCompatActivity implements CadastroLocalPresenter.View, AdapterView.OnItemSelectedListener {
+public class CadastroLocalActivity extends AppCompatActivity implements CadastroLocalPresenter.View {
     private EditText logradouroEditText;
     private EditText numCasaEditText;
-    private EditText complementoEdittext;
+    private EditText complementoEditText;
     private EditText bairroEditText;
     private EditText cidadeEditText;
     private EditText ufEditText;
     private EditText cepEditText;
     private EditText responsavelEditText;
     private EditText telefoneResponsavelEditText;
-    private EditText numDocumentoEditText;
-    private EditText bancoEditText;
-    private EditText agenciaEditText;
-    private EditText contaEditText;
     private CheckBox larCheckBox ;
     private CheckBox resgateCheckBox;
     private CheckBox vetCheckBox;
@@ -58,14 +54,9 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     private CadastroLocalPresenter presenter;
     private Local local;
     private boolean update = false;
-    private int tipoDoc = 0;
-    private boolean dadosContaBancariaPreenchidos = false;
-    private Spinner bancoSpinner;
-    private Banco banco;
-    private EditText proprietarioEditText;
-    private int tipoConta = 0;
-    private ContaBancaria contaBancaria;
-
+    private Button btnContaBancaria;
+    int idOrganizacao;
+    int idLocal;
 
 
 
@@ -80,16 +71,13 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         presenter = new CadastroLocalPresenter(this,this);
         logradouroEditText = findViewById(R.id.logradouroEditText);
         numCasaEditText = findViewById(R.id.numeroCasaEditText);
-        complementoEdittext = findViewById(R.id.complementoEditText);
+        complementoEditText = findViewById(R.id.complementoEditText);
         bairroEditText = findViewById(R.id.bairroEditText);
         cidadeEditText = findViewById(R.id.cidadeEditText);
         ufEditText = findViewById(R.id.ufEditText);
         cepEditText = findViewById(R.id.cepEditText);
         responsavelEditText = findViewById(R.id.responsavelEditText);
         telefoneResponsavelEditText = findViewById(R.id.telefoneResponsavelEditText);
-        numDocumentoEditText = findViewById(R.id.numDocumentoEditText);
-        agenciaEditText = findViewById(R.id.agenciaEditText);
-        contaEditText = findViewById(R.id.contaEditText);
         larCheckBox  = findViewById(R.id.larCheckbox);
         resgateCheckBox = findViewById(R.id.resgateCheckbox);
         vetCheckBox = findViewById(R.id.vetCheckbox);
@@ -99,17 +87,13 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         racaoGatoCheckBox = findViewById(R.id.racaoGatoCheckbox);
         areiaCheckBox = findViewById(R.id.areiaCheckbox);
         observacaoEdittext = findViewById(R.id.observacaoEditText);
-        bancoSpinner = findViewById(R.id.bancoSpinner);
-        proprietarioEditText = findViewById(R.id.proprietarioEditText);
 
 
 
 
         Bundle bundle = getIntent().getExtras();
-        int idOrganizacao = bundle.getInt("idOrganizacao");
-
-        Bundle bundle1 = getIntent().getExtras();
-        int idLocal = bundle.getInt("idLocal");
+        idOrganizacao = bundle.getInt("idOrganizacao");
+        idLocal = bundle.getInt("idLocal");
 
 
         if(idLocal!=0){
@@ -143,163 +127,120 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
 
 
 
-         presenter.trazBancos();
-
-
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean validaCampos = true; // okay
 
-                if( Utils.isCampoVazio(logradouroEditText.getText().toString())){
-                    validaCampos = false;
-                    logradouroEditText.requestFocus();
-                }
-                if( Utils.isCampoVazio(numCasaEditText.getText().toString())){
-                    validaCampos = false;
-                    numCasaEditText.requestFocus();
-                }
-                if( Utils.isCampoVazio(bairroEditText.getText().toString())){
-                    validaCampos = false;
-                    bairroEditText.requestFocus();
-                }
-                if( Utils.isCampoVazio(cidadeEditText.getText().toString())){
-                    validaCampos = false;
-                    cidadeEditText.requestFocus();
-                }
-                if( Utils.isCampoVazio(ufEditText.getText().toString().toUpperCase())||!Utils.isEstado(ufEditText.getText().toString().toUpperCase()) ){
-                    validaCampos = false;
-                    ufEditText.requestFocus();
-                }
-                if( Utils.isCampoVazio(responsavelEditText.getText().toString())){
-                    validaCampos = false;
-                    responsavelEditText.requestFocus();
-                }
-
-                if(!Utils.isPhone(telefoneResponsavelEditText.getText().toString())){
-                    validaCampos = false;
-                    telefoneResponsavelEditText.requestFocus();
-                }
-                if(!Utils.isTelefone(telefoneResponsavelEditText.getText().toString())){
-                    validaCampos = false;
-                   telefoneResponsavelEditText.requestFocus();
-                }
-
-                if(Utils.isCampoVazio(numDocumentoEditText.getText().toString())&& Utils.isCampoVazio(agenciaEditText.getText().toString()) && Utils.isCampoVazio(proprietarioEditText.getText().toString())&& Utils.isCampoVazio(contaEditText.getText().toString())){
-                    //validaCampos = true;
-                } else {
-                    if(Utils.isCampoVazio(numDocumentoEditText.getText().toString())){
-                        validaCampos = false;
-                        numDocumentoEditText.requestFocus();
-                    }
-                    else if(Utils.isCampoVazio(agenciaEditText.getText().toString())){
-                        validaCampos= false;
-                        agenciaEditText.requestFocus();
-                    }
-                    else if(Utils.isCampoVazio(contaEditText.getText().toString())) {
-                        validaCampos = false;
-                        contaEditText.requestFocus();
-                    }
-                    else if(Utils.isCampoVazio(proprietarioEditText.getText().toString())){
-                         validaCampos = false;
-                         proprietarioEditText.requestFocus();
-
-                    }
-                    else if(tipoDoc == 1 && !Utils.isCNPJ(numDocumentoEditText.getText().toString())){
-                        validaCampos = false;
-                        numDocumentoEditText.requestFocus();
-                    }
-                    else if (tipoDoc == 2 && !Utils.isCPF(numDocumentoEditText.getText().toString())){
-                        validaCampos = false;
-                        numDocumentoEditText.requestFocus();
-                    }
-                    else{
-                        dadosContaBancariaPreenchidos = true;
-                    }
-                }
-
-                if(validaCampos == false){
-
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroLocalActivity.this);
-                    dlg.setTitle(R.string.warning);
-                    dlg.setMessage(R.string.camposInvalidos);
-                    dlg.setNeutralButton("Ok", null);
-                    dlg.show();
-                }
-                else {
-
-                    if(update == false) {
-
-                        int idBanco = banco.getIdBanco();
-
-                        boolean createContaBancaria = dadosContaBancariaPreenchidos;
-
-                        presenter.cadastraEnderecoLocal(logradouroEditText.getText().toString(),
-                                numCasaEditText.getText().toString(),
-                                complementoEdittext.getText().toString(),
-                                bairroEditText.getText().toString(),
-                                cidadeEditText.getText().toString(),
-                                ufEditText.getText().toString(),
-                                cepEditText.getText().toString(),
-                                responsavelEditText.getText().toString(),
-                                idOrganizacao,
-                                telefoneResponsavelEditText.getText().toString(),
-                                createContaBancaria,
-                                numDocumentoEditText.getText().toString(),
-                                agenciaEditText.getText().toString(),
-                                contaEditText.getText().toString(),
-                                proprietarioEditText.getText().toString(),
-                                tipoDoc,
-                                idBanco,
-                                tipoConta);
-                    }
-
-                    else{
-                            int idBanco = banco.getIdBanco();
-
-                            String acaoContaBancaria = "";
-
-                            if(contaBancaria == null && dadosContaBancariaPreenchidos ){
-                                acaoContaBancaria = "create";
-                            } else if (contaBancaria != null && dadosContaBancariaPreenchidos){
-                                acaoContaBancaria = "update";
-                            } else if (contaBancaria != null && !dadosContaBancariaPreenchidos){
-                                acaoContaBancaria = "delete";
-                            }
-
-                            presenter.atualizaEnderecoLocal(local.getIdEndereco(),
-                                local.getIdLocal(),
-                                logradouroEditText.getText().toString(),
-                                numCasaEditText.getText().toString(),
-                                complementoEdittext.getText().toString(),
-                                bairroEditText.getText().toString(),
-                                cidadeEditText.getText().toString(),
-                                ufEditText.getText().toString(),
-                                cepEditText.getText().toString(),
-                                responsavelEditText.getText().toString(),
-                                local.getIdOrganizacao(),
-                                telefoneResponsavelEditText.getText().toString(),
-                                contaBancaria,
-                                acaoContaBancaria,
-                                numDocumentoEditText.getText().toString(),
-                                agenciaEditText.getText().toString(),
-                                contaEditText.getText().toString(),
-                                proprietarioEditText.getText().toString(),
-                                tipoDoc,
-                                idBanco, tipoConta);
-
-
-                    }
-
-
-                }
+                verificaCamposECadastraLocal(idOrganizacao, null);
 
             }
       });
+
+        btnContaBancaria = findViewById(R.id.btnContaBancaria);
+        btnContaBancaria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                verificaCamposECadastraLocal(idOrganizacao, "conta_bancaria");
+
+            }
+        });
+
+
+
+   }
+
+
+   public void verificaCamposECadastraLocal(int idOrganizacao, String redirect){
+       boolean validaCampos = true; // okay
+
+       if( Utils.isCampoVazio(logradouroEditText.getText().toString())){
+           validaCampos = false;
+           logradouroEditText.requestFocus();
+       }
+       if( Utils.isCampoVazio(numCasaEditText.getText().toString())){
+           validaCampos = false;
+           numCasaEditText.requestFocus();
+       }
+       if( Utils.isCampoVazio(bairroEditText.getText().toString())){
+           validaCampos = false;
+           bairroEditText.requestFocus();
+       }
+       if( Utils.isCampoVazio(cidadeEditText.getText().toString())){
+           validaCampos = false;
+           cidadeEditText.requestFocus();
+       }
+       if( Utils.isCampoVazio(ufEditText.getText().toString().toUpperCase())||!Utils.isEstado(ufEditText.getText().toString().toUpperCase()) ){
+           validaCampos = false;
+           ufEditText.requestFocus();
+       }
+       if( Utils.isCampoVazio(responsavelEditText.getText().toString())){
+           validaCampos = false;
+           responsavelEditText.requestFocus();
+       }
+
+       if(!Utils.isPhone(telefoneResponsavelEditText.getText().toString())){
+           validaCampos = false;
+           telefoneResponsavelEditText.requestFocus();
+       }
+       if(!Utils.isTelefone(telefoneResponsavelEditText.getText().toString())){
+           validaCampos = false;
+           telefoneResponsavelEditText.requestFocus();
+       }
+
+       if(validaCampos == false){
+
+           AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroLocalActivity.this);
+           dlg.setTitle(R.string.warning);
+           dlg.setMessage(R.string.camposInvalidos);
+           dlg.setNeutralButton("Ok", null);
+           dlg.show();
+       }
+       else {
+
+           if(update == false) {
+
+
+
+               presenter.cadastraEnderecoLocal(logradouroEditText.getText().toString(),
+                       numCasaEditText.getText().toString(),
+                       complementoEditText.getText().toString(),
+                       bairroEditText.getText().toString(),
+                       cidadeEditText.getText().toString(),
+                       ufEditText.getText().toString(),
+                       cepEditText.getText().toString(),
+                       responsavelEditText.getText().toString(),
+                       idOrganizacao,
+                       telefoneResponsavelEditText.getText().toString(),
+                       redirect);
+           }
+
+           else{
+
+
+               presenter.atualizaEnderecoLocal(local.getIdEndereco(),
+                       local.getIdLocal(),
+                       logradouroEditText.getText().toString(),
+                       numCasaEditText.getText().toString(),
+                       complementoEditText.getText().toString(),
+                       bairroEditText.getText().toString(),
+                       cidadeEditText.getText().toString(),
+                       ufEditText.getText().toString(),
+                       cepEditText.getText().toString(),
+                       responsavelEditText.getText().toString(),
+                       local.getIdOrganizacao(),
+                       telefoneResponsavelEditText.getText().toString(),
+                       redirect
+               );
+
+
+           }
+
+
+       }
+
    }
 
     @Override
@@ -307,7 +248,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         this.local = local;
         logradouroEditText.setText(local.getEndereco().getEnd());
         numCasaEditText.setText(local.getEndereco().getNumcasa());
-        complementoEdittext.setText(local.getEndereco().getComplemento());
+        complementoEditText.setText(local.getEndereco().getComplemento());
         bairroEditText.setText(local.getEndereco().getBairro());
         cidadeEditText.setText(local.getEndereco().getCidade());
         ufEditText.setText(local.getEndereco().getUf());
@@ -315,16 +256,32 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         responsavelEditText.setText(local.getNomeResponsavel());
         telefoneResponsavelEditText.setText(local.getTelefoneLocal());
 
-        presenter.trazContaBancaria(local.getIdLocal());
+
     }
 
     @Override
-    public void exibeToastSucesso(int idOrganizacao) {
+    public void exibeToastSucesso(int idOrganizacao, Local local, String redirect) {
 
-        Intent intent = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
-        intent.putExtra("idOrganizacao", idOrganizacao);
-        startActivity(intent);
-        Toast.makeText(this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
+        this.local = local;
+        update = true;
+        if("conta_bancaria".equals(redirect)){
+
+            Intent i = new Intent(CadastroLocalActivity.this, ContaBancariaActivity.class);
+            i.putExtra("idLocal", local.getIdLocal());
+            startActivity(i);
+        }
+        else if("necessidades".equals(redirect)){
+            Intent i = new Intent(CadastroLocalActivity.this, NecessidadesActivity.class);
+            i.putExtra("idLocal", local.getIdLocal());
+            startActivity(i);
+        }
+        else{
+            Toast.makeText(this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
+        }
+
+//        Intent intent = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
+//        intent.putExtra("idOrganizacao", idOrganizacao);
+//        startActivity(intent);
 
     }
 
@@ -336,98 +293,6 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     @Override
     public void exibeToastMsg(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void preencheCamposConta(ContaBancaria contaBancaria) {
-        this.contaBancaria = contaBancaria;
-        agenciaEditText.setText(Integer.toString(contaBancaria.getCodAgencia()));
-        contaEditText.setText(Integer.toString(contaBancaria.getCodConta()));
-        proprietarioEditText.setText(contaBancaria.getNomeProprietario());
-        numDocumentoEditText.setText(contaBancaria.getNumDoc());
-
-        ArrayAdapter<Banco> adapter = (ArrayAdapter<Banco>)bancoSpinner.getAdapter();
-        int pos = adapter.getPosition(new Banco(contaBancaria.getIdBanco()));
-        bancoSpinner.setSelection(pos);
-
-        if(contaBancaria.getIdCategoriaConta() == 1){
-            RadioButton btn = findViewById(R.id.radioCorrente);
-            btn.setChecked(true);
-            tipoConta = 1;
-        } else {
-            RadioButton btn = findViewById(R.id.radioPoupanca);
-            btn.setChecked(true);
-            tipoConta = 2;
-        }
-
-        if(contaBancaria.getTipoDoc() == 1){
-            RadioButton btn = findViewById(R.id.radioCnpj);
-            btn.setChecked(true);
-            tipoDoc = 1;
-        } else {
-            RadioButton btn = findViewById(R.id.radioCpf);
-            btn.setChecked(true);
-            tipoDoc = 2;
-        }
-    }
-
-    @Override
-    public void preencheBancos(ArrayList<Banco> bancos){
-        ArrayAdapter<Banco> adapter = new ArrayAdapter<Banco>(this,
-                android.R.layout.simple_spinner_item,bancos);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bancoSpinner.setAdapter(adapter);
-        bancoSpinner.setOnItemSelectedListener(this);
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        banco = (Banco)parent.getItemAtPosition(position);
-        }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-
-
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radioCnpj:
-                if (checked)
-                    tipoDoc = 1;
-                    numDocumentoEditText.addTextChangedListener(new MaskWatcher("##.###.###/####-##"));
-                break;
-            case R.id.radioCpf:
-                if (checked)
-                    tipoDoc = 2;
-                    numDocumentoEditText.addTextChangedListener(new MaskWatcher("###.###.###/##"));
-                break;
-        }
-    }
-
-
-    public void onRadioButtonClicked1(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radioPoupanca:
-                if (checked)
-                    tipoConta = 2;
-                break;
-            case R.id.radioCorrente:
-                if (checked)
-                    tipoConta = 1;
-                break;
-        }
     }
 
 
