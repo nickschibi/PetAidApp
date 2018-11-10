@@ -1,5 +1,6 @@
 package com.example.bonnie.petaid.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,9 +8,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -40,6 +43,7 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
     private int tipoConta = 0;
     private int idLocal;
     private ContaBancaria contaBancaria;
+    private Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        btnDelete = findViewById(R.id.deletbtn);
         numDocumentoEditText = findViewById(R.id.numDocumentoEditText);
         agenciaEditText = findViewById(R.id.agenciaEditText);
         contaEditText = findViewById(R.id.contaEditText);
@@ -132,6 +137,14 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
                 }
             }
         });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogExcluir();
+            }
+        });
+
     }
 
     @Override
@@ -231,7 +244,44 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
     }
 
     @Override
+    public void exibeToastSucessoExclusao(String msg)  {
+
+        Intent intent = new Intent(ContaBancariaActivity.this, CadastroLocalActivity.class);
+        intent.putExtra("idLocal", idLocal);
+        startActivity(intent);
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+
+
+
+    @Override
     public void exibeToastMsg(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+
+
+
+    public AlertDialog alerta;
+
+    private void dialogExcluir(){
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialog);
+        builder.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.confirmaExcluirContaBancaria)+ "</font>"))
+                .setPositiveButton(R.string.excluir, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        presenter.excluiContaBancaria(contaBancaria.getIdConta());
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        alerta.cancel();
+                    }
+                });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
+    }
+
 }

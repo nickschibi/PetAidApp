@@ -3,7 +3,6 @@ package com.example.bonnie.petaid.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,25 +10,15 @@ import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.bonnie.petaid.MaskWatcher;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.Utils;
-import com.example.bonnie.petaid.model.Banco;
-import com.example.bonnie.petaid.model.ContaBancaria;
 import com.example.bonnie.petaid.model.Local;
 import com.example.bonnie.petaid.presenter.CadastroLocalPresenter;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class CadastroLocalActivity extends AppCompatActivity implements CadastroLocalPresenter.View {
@@ -42,23 +31,13 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     private EditText cepEditText;
     private EditText responsavelEditText;
     private EditText telefoneResponsavelEditText;
-    private CheckBox larCheckBox ;
-    private CheckBox resgateCheckBox;
-    private CheckBox vetCheckBox;
-    private CheckBox advogadoCheckbox;
-    private CheckBox remedioCheckBox;
-    private CheckBox racaoCaoCheckBox;
-    private CheckBox racaoGatoCheckBox;
-    private CheckBox areiaCheckBox;
-    private EditText observacaoEdittext;
     private CadastroLocalPresenter presenter;
     private Local local;
     private boolean update = false;
     private Button btnContaBancaria;
+    private Button btnNecessidades;
     int idOrganizacao;
     int idLocal;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,18 +57,6 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         cepEditText = findViewById(R.id.cepEditText);
         responsavelEditText = findViewById(R.id.responsavelEditText);
         telefoneResponsavelEditText = findViewById(R.id.telefoneResponsavelEditText);
-        larCheckBox  = findViewById(R.id.larCheckbox);
-        resgateCheckBox = findViewById(R.id.resgateCheckbox);
-        vetCheckBox = findViewById(R.id.vetCheckbox);
-        advogadoCheckbox = findViewById(R.id.advogadoCheckbox);
-        remedioCheckBox = findViewById(R.id.remedioCheckbox);
-        racaoCaoCheckBox = findViewById(R.id.racaoCaoCheckbox);
-        racaoGatoCheckBox = findViewById(R.id.racaoGatoCheckbox);
-        areiaCheckBox = findViewById(R.id.areiaCheckbox);
-        observacaoEdittext = findViewById(R.id.observacaoEditText);
-
-
-
 
         Bundle bundle = getIntent().getExtras();
         idOrganizacao = bundle.getInt("idOrganizacao");
@@ -99,13 +66,11 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         if(idLocal!=0){
             update = true;
             presenter.trazLocal(idLocal);
-
         }
 
         telefoneResponsavelEditText.addTextChangedListener(new PhoneNumberFormattingTextWatcher() {
             int length_before = 0;
             private boolean mFormatting;
-
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -123,31 +88,32 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                     }
                     mFormatting = false;
                 }
-            }});
-
-
-
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 verificaCamposECadastraLocal(idOrganizacao, null);
-
             }
-      });
+        });
 
         btnContaBancaria = findViewById(R.id.btnContaBancaria);
         btnContaBancaria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 verificaCamposECadastraLocal(idOrganizacao, "conta_bancaria");
-
             }
         });
 
+        btnNecessidades = findViewById(R.id.btnNecessidade);
+        btnNecessidades.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verificaCamposECadastraLocal(idOrganizacao, "necessidades");
+            }
+        });
 
 
    }
@@ -199,11 +165,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
            dlg.show();
        }
        else {
-
            if(update == false) {
-
-
-
                presenter.cadastraEnderecoLocal(logradouroEditText.getText().toString(),
                        numCasaEditText.getText().toString(),
                        complementoEditText.getText().toString(),
@@ -216,10 +178,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                        telefoneResponsavelEditText.getText().toString(),
                        redirect);
            }
-
            else{
-
-
                presenter.atualizaEnderecoLocal(local.getIdEndereco(),
                        local.getIdLocal(),
                        logradouroEditText.getText().toString(),
@@ -234,13 +193,8 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
                        telefoneResponsavelEditText.getText().toString(),
                        redirect
                );
-
-
            }
-
-
        }
-
    }
 
     @Override
@@ -255,8 +209,6 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         cepEditText.setText(local.getEndereco().getCep());
         responsavelEditText.setText(local.getNomeResponsavel());
         telefoneResponsavelEditText.setText(local.getTelefoneLocal());
-
-
     }
 
     @Override
@@ -278,11 +230,6 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         else{
             Toast.makeText(this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
         }
-
-//        Intent intent = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
-//        intent.putExtra("idOrganizacao", idOrganizacao);
-//        startActivity(intent);
-
     }
 
     @Override

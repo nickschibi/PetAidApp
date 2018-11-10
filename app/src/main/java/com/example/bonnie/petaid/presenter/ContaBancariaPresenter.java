@@ -23,6 +23,7 @@ public class ContaBancariaPresenter {
     }
 
 
+
     public void trazBancos(){
         String trazBanco = contexto.getString(R.string.web_service_url) + "banco" ;
         new ConsomeServico(trazBanco, ConsomeServico.Metodo.GET, new ConsomeServico.PosExecucao() {
@@ -58,7 +59,6 @@ public class ContaBancariaPresenter {
         ContaBancaria contaBancaria = new ContaBancaria(Integer.parseInt(agencia), Integer.parseInt(numContaBancaria), proprietario, tipoDoc, numDoc, idBanco, tipoConta, idLocal);
         String requestBody = new Gson().toJson(contaBancaria);
         String urlContaBancaria = contexto.getString(R.string.web_service_url) + "contaBancaria";
-        Gson gson = new Gson();
         new ConsomeServico(urlContaBancaria, ConsomeServico.Metodo.POST, requestBody, new ConsomeServico.PosExecucao() {
             @Override
             public void executa(String resultado, int returnCode) {
@@ -93,10 +93,28 @@ public class ContaBancariaPresenter {
         }).executa();
     }
 
+    public void excluiContaBancaria(int idConta) {
+        String urlExcluirConta = contexto.getString(R.string.web_service_url) + "contaBancaria/" + idConta;
+        new ConsomeServico(urlExcluirConta, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
+            @Override
+            public void executa(String resultado, int returnCode) {
+                if(returnCode == 200){
+                    view.exibeToastSucessoExclusao("Conta bancaria excluida");
+                } else {
+                    view.exibeToastMsg("Erro ao excluir da conta bancária");
+                }
+            }
+        }).executa();
+
+
+
+    }
+
     public interface View{
         void preencheBancos(ArrayList<Banco> bancos);
         void preencheCamposConta(ContaBancaria contaBancaria);
         void exibeToastMsg(String msg);
         void exibeToastSucesso(ContaBancaria contaBancaria);
+        void exibeToastSucessoExclusao(String msg);
     }
 }

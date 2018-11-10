@@ -66,6 +66,8 @@ public class ConsomeServico extends AsyncTask<String, Void, String> {
             request = new Request.Builder().url(url[0]).put(body).build();
         } else if (metodo.equals(Metodo.POST)){
             request = new Request.Builder().url(url[0]).post(body).build();
+        } else if (metodo.equals(Metodo.DELETE_WITH_BODY)) {
+            request = new Request.Builder().url(url[0]).delete(body).build();
         }
 
         okhttp3.Response response = null;
@@ -110,6 +112,7 @@ public class ConsomeServico extends AsyncTask<String, Void, String> {
         GET,
         POST,
         PUT,
-        DELETE
+        DELETE,
+        DELETE_WITH_BODY
     }
 }

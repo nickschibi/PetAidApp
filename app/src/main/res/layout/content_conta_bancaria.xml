@@ -92,7 +92,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked1"
                 android:text="@string/poupanca"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorAccent"
+                android:elevation="0dp"/>
 
             <RadioButton
                 android:id="@+id/radioCorrente"
@@ -100,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked1"
                 android:text="@string/corrente"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorAccent"
+                android:elevation="0dp"/>
 
 
         </RadioGroup>

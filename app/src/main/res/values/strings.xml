@@ -94,6 +94,7 @@
     <string name="title_activity_necessidades">Necessidades</string>
     <string name="Outros">Outros</string>
     <string name="title_activity_conta_bancaria">Conta Bancaria</string>
+    <string name="confirmaExcluirContaBancaria">Deseja realmente excluir conta bancária?</string>
 
 
 </resources>
