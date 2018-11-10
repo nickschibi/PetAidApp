@@ -19,6 +19,7 @@ public class ContaBancaria {
         this.codAgencia = codAgencia;
         this.codConta = codConta;
         this.nomeProprietario = nomeProprietario;
+        this.tipoDoc = tipoDoc;
         this.numDoc = numDoc;
         this.idBanco = idBanco;
         this.idCategoriaConta = idCategoriaConta;
