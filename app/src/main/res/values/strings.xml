@@ -19,8 +19,8 @@
     <string name="telefone">Telefone:</string>
     <string name="email">E-mail:</string>
     <string name="senha">Senha:</string>
-    <!--<string name="web_service_url">http://34.219.202.228:9090/</string>-->
-    <string name="web_service_url">http://192.168.1.191:9090/</string>
+    <string name="web_service_url">http://34.219.202.228:9090/</string>
+    <!--<string name="web_service_url">http://192.168.1.191:9090/</string>-->
     <string name="title_activity_maps">Map</string>
     <string name="nomeFantasia">Nome Fantasia</string>
     <string name="razaoSocial">Razão Social</string>
@@ -95,6 +95,7 @@
     <string name="Outros">Outros</string>
     <string name="title_activity_conta_bancaria">Conta Bancaria</string>
     <string name="confirmaExcluirContaBancaria">Deseja realmente excluir conta bancária?</string>
+    <string name="sucesso">Sucesso nas alterações</string>
 
 
 </resources>

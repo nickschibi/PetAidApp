@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".activities.CadastroVolActivity"
     android:background="@color/colorPrimaryDark"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
 
 
 

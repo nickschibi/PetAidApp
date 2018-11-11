@@ -58,7 +58,7 @@ public class NecessidadesPresenter {
         new ConsomeServico(trazNecessidadesLocal, ConsomeServico.Metodo.POST, requestBody, new ConsomeServico.PosExecucao(){
             @Override
             public void executa(String resultado, int returnCode) {
-                view.exibeToastMsg("OK Salvo");
+                view.exibeToastSucesso();
             }
         }).executa();
     }
@@ -69,7 +69,18 @@ public class NecessidadesPresenter {
         new ConsomeServico(trazNecessidadesLocal, ConsomeServico.Metodo.DELETE_WITH_BODY, requestBody, new ConsomeServico.PosExecucao(){
             @Override
             public void executa(String resultado, int returnCode) {
-                view.exibeToastMsg("OK Removido");
+                view.exibeToastSucesso();
+            }
+        }).executa();
+    }
+
+    public void atualizaNecessidadeLocal(NecessidadeLocal necessidadeLocal) {
+        String requestBody = new Gson().toJson(necessidadeLocal);
+        String atualizaNecessidadeLocal = contexto.getString(R.string.web_service_url) + "necessidadesLocal";
+        new ConsomeServico(atualizaNecessidadeLocal, ConsomeServico.Metodo.PUT, requestBody, new ConsomeServico.PosExecucao(){
+            @Override
+            public void executa(String resultado, int returnCode) {
+                view.exibeToastSucesso();
             }
         }).executa();
     }
@@ -78,6 +89,7 @@ public class NecessidadesPresenter {
         void exibeToastMsg(String msg);
         void preencheCheckNecessidades(ArrayList<Necessidade> necessidades);
         void preencheCheckNecessidadesLocal(ArrayList<NecessidadeLocal> necessidadesLocal);
+        void exibeToastSucesso();
     }
 
 

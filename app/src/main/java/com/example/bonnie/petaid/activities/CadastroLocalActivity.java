@@ -1,6 +1,7 @@
 package com.example.bonnie.petaid.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -38,6 +39,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     private Button btnNecessidades;
     int idOrganizacao;
     int idLocal;
+    private Button backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         cepEditText = findViewById(R.id.cepEditText);
         responsavelEditText = findViewById(R.id.responsavelEditText);
         telefoneResponsavelEditText = findViewById(R.id.telefoneResponsavelEditText);
+        backBtn = findViewById(R.id.backbtn);
 
         Bundle bundle = getIntent().getExtras();
         idOrganizacao = bundle.getInt("idOrganizacao");
@@ -115,6 +118,14 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
             }
         });
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                backBtn.setTextColor(Color.parseColor("#FF0000"));
+                Intent i = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
+                startActivity(i);
+            }
+        });
 
    }
 

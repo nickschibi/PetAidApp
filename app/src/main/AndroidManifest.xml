@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginVolActivity" />
+
         <activity android:name=".activities.LoginOngActivity" />
         <activity android:name=".activities.CadastroVolActivity" />
 
@@ -41,53 +41,30 @@
         android:name=".PerfilVol"
         android:label="@string/title_activity_perfil_vol"
         android:theme="@style/AppTheme" />
-        <activity android:name=".MenuVol" />
+
         <activity
             android:name=".activities.PerfilVolActivity"
             android:label="@string/title_activity_perfil_vol"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".NavDrawer"
-            android:label="@string/title_activity_nav_drawer"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.CadastroOngActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_cadastro_ong"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.CadastroOngActivity"
-            android:label="@string/title_activity_cadastro_ong"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.CadastroLocalActivity"
             android:label="@string/title_activity_cadastro_local"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.PerfilOngActivity"
-            android:label="@string/title_activity_perfil_ong"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.activity_cadastro_ong2"
-            android:label="@string/title_activity_cadastro_ong2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity_cadastro_ong_enderecos2"
-            android:label="@string/title_activity_cadastro_ong_enderecos2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activities.CadastroOngActivity"
-            android:label="@string/title_activity_cadastro_ong"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.CadastroOngEnderecosActivity"
             android:label="@string/title_activity_cadastro_ong_enderecos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.VoluntariosActivity" />
         <activity android:name=".activities.VoluntariadoActivity" />
-        <activity
-            android:name=".LocalActivity"
-            android:label="@string/title_activity_local"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.NecessidadesActivity"
             android:label="@string/title_activity_necessidades"
