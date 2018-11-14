@@ -26,7 +26,7 @@
                 android:textColorHint="@color/colorAccent"
                 android:backgroundTint="@color/colorAccent"
                 android:maxLength="100"
-                android:digits="abcdefghijklmnopqrstuvxzwy ABCDEFGHIJKLMNOPQRSTUVXZWY"/>
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -42,7 +42,7 @@
                 android:hint="@string/nomeFantasia"
                 android:inputType="text"
                 android:maxLines="1"
-                android:digits="abcdefghijklmnopqrstuvxzwy ABCDEFGHIJKLMNOPQRSTUVXZWY"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"
                 android:singleLine="true"
                 android:textColorHint="@color/colorAccent"
                 android:backgroundTint="@color/colorAccent"

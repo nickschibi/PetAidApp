@@ -17,56 +17,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
-        <!--<CheckBox android:id="@+id/larCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/lar"-->
-            <!--/>-->
-        <!--<CheckBox android:id="@+id/resgateCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/resgate"-->
-            <!--/>-->
-        <!--<CheckBox android:id="@+id/vetCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/vet"-->
-            <!--/>-->
-        <!--<CheckBox android:id="@+id/advogadoCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/advogado"-->
-            <!--/>-->
-        <!--<CheckBox android:id="@+id/remedioCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/remedio"-->
-            <!--/>-->
-        <!--<CheckBox android:id="@+id/racaoCaoCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/racaocao"-->
-            <!--/>-->
-        <!--<CheckBox android:id="@+id/racaoGatoCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/racaogato"-->
-            <!--/>-->
-
-        <!--<CheckBox android:id="@+id/areiaCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/areiagato"-->
-            <!--/>-->
-
-        <!--<CheckBox android:id="@+id/outroCheckbox"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/Outros"-->
-            <!--/>-->
-
-
-
 
     </LinearLayout>
 
@@ -92,6 +42,7 @@
             android:gravity="top"
             android:paddingTop="1dp"
             android:visibility="gone"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"
             />
     </android.support.design.widget.TextInputLayout>
 

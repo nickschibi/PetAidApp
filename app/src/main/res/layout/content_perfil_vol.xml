@@ -22,7 +22,7 @@
             android:id="@+id/nomeEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"
             android:maxLines="1"
             android:singleLine="true"
             android:backgroundTint="@color/colorAccent"

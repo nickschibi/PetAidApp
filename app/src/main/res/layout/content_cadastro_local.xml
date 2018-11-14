@@ -33,7 +33,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
                     android:maxLength="200"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -74,7 +74,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
                     android:maxLength="200"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê0123456789"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -94,7 +94,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
                     android:maxLength="100"
-                    android:digits= "ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
+                    android:digits= "ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -115,6 +115,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
                     android:maxLength="200"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -184,7 +185,7 @@
                 android:backgroundTint="@color/colorAccent"
                 android:maxLength="200"
                 android:inputType="text"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVXWYZ ~^´abcdefghijklmnopqrstuvxwyz"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZÃÁÀÓÔÉÊ abcdefghijklmnopqrstuvwxyzãáàóôeéê"
                 />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
