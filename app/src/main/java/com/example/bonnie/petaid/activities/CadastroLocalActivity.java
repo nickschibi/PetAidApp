@@ -124,15 +124,6 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
             }
         });
 
-//        backBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                backBtn.setTextColor(Color.parseColor("#FF0000"));
-//                Intent i = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
    }
 
 
@@ -235,7 +226,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         this.local = local;
         update = true;
         if("conta_bancaria".equals(redirect)){
-
+                Toast.makeText(CadastroLocalActivity.this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
             Intent i = new Intent(CadastroLocalActivity.this, ContaBancariaActivity.class);
             i.putExtra("idLocal", local.getIdLocal());
             startActivity(i);
@@ -246,7 +237,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
             startActivity(i);
         }
         else{
-            Toast.makeText(this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroLocalActivity.this, getString(R.string.cadastroSucesso), Toast.LENGTH_SHORT).show();
         }
     }
 
