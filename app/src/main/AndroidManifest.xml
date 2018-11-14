@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:name=".PetAidApplication"
         android:allowBackup="true"
@@ -12,14 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SplashScreenActivity">
+        <activity android:name=".activities.SplashScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.QuestionUserActivity">
+        <activity android:name=".activities.QuestionUserActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.projekt.TesteTCC.Tela_Incial" />
 
@@ -27,8 +30,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.LoginOngActivity" />
-        <activity android:name=".activities.CadastroVolActivity" />
+        <activity android:name=".activities.LoginVolActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.LoginOngActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.CadastroVolActivity"
+            android:screenOrientation="portrait" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -37,42 +45,53 @@
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:theme="@style/AppTheme.NoActionBar" />
-        android:name=".PerfilVol"
-        android:label="@string/title_activity_perfil_vol"
-        android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".activities.PerfilVolActivity"
             android:label="@string/title_activity_perfil_vol"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.CadastroOngActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_cadastro_ong"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.CadastroLocalActivity"
             android:label="@string/title_activity_cadastro_local"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="com.example.bonnie.petaid.activities.CadastroOngEnderecosActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.CadastroOngEnderecosActivity"
             android:label="@string/title_activity_cadastro_ong_enderecos"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.VoluntariosActivity" />
-        <activity android:name=".activities.VoluntariadoActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.VoluntariosActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.VoluntariadoActivity"
+            android:parentActivityName="com.example.bonnie.petaid.activities.CadastroOngActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.NecessidadesActivity"
             android:label="@string/title_activity_necessidades"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="com.example.bonnie.petaid.activities.CadastroLocalActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ContaBancariaActivity"
             android:label="@string/title_activity_conta_bancaria"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="com.example.bonnie.petaid.activities.CadastroLocalActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

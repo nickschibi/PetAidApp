@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
+import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +42,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     int idOrganizacao;
     int idLocal;
     private Button backBtn;
+    public AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,11 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         setContentView(R.layout.activity_cadastro_local);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
+        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#69efad'>Endereço </font>")); ;     //Titulo para ser exibido na sua Action Bar em frente à seta
+
+
         presenter = new CadastroLocalPresenter(this,this);
         logradouroEditText = findViewById(R.id.logradouroEditText);
         numCasaEditText = findViewById(R.id.numeroCasaEditText);
@@ -118,14 +124,14 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                backBtn.setTextColor(Color.parseColor("#FF0000"));
-                Intent i = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
-                startActivity(i);
-            }
-        });
+//        backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                backBtn.setTextColor(Color.parseColor("#FF0000"));
+//                Intent i = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
    }
 
@@ -169,11 +175,12 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
 
        if(validaCampos == false){
 
-           AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroLocalActivity.this);
-           dlg.setTitle(R.string.warning);
-           dlg.setMessage(R.string.camposInvalidos);
-           dlg.setNeutralButton("Ok", null);
-           dlg.show();
+           AlertDialog.Builder builder = new AlertDialog.Builder(CadastroLocalActivity.this, R.style.MyDialog);
+           builder.setTitle(R.string.warning);
+           builder.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.camposInvalidos)+ "</font>"));
+           builder.setNeutralButton("Ok", null);
+           alerta = builder.create();
+           alerta.show();
        }
        else {
            if(update == false) {
@@ -253,5 +260,27 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+
+    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
+        switch (item.getItemId()) {
+            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                Intent intent = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
+                intent.putExtra("idOrganizacao", local.getIdOrganizacao());
+                startActivity(intent);  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                finishAffinity();  //Método para matar a activity e não deixa-lá indexada na pilhagem
+                break;
+            default:break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed(){ //Botão BACK padrão do android
+        Intent intent = new Intent(CadastroLocalActivity.this, CadastroOngEnderecosActivity.class);
+        intent.putExtra("idOrganizacao", local.getIdOrganizacao());
+        startActivity(intent); //O efeito ao ser pressionado do botão (no caso abre a activity)
+        finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
+        return;
+    }
 
 }

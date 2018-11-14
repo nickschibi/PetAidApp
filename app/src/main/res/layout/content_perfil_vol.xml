@@ -22,10 +22,9 @@
             android:id="@+id/nomeEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:inputType="text"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="@color/colorAccent"
             android:backgroundTint="@color/colorAccent"
             android:enabled="false"/>
 
@@ -46,7 +45,6 @@
             android:inputType="phone"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="@color/colorAccent"
             android:backgroundTint="@color/colorAccent"
             android:enabled="false"/>
 
@@ -68,7 +66,6 @@
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="@color/colorAccent"
             android:backgroundTint="@color/colorAccent"
             android:enabled="false"/>
 

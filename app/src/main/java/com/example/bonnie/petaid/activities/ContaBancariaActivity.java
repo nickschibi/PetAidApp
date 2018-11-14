@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.InputFilter;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +46,7 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
     private int idLocal;
     private ContaBancaria contaBancaria;
     private Button btnDelete;
+    public AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,9 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
+        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#69efad'>Conta Bancária </font>"));    //Titulo para ser exibido na sua Action Bar em frente à seta
 
         btnDelete = findViewById(R.id.deletbtn);
         numDocumentoEditText = findViewById(R.id.numDocumentoEditText);
@@ -107,12 +113,13 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
                 }
 
                 if(validaCampos == false){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ContaBancariaActivity.this, R.style.MyDialog);
+                    builder.setTitle(R.string.warning);
+                    builder.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.camposInvalidos)+ "</font>"));
+                    builder.setNeutralButton("Ok", null);
+                    alerta = builder.create();
+                    alerta.show();
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(ContaBancariaActivity.this);
-                    dlg.setTitle(R.string.warning);
-                    dlg.setMessage(R.string.camposInvalidos);
-                    dlg.setNeutralButton("Ok", null);
-                    dlg.show();
                 }
                 else {
                     int idBanco = banco.getIdBanco();
@@ -182,10 +189,12 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
             RadioButton btn = findViewById(R.id.radioCnpj);
             btn.setChecked(true);
             tipoDoc = 1;
+            numDocumentoEditText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(18)});
         } else {
             RadioButton btn = findViewById(R.id.radioCpf);
             btn.setChecked(true);
             tipoDoc = 2;
+            numDocumentoEditText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(14)});
         }
     }
 
@@ -208,11 +217,13 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
                 if (checked)
                     tipoDoc = 1;
                 numDocumentoEditText.addTextChangedListener(new MaskWatcher("##.###.###/####-##"));
+                numDocumentoEditText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(18)});
                 break;
             case R.id.radioCpf:
                 if (checked)
                     tipoDoc = 2;
                 numDocumentoEditText.addTextChangedListener(new MaskWatcher("###.###.###-##"));
+                numDocumentoEditText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(14)});
                 break;
         }
     }
@@ -262,7 +273,7 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
 
 
 
-    public AlertDialog alerta;
+
 
     private void dialogExcluir(){
         // Use the Builder class for convenient dialog construction
@@ -282,6 +293,28 @@ public class ContaBancariaActivity extends AppCompatActivity implements ContaBan
         alerta = builder.create();
         //Exibe
         alerta.show();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
+        switch (item.getItemId()) {
+            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                Intent intent = new Intent(ContaBancariaActivity.this, CadastroLocalActivity.class);
+                intent.putExtra("idLocal", idLocal);
+                startActivity(intent);  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                finishAffinity();  //Método para matar a activity e não deixa-lá indexada na pilhagem
+                break;
+            default:break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed(){ //Botão BACK padrão do android
+        Intent intent = new Intent(ContaBancariaActivity.this, CadastroLocalActivity.class);
+        intent.putExtra("idLocal", idLocal);
+        startActivity(intent); //O efeito ao ser pressionado do botão (no caso abre a activity)
+        finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
+        return;
     }
 
 }

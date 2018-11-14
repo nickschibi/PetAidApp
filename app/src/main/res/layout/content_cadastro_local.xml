@@ -33,6 +33,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
                     android:maxLength="200"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -73,6 +74,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
                     android:maxLength="200"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -92,6 +94,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:backgroundTint="@color/colorAccent"
                     android:maxLength="100"
+                    android:digits= "ABCDEFGHIJKLMNOPQRSTUWXYZ abcdefghijklmnopqrstuwxyz~^´"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -181,7 +184,7 @@
                 android:backgroundTint="@color/colorAccent"
                 android:maxLength="200"
                 android:inputType="text"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVXWYZ ~abcdefghijklmnopqrstuvxwyz"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVXWYZ ~^´abcdefghijklmnopqrstuvxwyz"
                 />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -197,7 +200,7 @@
                 android:singleLine="true"
                 android:textColorHint="@color/colorAccent"
                 android:backgroundTint="@color/colorAccent"
-                android:maxLength="200"
+                android:maxLength="15"
                 android:inputType="phone"
                 android:digits="0123456789() -"
                 />

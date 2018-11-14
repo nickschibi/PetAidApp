@@ -11,6 +11,7 @@
         <item name="android:textColorSecondary">@color/text_color_secundary</item>
         <item name="android:colorBackground">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:homeAsUpIndicator">@drawable/back</item>
 
     </style>
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,12 +29,14 @@ public class CadastroVolActivity extends AppCompatActivity implements CadastroVo
     private EditText email;
     private EditText telefone;
     private CadastroVolPresenter presenter;
-
+    private AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new CadastroVolPresenter(this,this);
+
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#69efad'>Cadastro </font>"));
 
 
 
@@ -99,11 +102,12 @@ public class CadastroVolActivity extends AppCompatActivity implements CadastroVo
                 }
                 if(validaCampos == false){
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroVolActivity.this);
-                    dlg.setTitle(R.string.warning);
-                    dlg.setMessage(R.string.camposInvalidos);
-                    dlg.setNeutralButton("Ok", null);
-                    dlg.show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CadastroVolActivity.this, R.style.MyDialog);
+                    builder.setTitle(R.string.warning);
+                    builder.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.camposInvalidos)+ "</font>"));
+                    builder.setNeutralButton("Ok", null);
+                    alerta = builder.create();
+                    alerta.show();
                 }
                 else {
                     presenter.cadastraVoluntario(nome.getText().toString(),
@@ -124,5 +128,12 @@ public class CadastroVolActivity extends AppCompatActivity implements CadastroVo
     @Override
     public void exibeToastErro(){
         Toast.makeText(CadastroVolActivity.this, getString(R.string.cadastroErro), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed(){ //Botão BACK padrão do android
+        startActivity(new Intent(this, SplashScreenActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
+        finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
+        return;
     }
 }

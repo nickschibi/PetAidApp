@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +45,8 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
+        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
 
         String email = ((PetAidApplication) CadastroOngActivity.this.getApplication()).getEmailSignUser();
 
@@ -70,6 +73,7 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
             dlg.setNeutralButton("Ok, Entendi", null);
             dlg.show();
             btnDelete.setVisibility(View.INVISIBLE);
+
         }
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -108,11 +112,13 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
                 }
                 if(validaCampos == false){
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(CadastroOngActivity.this);
-                    dlg.setTitle(R.string.warning);
-                    dlg.setMessage(R.string.camposInvalidos);
-                    dlg.setNeutralButton("Ok", null);
-                    dlg.show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CadastroOngActivity.this, R.style.MyDialog);
+                    builder.setTitle(R.string.warning);
+                    builder.setMessage(Html.fromHtml("<font color='#FFFFFF'>" + getText(R.string.camposInvalidos)+ "</font>"));
+                    builder.setNeutralButton("Ok", null);
+                    alerta = builder.create();
+                    alerta.show();
+
                 }
                 else {
 
@@ -198,5 +204,18 @@ public class CadastroOngActivity extends AppCompatActivity implements CadastroOn
         Toast.makeText(CadastroOngActivity.this, "Cadastro excluido", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(CadastroOngActivity.this, SplashScreenActivity.class);
         startActivity(i);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
+        switch (item.getItemId()) {
+            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                Intent intent = new Intent(CadastroOngActivity.this, MapsActivity.class);
+
+                startActivity(intent);  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                finishAffinity();  //Método para matar a activity e não deixa-lá indexada na pilhagem
+                break;
+            default:break;
+        }
+        return true;
     }
 }

@@ -23,6 +23,7 @@ public class CadastroOngEnderecosActivity extends AppCompatActivity implements  
     private ArrayList<Local> listaLocais;
     private ListaLocalAdapter adapter;
     private Button btnFinal;
+    private int idOrganizacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class CadastroOngEnderecosActivity extends AppCompatActivity implements  
         btnFinal= findViewById(R.id.btnFinal);
 
         Bundle bundle = getIntent().getExtras();
-        int idOrganizacao = bundle.getInt("idOrganizacao");
+        idOrganizacao = bundle.getInt("idOrganizacao");
 
 
         ImageButton fab = (ImageButton) findViewById(R.id.fab2);
@@ -96,5 +97,14 @@ public class CadastroOngEnderecosActivity extends AppCompatActivity implements  
     @Override
     public void exibeToastErro() {
         Toast.makeText(CadastroOngEnderecosActivity.this, getString(R.string.cadastroErro), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed(){ //Botão BACK padrão do android
+        Intent intent = new Intent(CadastroOngEnderecosActivity.this, CadastroOngActivity.class);
+        intent.putExtra("idOrganizacao",idOrganizacao );
+        startActivity(intent); //O efeito ao ser pressionado do botão (no caso abre a activity)
+        finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
+        return;
     }
 }
