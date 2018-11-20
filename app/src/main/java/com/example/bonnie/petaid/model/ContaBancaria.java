@@ -8,6 +8,7 @@ public class ContaBancaria {
     private String nomeProprietario;
     private int tipoDoc;
     private Banco banco;
+    private CategoriaConta categoriaConta;
 
 
     private String numDoc;
@@ -108,5 +109,13 @@ public class ContaBancaria {
 
     public void setBanco(Banco banco) {
         this.banco = banco;
+    }
+
+    public CategoriaConta getCategoriaConta() {
+        return categoriaConta;
+    }
+
+    public void setCategoriaConta(CategoriaConta categoriaConta) {
+        this.categoriaConta = categoriaConta;
     }
 }

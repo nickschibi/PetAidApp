@@ -11,22 +11,45 @@
         android:layout_marginTop="2dp"
         android:background="@color/colorPrimary"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="Nome:"
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/nomeOngTextView"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:text="Nome da Ong"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="Cnpj:"
+            android:textColor="@color/colorAccent"
+            android:paddingLeft="5dp"/>
         <TextView
             android:id="@+id/cnpjTextView"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:text="124574513252456546"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"/>
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Responsável:"
+                android:paddingLeft="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorAccent"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,72 +57,106 @@
 
             <TextView
                 android:id="@+id/nomeResponsavelTextView"
-                android:layout_width="275dp"
-                android:layout_height="30dp"
+                android:layout_width="250dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
-                android:text="nome do responsavel" />
-
+                android:text="Reponsavel"
+                android:textSize="18dp" />
             <TextView
                 android:id="@+id/dataVoluntariadoTextView"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="10/12/2018"/>
+                android:layout_height="25dp"
+                android:text="10/12/2018"
+                android:textSize="18dp"/>
 
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Telefone:"
+            android:paddingLeft="5dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/telefoneTextView"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:text="1198222452"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"/>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearConta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/colorPrimary"
-        android:layout_marginTop="2dp"
         >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dados Bancários:"
+            android:paddingLeft="5dp"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/proprietarioTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/proprietarioConta"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
             />
+
 
         <TextView
             android:id="@+id/numDocTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="numero documento"
+            android:text="24545454564"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
             />
+
 
         <TextView
             android:id="@+id/bancoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            android:text="Banco"
             />
 
         <TextView
             android:id="@+id/categoriaTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Categoria"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
             />
 
         <TextView
-            android:id="@+id/agencia2TextView"
+            android:id="@+id/agenciaTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Agencia"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
             />
 
         <TextView
             android:id="@+id/contaBancariaTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Conta"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
             />
 
     </LinearLayout>

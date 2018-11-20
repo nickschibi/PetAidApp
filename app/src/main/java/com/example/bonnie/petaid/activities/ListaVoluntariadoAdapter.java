@@ -66,7 +66,7 @@ public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter
         TextView proprietarioTextView = (TextView) view.findViewById(R.id.proprietarioTextView);
         TextView numDocTextView = (TextView) view.findViewById(R.id.numDocTextView);
         TextView bancoTextView = (TextView) view.findViewById(R.id.bancoTextView);
-        TextView agenciaTextView = (TextView) view.findViewById(R.id.agencia2TextView);
+        TextView agenciaTextView = (TextView) view.findViewById(R.id.agenciaTextView);
         TextView categoriaTextView = (TextView) view.findViewById(R.id.categoriaTextView);
         TextView contaBancariaTextView = (TextView) view.findViewById(R.id.contaBancariaTextView);
 
@@ -82,8 +82,7 @@ public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter
             bancoTextView.setText(list.get(position).getLocal().getContaBancaria().getBanco().getNomeBanco());
             agenciaTextView.setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodAgencia()));
             contaBancariaTextView .setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodConta()));
-
-            //categoriaTextView.setText(list.get(position).getLocal().getContaBancaria().getC);
+            categoriaTextView.setText(list.get(position).getLocal().getContaBancaria().);
         }
         return view;
     }
