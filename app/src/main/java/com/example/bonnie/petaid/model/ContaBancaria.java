@@ -27,9 +27,6 @@ public class ContaBancaria {
         this.idLocal = idLocal;
     }
 
-    public ContaBancaria() {
-
-    }
 
     public int getIdConta() {
         return idConta;

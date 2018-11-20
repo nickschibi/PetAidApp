@@ -4,26 +4,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.model.Voluntariado;
 import com.example.bonnie.petaid.presenter.VoluntariadoPresenter;
-
 import java.util.ArrayList;
 
 public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter {
-//    private TextView nomeOngTextView;
-//    private TextView cnpjTextView;
-//    private TextView nomeResponsavelTextView;
-//    private TextView dataVoluntariadoTextView;
-//    private TextView telefoneTextView;
-//    private TextView proprietarioTextView;
-//    private TextView numDocTextView;
-//    private TextView bancoTextView;
-//    private TextView contaBancariaTextView;
-//    private TextView categoriaTextView;
-//    private TextView agenciaTextView;
+
 
     private ArrayList<Voluntariado> list = new ArrayList<>();
     private Context context;
@@ -69,6 +59,7 @@ public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter
         TextView agenciaTextView = (TextView) view.findViewById(R.id.agenciaTextView);
         TextView categoriaTextView = (TextView) view.findViewById(R.id.categoriaTextView);
         TextView contaBancariaTextView = (TextView) view.findViewById(R.id.contaBancariaTextView);
+        LinearLayout ll = (LinearLayout) view.findViewById(R.id.linearConta);
 
         nomeOngTextView.setText(list.get(position).getLocal().getOrganizacao().getNomeFantasia());
         cnpjTextView.setText(list.get(position).getLocal().getOrganizacao().getNmCnpj());
@@ -77,12 +68,13 @@ public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter
         telefoneTextView.setText(list.get(position).getLocal().getTelefoneLocal());
 
         if(list.get(position).getLocal().getContaBancaria() != null){
+            ll.setVisibility(View.VISIBLE); //Torna Visivel o Bloco de Campos Relacionados a Conta Bancaria apenas se tiver Conta
             proprietarioTextView.setText(list.get(position).getLocal().getContaBancaria().getNomeProprietario());
             numDocTextView.setText(list.get(position).getLocal().getContaBancaria().getNumDoc());
             bancoTextView.setText(list.get(position).getLocal().getContaBancaria().getBanco().getNomeBanco());
             agenciaTextView.setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodAgencia()));
             contaBancariaTextView .setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodConta()));
-            categoriaTextView.setText(list.get(position).getLocal().getContaBancaria().);
+            //categoriaTextView.setText(list.get(position).getLocal().getContaBancaria().getCategoriaConta();
         }
         return view;
     }
