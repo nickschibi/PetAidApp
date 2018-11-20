@@ -25,7 +25,8 @@
             android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:text="Nome da Ong"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textColor="@color/text_color_secundary"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -40,8 +41,8 @@
             android:layout_height="25dp"
             android:text="124574513252456546"
             android:layout_marginLeft="10dp"
-            android:textSize="18dp"/>
-
+            android:textSize="18dp"
+            android:textColor="@color/text_color_secundary"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -61,13 +62,15 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
                 android:text="Reponsavel"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textColor="@color/text_color_secundary"/>
             <TextView
                 android:id="@+id/dataVoluntariadoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:text="10/12/2018"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:textColor="@color/text_color_secundary"/>
 
         </LinearLayout>
         <TextView
@@ -84,7 +87,8 @@
             android:layout_height="25dp"
             android:text="1198222452"
             android:layout_marginLeft="10dp"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:textColor="@color/text_color_secundary"/>
 
     </LinearLayout>
 
@@ -111,6 +115,7 @@
             android:text="@string/proprietarioConta"
             android:textSize="18dp"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/text_color_secundary"
             />
 
 
@@ -121,6 +126,7 @@
             android:text="24545454564"
             android:textSize="18dp"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/text_color_secundary"
             />
 
 
@@ -131,6 +137,7 @@
             android:textSize="18dp"
             android:layout_marginLeft="10dp"
             android:text="Banco"
+            android:textColor="@color/text_color_secundary"
             />
 
         <TextView
@@ -140,6 +147,7 @@
             android:text="Categoria"
             android:textSize="18dp"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/text_color_secundary"
             />
 
         <TextView
@@ -149,6 +157,7 @@
             android:text="Agencia"
             android:textSize="18dp"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/text_color_secundary"
             />
 
         <TextView
@@ -158,6 +167,7 @@
             android:text="Conta"
             android:textSize="18dp"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/text_color_secundary"
             />
 
     </LinearLayout>
