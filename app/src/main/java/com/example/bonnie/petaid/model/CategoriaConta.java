@@ -1,6 +1,6 @@
 package com.example.bonnie.petaid.model;
 
-class CategoriaConta {
+public class CategoriaConta {
     private int idCategoria;
     private String tipoConta;
 

@@ -11,7 +11,8 @@
         android:layout_width="310dp"
         android:layout_height="52dp"
         android:text="@string/nomeFantasia"
-        android:textSize="@dimen/titleSize" />
+        android:textSize="@dimen/titleSize"
+        android:textColor="@color/text_color_secundary"/>
 
     <TextView
         android:layout_margin="2dp"
@@ -20,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="63dp"
         android:text="@string/razaoSocial"
-        android:textSize="@dimen/subtitleSize" />
+        android:textSize="@dimen/subtitleSize"
+        android:textColor="@color/text_color_secundary"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,21 +46,26 @@
     <TextView
         android:id="@+id/descricaoOngTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/text_color_secundary"/>
 
     <TextView
         android:id="@+id/oquePrecisamosTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/oqueprecisa"
-        android:layout_marginTop="63dp"/>
+        android:layout_marginTop="63dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="15dp" />
 
 
     <TextView
         android:id="@+id/necessidadesTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:textSize="18dp"
+        android:textColor="@color/text_color_secundary"/>
 
     <TextView
         android:id="@+id/observacaoTextView"
@@ -67,6 +74,8 @@
         android:maxLines="20"
         android:maxLength="399"
         android:lines="5"
+        android:textSize="18dp"
+        android:textColor="@color/text_color_secundary"
         />
 
     <Button

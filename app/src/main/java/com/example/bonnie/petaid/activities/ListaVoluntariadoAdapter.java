@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.example.bonnie.petaid.R;
+import com.example.bonnie.petaid.Utils;
 import com.example.bonnie.petaid.model.Voluntariado;
 import com.example.bonnie.petaid.presenter.VoluntariadoPresenter;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter
         nomeOngTextView.setText(list.get(position).getLocal().getOrganizacao().getNomeFantasia());
         cnpjTextView.setText(list.get(position).getLocal().getOrganizacao().getNmCnpj());
         nomeResponsavelTextView.setText(list.get(position).getLocal().getNomeResponsavel());
-        dataVoluntariadoTextView.setText(list.get(position).getDtVoluntariado().toString());
+        dataVoluntariadoTextView.setText(Utils.covertData(list.get(position).getDtVoluntariado())); //tirei o to string do final
         telefoneTextView.setText(list.get(position).getLocal().getTelefoneLocal());
 
         if(list.get(position).getLocal().getContaBancaria() != null){
@@ -74,7 +75,7 @@ public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter
             bancoTextView.setText(list.get(position).getLocal().getContaBancaria().getBanco().getNomeBanco());
             agenciaTextView.setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodAgencia()));
             contaBancariaTextView .setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodConta()));
-            //categoriaTextView.setText(list.get(position).getLocal().getContaBancaria().getCategoriaConta();
+            categoriaTextView.setText(list.get(position).getLocal().getContaBancaria().getCategoriaConta().getTipoConta());
         }
         return view;
     }
