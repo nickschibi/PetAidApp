@@ -61,9 +61,12 @@
         />
 
     <TextView
-        android:id="@+id/contaBancariaTextView"
+        android:id="@+id/observacaoTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="20"
+        android:maxLength="399"
+        android:lines="5"
         />
 
     <Button
@@ -73,7 +76,8 @@
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:layout_marginTop="5dp"
-        android:text="@string/voluntariarse" />
+        android:text="@string/voluntariarse"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/btnAvaliar"
@@ -82,7 +86,7 @@
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"
         android:layout_marginTop="5dp"
-        android:text="Avaliar Organização" />
-
+        android:text="Avaliar Organização"
+        android:visibility="gone" />
 
 </LinearLayout>

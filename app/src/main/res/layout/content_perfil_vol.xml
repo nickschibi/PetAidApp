@@ -69,11 +69,23 @@
             android:backgroundTint="@color/colorAccent"
             android:enabled="false"/>
 
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/listaVoluntariado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Minha lista de Organizações"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

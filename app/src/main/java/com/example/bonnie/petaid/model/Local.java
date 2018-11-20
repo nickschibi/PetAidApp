@@ -9,6 +9,8 @@ public class Local {
     private String telefoneLocal;
     private float mediaNota;
     private Endereco endereco;
+    private Organizacao organizacao;
+    private ContaBancaria contaBancaria;
 
     public Local(int idLocal, String nomeResponsavel, int idOrganizacao, int idEndereco,String telefoneLocal) {
         this.idLocal = idLocal;
@@ -83,6 +85,22 @@ public class Local {
 
     public void setIdEndereco(int idEndereco) {
         this.idEndereco = idEndereco;
+    }
+
+    public Organizacao getOrganizacao() {
+        return organizacao;
+    }
+
+    public void setOrganizacao(Organizacao organizacao) {
+        this.organizacao = organizacao;
+    }
+
+    public ContaBancaria getContaBancaria() {
+        return contaBancaria;
+    }
+
+    public void setContaBancaria(ContaBancaria contaBancaria) {
+        this.contaBancaria = contaBancaria;
     }
 
     public String toString(){

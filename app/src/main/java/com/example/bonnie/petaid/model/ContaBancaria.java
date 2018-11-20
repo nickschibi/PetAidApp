@@ -7,7 +7,7 @@ public class ContaBancaria {
     private int codConta;
     private String nomeProprietario;
     private int tipoDoc;
-
+    private Banco banco;
 
 
     private String numDoc;
@@ -100,5 +100,13 @@ public class ContaBancaria {
 
     public void setIdLocal(int idLocal) {
         this.idLocal = idLocal;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
     }
 }

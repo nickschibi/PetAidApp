@@ -3,6 +3,10 @@ package com.example.bonnie.petaid;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.InputMismatchException;
@@ -119,6 +123,18 @@ public class Utils {
                 CNPJ.substring(5, 8) + "/" + CNPJ.substring(8, 12) + "-" +
                 CNPJ.substring(12, 14));
     }
+
+    public static String covertData(Date date){
+        //SimpleDateFormat originalFormato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss zzz");
+        SimpleDateFormat novoFormato = new SimpleDateFormat("dd/MM/yyyy");
+        //ParsePosition pos = new ParsePosition(0);
+        //Date dataFromString = originalFormato.parse(String.valueOf(date),pos);
+        //String dateStringNovoFormato = novoFormato.format(dataFromString);
+        String dateStringNovoFormato = novoFormato.format(date);
+
+        return dateStringNovoFormato;
+    }
+
 
 
     public static boolean isEstado(String uf){

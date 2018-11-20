@@ -55,4 +55,53 @@
             android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="2dp"
+        >
+
+        <TextView
+            android:id="@+id/proprietarioTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/proprietarioConta"
+            />
+
+        <TextView
+            android:id="@+id/numDocTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="numero documento"
+            />
+
+        <TextView
+            android:id="@+id/bancoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/categoriaTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/agencia2TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/contaBancariaTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
 </LinearLayout>

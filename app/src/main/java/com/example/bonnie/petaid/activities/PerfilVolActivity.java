@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bonnie.petaid.R;
@@ -33,6 +34,8 @@ public class PerfilVolActivity extends AppCompatActivity implements PerfilVolPre
     private EditText nomediag;
     private EditText telefonediag;
     private PerfilVolPresenter presenter;
+    private TextView listaVoluntariado;
+    private Voluntario voluntario;
 
 
     @Override
@@ -49,6 +52,7 @@ public class PerfilVolActivity extends AppCompatActivity implements PerfilVolPre
         telefone = findViewById(R.id.telefoneEditText);
         backBtn = findViewById(R.id.backbtn);
         deleteBtn = findViewById(R.id.deletbtn);
+        listaVoluntariado = findViewById(R.id.listaVoluntariado);
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +76,15 @@ public class PerfilVolActivity extends AppCompatActivity implements PerfilVolPre
             @Override
             public void onClick(View view) {
                 updateVoluntario();
+            }
+        });
+
+        listaVoluntariado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PerfilVolActivity.this, VoluntariadoActivity.class);
+                i.putExtra("idVoluntario", voluntario.getId_voluntario());
+                startActivity(i);
             }
         });
     }
@@ -179,6 +192,7 @@ public class PerfilVolActivity extends AppCompatActivity implements PerfilVolPre
 
     @Override
     public void atualizaVoluntario(Voluntario voluntario) {
+        this.voluntario = voluntario;
         nome.setText(voluntario.getNome_voluntario());
         email.setText(voluntario.getEmail());
         telefone.setText(voluntario.getTelefone_voluntario());

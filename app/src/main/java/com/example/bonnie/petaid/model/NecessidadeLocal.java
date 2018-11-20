@@ -4,6 +4,9 @@ public class NecessidadeLocal {
     private String observacao;
     private int idLocal;
     private int idNecessidade;
+    private Necessidade necessidade;
+
+
 
     public NecessidadeLocal(String observacao, int idLocal, int idNecessidade) {
         this.observacao = observacao;
@@ -17,6 +20,14 @@ public class NecessidadeLocal {
     }
 
     public NecessidadeLocal() {
+    }
+
+    public Necessidade getNecessidade() {
+        return necessidade;
+    }
+
+    public void setNecessidade(Necessidade necessidade) {
+        this.necessidade = necessidade;
     }
 
     public String getObservacao() {

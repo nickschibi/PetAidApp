@@ -43,6 +43,7 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
     int idLocal;
     private Button backBtn;
     public AlertDialog alerta;
+    private Button btnListaVol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +67,22 @@ public class CadastroLocalActivity extends AppCompatActivity implements Cadastro
         responsavelEditText = findViewById(R.id.responsavelEditText);
         telefoneResponsavelEditText = findViewById(R.id.telefoneResponsavelEditText);
         backBtn = findViewById(R.id.backbtn);
+        btnListaVol = findViewById(R.id.btnListVoluntarios);
 
         Bundle bundle = getIntent().getExtras();
         idOrganizacao = bundle.getInt("idOrganizacao");
         idLocal = bundle.getInt("idLocal");
+
+        btnListaVol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CadastroLocalActivity.this, VoluntariosActivity.class);
+                intent.putExtra("idLocal", local.getIdLocal());
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
 
 
         if(idLocal!=0){
