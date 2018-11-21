@@ -76,6 +76,8 @@ public class ListaVoluntariadoAdapter extends BaseAdapter implements ListAdapter
             agenciaTextView.setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodAgencia()));
             contaBancariaTextView .setText(Integer.toString(list.get(position).getLocal().getContaBancaria().getCodConta()));
             categoriaTextView.setText(list.get(position).getLocal().getContaBancaria().getCategoriaConta().getTipoConta());
+        } else {
+            ll.setVisibility(View.GONE);
         }
         return view;
     }

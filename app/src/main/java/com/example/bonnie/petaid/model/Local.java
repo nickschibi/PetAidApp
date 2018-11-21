@@ -8,6 +8,7 @@ public class Local {
     private int idEndereco;
     private String telefoneLocal;
     private float mediaNota;
+    private int countNecessidades;
     private Endereco endereco;
     private Organizacao organizacao;
     private ContaBancaria contaBancaria;
@@ -85,6 +86,14 @@ public class Local {
 
     public void setIdEndereco(int idEndereco) {
         this.idEndereco = idEndereco;
+    }
+
+    public int getCountNecessidades() {
+        return countNecessidades;
+    }
+
+    public void setCountNecessidades(int countNecessidades) {
+        this.countNecessidades = countNecessidades;
     }
 
     public Organizacao getOrganizacao() {

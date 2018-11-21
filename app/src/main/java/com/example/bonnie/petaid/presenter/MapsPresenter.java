@@ -73,7 +73,7 @@ public class MapsPresenter {
                         }
                     }).executa();
 
-                    view.setaOrganizacaoSlidingPanel(o.getNomeFantasia(), o.getDescricao(), o.getRazaoSocial());
+                    view.setaOrganizacaoSlidingPanel(o.getNomeFantasia(), o.getDescricao(), o.getRazaoSocial(), local.getMediaNota());
                 }
             }
         }).executa();
@@ -188,7 +188,7 @@ public class MapsPresenter {
 
     public interface View{
         void poeMarcadoresEnderecos() throws  IOException;
-        void setaOrganizacaoSlidingPanel(String nomeFantasia, String descricao, String razaoSocial);
+        void setaOrganizacaoSlidingPanel(String nomeFantasia, String descricao, String razaoSocial, float notaLocal);
         void setaNecessidades(ArrayList<NecessidadeLocal> necessidadesLocal);
         void exibeToastMsg(String s);
         void mudaEstadoBotoes(Boolean flag);

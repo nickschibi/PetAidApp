@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/avaliacaoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textSize="32dp"/>
+
+    <RatingBar
+        android:id="@+id/ratingBarAvaliacao"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="0dp"
+        android:max="5"
+        android:numStars="5"
+        android:padding="0dp"
+        android:scaleX="1.0"
+        android:scaleY="1.0"
+        android:stepSize="0.5"
+
+        />
+
+</LinearLayout>

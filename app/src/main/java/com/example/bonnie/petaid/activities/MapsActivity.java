@@ -1,5 +1,6 @@
 package com.example.bonnie.petaid.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -7,8 +8,12 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +55,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button btnAvaliar;
     private Local local;
     private Voluntario voluntario;
+    private RatingBar ratingBar;
+    private double avaliacao;
+    private TextView avaliacaoTextView;
+    private TextView mediaNota;
+    private LinearLayout linearNota;
 
 
     @Override
@@ -79,6 +89,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn = findViewById(R.id.btn);
         btnVoluntariarse = findViewById(R.id.btnVoluntariar);
         btnAvaliar = findViewById(R.id.btnAvaliar);
+        mediaNota = findViewById(R.id.notaLocal);
+        linearNota = findViewById(R.id.linearNota);
 
         if (((PetAidApplication) MapsActivity.this.getApplication()).getTypeUser().equals("vol")) {
             btnVoluntariarse.setVisibility(View.VISIBLE);
@@ -90,6 +102,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 presenter.criaVoluntariado(local.getIdLocal(), voluntario);
+            }
+        });
+
+        btnAvaliar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                avaliaOng();
             }
         });
 
@@ -111,6 +130,78 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locais = new ArrayList<>();
         presenter.getLocais(locais);
     }
+
+
+
+    void avaliaOng(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialog);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.avaliacao_dialog, null);
+        builder.setView(dialogView);
+        builder.setTitle("Avaliação");
+        builder.setMessage("");
+        avaliacaoTextView = dialogView.findViewById(R.id.avaliacaoTextView);
+        ratingBar = dialogView.findViewById(R.id.ratingBarAvaliacao);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if(rating == 0){
+                    avaliacao = 0;
+                }
+                else if(rating == 0.5){
+                    avaliacao = 0.5;
+                }
+                else if(rating == 1.0){
+                    avaliacao = 1.0;
+                }
+                else if(rating == 1.5){
+                    avaliacao = 1.5;
+                }
+                else if(rating == 2.0){
+                    avaliacao = 2.0;
+                }
+                else if(rating == 2.5){
+                    avaliacao = 2.5;
+                }
+                else if(rating == 3.0){
+                    avaliacao = 3.0;
+                }
+                else if(rating == 3.5){
+                    avaliacao = 3.5;
+                }
+                else if(rating == 4.0){
+                    avaliacao = 4.0;
+                }
+                else if(rating == 4.5){
+                    avaliacao = 4.5;
+                }
+                else if(rating == 5.0){
+                    avaliacao = 5.0;
+                }
+
+                String value = Double.toString(avaliacao);
+                avaliacaoTextView.setText(value);
+            }
+        });
+
+
+        builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+
+        builder.show();
+    }
+
+
 
     // Mapa
     @Override
@@ -148,26 +239,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lat = address.getLatitude();
             lng = address.getLongitude();
 
-            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.pata, null);
-            Bitmap b = bitmapdraw.getBitmap();
-            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+            if(l.getCountNecessidades()>=6){
+                BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.patanecessidade, null);
+                Bitmap b = bitmapdraw.getBitmap();
+                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+                MarkerOptions options = new MarkerOptions()
+                        //.title(address.getCountryName())
+                        .position(new LatLng(lat, lng))
+                        .icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
-            MarkerOptions options = new MarkerOptions()
-                    //.title(address.getCountryName())
-                    .position(new LatLng(lat, lng))
-                    .icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                Marker marker = mMap.addMarker(options);
+                marker.setTag(l);
+            }else {
+                BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.pata, null);
+                Bitmap b = bitmapdraw.getBitmap();
+                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+                MarkerOptions options = new MarkerOptions()
+                        //.title(address.getCountryName())
+                        .position(new LatLng(lat, lng))
+                        .icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
 
-            Marker marker = mMap.addMarker(options);
-            marker.setTag(l);
+                Marker marker = mMap.addMarker(options);
+                marker.setTag(l);
+            }
+
         }
         goToLocationZoom(lat, lng, 10);
     }
 
     @Override
-    public void setaOrganizacaoSlidingPanel(String nomeFantasia, String descricao, String razaoSocial) {
+    public void setaOrganizacaoSlidingPanel(String nomeFantasia, String descricao, String razaoSocial, float notaLocal) {
         nomeFantasiaTextView.setText(nomeFantasia);
         descricaoTextView.setText(descricao);
         razaoSocialTextView.setText(razaoSocial);
+        mediaNota.setText((Float.toString(notaLocal)));
+        if(notaLocal>0.0){
+            linearNota.setVisibility(View.VISIBLE); // Só funciona na primeira vez que clica, verificar isso.
+        }
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
@@ -233,3 +341,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         this.voluntario = voluntario;
     }
 }
+
