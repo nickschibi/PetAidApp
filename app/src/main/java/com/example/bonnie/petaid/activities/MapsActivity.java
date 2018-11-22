@@ -275,6 +275,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mediaNota.setText((Float.toString(notaLocal)));
         if(notaLocal>0.0){
             linearNota.setVisibility(View.VISIBLE); // Só funciona na primeira vez que clica, verificar isso.
+        } else {
+            linearNota.setVisibility(View.GONE);
         }
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
