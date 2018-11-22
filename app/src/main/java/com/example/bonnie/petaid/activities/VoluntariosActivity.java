@@ -46,6 +46,7 @@ public class VoluntariosActivity extends AppCompatActivity implements Voluntario
 
     @Override
     public void atualizaListaVoluntarios(ArrayList<Voluntario> vols) {
+        verificaListaVazia();
         inflaListaVoluntarios(vols);
 
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.model.Voluntariado;
@@ -43,6 +44,7 @@ public class VoluntariadoActivity extends AppCompatActivity implements Voluntari
 
     @Override
     public void atualizaListaVoluntariados(ArrayList<Voluntariado> listaVoluntariados) {
+        verificaListaVazia();
         inflaListaVoluntariados(listaVoluntariados);
     }
     public void inflaListaVoluntariados(ArrayList<Voluntariado> vols){
@@ -52,6 +54,11 @@ public class VoluntariadoActivity extends AppCompatActivity implements Voluntari
 
     }
 
+    public void verificaListaVazia(){
+        if(!listaVoluntariados.isEmpty()){
+            Toast.makeText(this, "Ops! Nenhum voluntariado até o momento", Toast.LENGTH_SHORT).show();
+        }
+    }
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar

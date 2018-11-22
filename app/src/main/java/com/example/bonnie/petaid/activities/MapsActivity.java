@@ -22,6 +22,7 @@ import com.example.bonnie.petaid.model.Endereco;
 import com.example.bonnie.petaid.R;
 import com.example.bonnie.petaid.model.Local;
 import com.example.bonnie.petaid.model.NecessidadeLocal;
+import com.example.bonnie.petaid.model.Voluntariado;
 import com.example.bonnie.petaid.model.Voluntario;
 import com.example.bonnie.petaid.presenter.MapsPresenter;
 import com.google.android.gms.maps.CameraUpdate;
@@ -60,7 +61,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private TextView avaliacaoTextView;
     private TextView mediaNota;
     private LinearLayout linearNota;
-
+    private boolean flagAcaoVolutariar = true;
+    private Voluntariado voluntariado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnVoluntariarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.criaVoluntariado(local.getIdLocal(), voluntario);
+                if(flagAcaoVolutariar){
+                    presenter.criaVoluntariado(local.getIdLocal(), voluntario);
+                } else {
+                    presenter.apagaVoluntariado(voluntariado);
+                }
             }
         });
 
@@ -323,15 +329,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void mudaEstadoBotoes(Boolean flag) {
+    public void mudaEstadoBotoes(Boolean flag, Voluntariado voluntariado) {
         if (flag.equals(true)) {
             btnVoluntariarse.setText("Desvoluntariar-se");
+            flagAcaoVolutariar = false;
             btnAvaliar.setVisibility(View.VISIBLE);
-
-
-
+            this.voluntariado = voluntariado;
         } else if (flag.equals(false)) {
             btnVoluntariarse.setText("Voluntariar-se");
+            flagAcaoVolutariar = true;
             btnAvaliar.setVisibility(View.GONE);
 
         }

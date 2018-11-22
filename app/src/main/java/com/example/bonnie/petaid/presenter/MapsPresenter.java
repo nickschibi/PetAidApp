@@ -90,53 +90,13 @@ public class MapsPresenter {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
                     ArrayList<Voluntariado> voluntariados = gson.fromJson(resultado, foundListType);
                     if(voluntariados.size() > 0){
-                        view.mudaEstadoBotoes(true);
+                        view.mudaEstadoBotoes(true, voluntariados.get(0));
                     } else {
-                        view.mudaEstadoBotoes(false);
+                        view.mudaEstadoBotoes(false, null);
                     }
                 }
             }
         }).executa();
-    }
-
-
-
-    public void criaVoluntariadoOld(int idLocal, String emailSignUser) {
-        String trazVoluntario = contexto.getString(R.string.web_service_url) + "voluntario?email=" +  emailSignUser;
-        new ConsomeServico(trazVoluntario, ConsomeServico.Metodo.GET, new ConsomeServico.PosExecucao() {
-            @Override
-            public void executa(String resultado, int returnCode) {
-                Type foundType = new TypeToken<ArrayList<Voluntario>>(){}.getType();
-                ArrayList<Voluntario> voluntarios = new Gson().fromJson(resultado,foundType);
-                voluntario = voluntarios.get(0);
-
-                if(voluntario != null) {
-                    String criaVoluntariado = contexto.getString(R.string.web_service_url) + "/voluntariado";
-                    Voluntariado voluntariado = new Voluntariado();
-                    voluntariado.setDtVoluntariado(new Date());
-                    voluntariado.setIdLocal(idLocal);
-                    voluntariado.setIdVoluntario(voluntario.getId_voluntario());
-                    voluntariado.setAtivo(1);
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
-                    String requestBody = gson.toJson(voluntariado);
-                    new ConsomeServico(criaVoluntariado, ConsomeServico.Metodo.POST, requestBody, new ConsomeServico.PosExecucao() {
-                        @Override
-                        public void executa(String resultado, int returnCode) {
-                            if(returnCode == 200){
-                                Type foundType = new TypeToken<Voluntariado>(){}.getType();
-                                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
-                                Voluntariado voluntariado = gson.fromJson(resultado,foundType);
-                                view.mudaEstadoBotoes(true);
-                            } else {
-                                view.exibeToastMsg("Erro ao volutariar-se");
-                            }
-                        }
-                    }).executa();
-                }
-
-            }
-        }).executa();
-
     }
 
 
@@ -156,7 +116,7 @@ public class MapsPresenter {
                     Type foundType = new TypeToken<Voluntariado>(){}.getType();
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
                     Voluntariado voluntariado = gson.fromJson(resultado,foundType);
-                    view.mudaEstadoBotoes(true);
+                    view.mudaEstadoBotoes(true, voluntariado);
                 } else {
                     view.exibeToastMsg("Erro ao volutariar-se");
                 }
@@ -184,6 +144,19 @@ public class MapsPresenter {
 
     }
 
+    public void apagaVoluntariado(Voluntariado voluntariado) {
+        String apagaVoluntariado = contexto.getString(R.string.web_service_url) + "/voluntariado/" + voluntariado.getIdVoluntariado() + "?force=true";
+        new ConsomeServico(apagaVoluntariado, ConsomeServico.Metodo.DELETE, new ConsomeServico.PosExecucao() {
+            @Override
+            public void executa(String resultado, int returnCode) {
+                if(returnCode == 200){
+                    view.mudaEstadoBotoes(false, null);
+                } else {
+                    view.exibeToastMsg("Erro ao desvolutariar-se");
+                }
+            }
+        }).executa();
+    }
 
 
     public interface View{
@@ -191,7 +164,7 @@ public class MapsPresenter {
         void setaOrganizacaoSlidingPanel(String nomeFantasia, String descricao, String razaoSocial, float notaLocal);
         void setaNecessidades(ArrayList<NecessidadeLocal> necessidadesLocal);
         void exibeToastMsg(String s);
-        void mudaEstadoBotoes(Boolean flag);
+        void mudaEstadoBotoes(Boolean flag, Voluntariado voluntariado);
         void setaVoluntario(Voluntario voluntario);
     }
 }
