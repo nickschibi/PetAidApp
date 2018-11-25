@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.bonnie.petaid.ConsomeServico;
 import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
+import com.example.bonnie.petaid.model.Avaliacao;
 import com.example.bonnie.petaid.model.ContaBancaria;
 import com.example.bonnie.petaid.model.Endereco;
 import com.example.bonnie.petaid.model.Local;
@@ -33,16 +34,37 @@ public class MapsPresenter {
         this.view = view;
     }
 
-     public void getLocais(List<Local> locais){
+    public void atualizaNotaMediaLocal(Local local){
+        String trazEnderecos = contexto.getString(R.string.web_service_url) + "local/" + local.getIdLocal();
+        new ConsomeServico(trazEnderecos,  ConsomeServico.Metodo.GET, new ConsomeServico.PosExecucao() {
+            @Override
+            public void executa(String resultado, int returnCode) {
+                Type foundListType = new TypeToken<Local>(){}.getType();
+                Local l = new Gson().fromJson(resultado,foundListType);
+                local.setMediaNota(l.getMediaNota());
+                view.atualizaNotaMediaLocal();
+            }
+        }).executa();
+    }
+
+
+    public void getLocais(List<Local> locais, List<Local> locaisFiltrado){
         String trazEnderecos = contexto.getString(R.string.web_service_url) + "local/";
         new ConsomeServico(trazEnderecos,  ConsomeServico.Metodo.GET, new ConsomeServico.PosExecucao() {
             @Override
             public void executa(String resultado, int returnCode) {
                 locais.clear();
+                locaisFiltrado.clear();
                 Type foundListType = new TypeToken<ArrayList<Local>>(){}.getType();
                 ArrayList<Local> l = new Gson().fromJson(resultado,foundListType);
                 if(l != null) {
-                    locais.addAll(l);
+                    for (Local local : l){
+                        locais.add(local);
+                        if(local.getCountNecessidades() >= 6){
+                            locaisFiltrado.add(local);
+                        }
+                    }
+
                 }
                 try {
                     view.poeMarcadoresEnderecos();
@@ -90,6 +112,8 @@ public class MapsPresenter {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
                     ArrayList<Voluntariado> voluntariados = gson.fromJson(resultado, foundListType);
                     if(voluntariados.size() > 0){
+                        Voluntariado voluntariado = voluntariados.get(0);
+                        voluntariado.setLocal(local); // Seta o local do voluntariado como o local recebido para manter a referencia
                         view.mudaEstadoBotoes(true, voluntariados.get(0));
                     } else {
                         view.mudaEstadoBotoes(false, null);
@@ -100,11 +124,11 @@ public class MapsPresenter {
     }
 
 
-    public void criaVoluntariado(int idLocal, Voluntario voluntario) {
+    public void criaVoluntariado(Local local, Voluntario voluntario) {
         String criaVoluntariado = contexto.getString(R.string.web_service_url) + "/voluntariado";
         Voluntariado voluntariado = new Voluntariado();
         voluntariado.setDtVoluntariado(new Date());
-        voluntariado.setIdLocal(idLocal);
+        voluntariado.setIdLocal(local.getIdLocal());
         voluntariado.setIdVoluntario(voluntario.getId_voluntario());
         voluntariado.setAtivo(1);
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
@@ -116,6 +140,7 @@ public class MapsPresenter {
                     Type foundType = new TypeToken<Voluntariado>(){}.getType();
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
                     Voluntariado voluntariado = gson.fromJson(resultado,foundType);
+                    voluntariado.setLocal(local);
                     view.mudaEstadoBotoes(true, voluntariado);
                 } else {
                     view.exibeToastMsg("Erro ao volutariar-se");
@@ -123,6 +148,9 @@ public class MapsPresenter {
             }
         }).executa();
     }
+
+
+
 
 
 
@@ -141,7 +169,6 @@ public class MapsPresenter {
 
             }
         }).executa();
-
     }
 
     public void apagaVoluntariado(Voluntariado voluntariado) {
@@ -151,12 +178,44 @@ public class MapsPresenter {
             public void executa(String resultado, int returnCode) {
                 if(returnCode == 200){
                     view.mudaEstadoBotoes(false, null);
+                    atualizaNotaMediaLocal(voluntariado.getLocal());
                 } else {
                     view.exibeToastMsg("Erro ao desvolutariar-se");
                 }
             }
         }).executa();
     }
+
+    public void setAvaliacao(Voluntariado voluntariado, float notaAvaliacao) {
+        Avaliacao avaliacao = null;
+        if(voluntariado.getAvaliacao()==null){
+            avaliacao = new Avaliacao();
+            avaliacao.setDtAvaliacao(new Date());
+            avaliacao.setIdVoluntariado(voluntariado.getIdVoluntariado());
+            avaliacao.setNotaAvaliacao(notaAvaliacao);
+        }else{
+            avaliacao = voluntariado.getAvaliacao();
+            avaliacao.setNotaAvaliacao(notaAvaliacao);
+            avaliacao.setDtAvaliacao(new Date());
+        }
+        String criaAvaliacao = contexto.getString(R.string.web_service_url) + "/avaliacao";
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
+        String requestBody = gson.toJson(avaliacao);
+        new ConsomeServico(criaAvaliacao, ConsomeServico.Metodo.POST, requestBody, new ConsomeServico.PosExecucao() {
+            @Override
+            public void executa(String resultado, int returnCode) {
+                if(returnCode == 200){
+                    Type foundType = new TypeToken<Avaliacao>(){}.getType();
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss zzz").create();
+                    Avaliacao avaliacao = gson.fromJson(resultado,foundType);
+                    atualizaNotaMediaLocal(voluntariado.getLocal());
+                } else {
+                    view.exibeToastMsg("Erro ao avaliar");
+                }
+            }
+        }).executa();
+    }
+
 
 
     public interface View{
@@ -166,5 +225,7 @@ public class MapsPresenter {
         void exibeToastMsg(String s);
         void mudaEstadoBotoes(Boolean flag, Voluntariado voluntariado);
         void setaVoluntario(Voluntario voluntario);
+
+        void atualizaNotaMediaLocal();
     }
 }

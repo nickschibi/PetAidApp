@@ -10,6 +10,7 @@ public class Voluntariado {
     private long idLocal;
     private Voluntario voluntario;
     private Local local;
+    private Avaliacao avaliacao;
 
     public Voluntariado( Date dtVoluntariado, int ativo, long idVoluntario, long idLocal) {
         this.idVoluntariado = idVoluntariado;
@@ -77,5 +78,13 @@ public class Voluntariado {
 
     public void setLocal(Local local) {
         this.local = local;
+    }
+
+    public Avaliacao getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(Avaliacao avaliacao) {
+        this.avaliacao = avaliacao;
     }
 }

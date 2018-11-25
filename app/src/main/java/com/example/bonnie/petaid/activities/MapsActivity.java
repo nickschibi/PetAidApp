@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private List<Local> locais;
+    private List<Local> locaisTodos;
+    private List<Local> locaisFiltrados;
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private Button btn;
     private MapsPresenter presenter;
@@ -57,12 +60,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Local local;
     private Voluntario voluntario;
     private RatingBar ratingBar;
-    private double avaliacao;
+    private double notaAvaliacao;
     private TextView avaliacaoTextView;
     private TextView mediaNota;
     private LinearLayout linearNota;
     private boolean flagAcaoVolutariar = true;
     private Voluntariado voluntariado;
+    private Button btnSearch;
+    private int filtroOng = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,11 +105,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
+        btnSearch = findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filtrarOrganizacao();
+            }
+        });
+
+
         btnVoluntariarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(flagAcaoVolutariar){
-                    presenter.criaVoluntariado(local.getIdLocal(), voluntario);
+                    presenter.criaVoluntariado(local, voluntario);
                 } else {
                     presenter.apagaVoluntariado(voluntariado);
                 }
@@ -133,10 +147,72 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        locais = new ArrayList<>();
-        presenter.getLocais(locais);
+        locaisTodos = new ArrayList<>();
+        locaisFiltrados = new ArrayList<>();
+        locais = locaisTodos;
+        presenter.getLocais(locaisTodos, locaisFiltrados);
     }
 
+    void filtrarOrganizacao(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialog);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.filtrar_dialog, null);
+        builder.setView(dialogView);
+        builder.setTitle("Filtrar por :");
+        builder.setMessage("");
+
+        builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(filtroOng == 1){
+                    locais = locaisTodos;
+                }else{
+                    locais = locaisFiltrados;
+                }
+                try{
+                    poeMarcadoresEnderecos();
+                } catch (Exception e){
+
+                }
+            }
+
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+
+        builder.show();
+
+        RadioButton radioTodasOngs = dialogView.findViewById(R.id.radioTodasOngs);
+        RadioButton radioMaiorNecessidades = dialogView.findViewById(R.id.radioMaiorNecessidades);
+
+        if(filtroOng == 1){
+            radioTodasOngs.setChecked(true);
+        } else {
+            radioMaiorNecessidades.setChecked(true);
+        }
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioTodasOngs:
+                if (checked)
+                    filtroOng = 1;
+
+                break;
+            case R.id.radioMaiorNecessidades:
+                if (checked)
+                    filtroOng = 2;
+
+                break;
+        }
+    }
 
 
     void avaliaOng(){
@@ -146,47 +222,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         builder.setView(dialogView);
         builder.setTitle("Avaliação");
         builder.setMessage("");
+
         avaliacaoTextView = dialogView.findViewById(R.id.avaliacaoTextView);
         ratingBar = dialogView.findViewById(R.id.ratingBarAvaliacao);
+
+        if(voluntariado.getAvaliacao()!= null){
+            ratingBar.setRating(voluntariado.getAvaliacao().getNotaAvaliacao());
+            avaliacaoTextView.setText(Float.toString(voluntariado.getAvaliacao().getNotaAvaliacao()));
+        }
+
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if(rating == 0){
-                    avaliacao = 0;
-                }
-                else if(rating == 0.5){
-                    avaliacao = 0.5;
-                }
-                else if(rating == 1.0){
-                    avaliacao = 1.0;
-                }
-                else if(rating == 1.5){
-                    avaliacao = 1.5;
-                }
-                else if(rating == 2.0){
-                    avaliacao = 2.0;
-                }
-                else if(rating == 2.5){
-                    avaliacao = 2.5;
-                }
-                else if(rating == 3.0){
-                    avaliacao = 3.0;
-                }
-                else if(rating == 3.5){
-                    avaliacao = 3.5;
-                }
-                else if(rating == 4.0){
-                    avaliacao = 4.0;
-                }
-                else if(rating == 4.5){
-                    avaliacao = 4.5;
-                }
-                else if(rating == 5.0){
-                    avaliacao = 5.0;
-                }
 
-                String value = Double.toString(avaliacao);
+                notaAvaliacao = rating;
+                 String value = Double.toString(notaAvaliacao);
                 avaliacaoTextView.setText(value);
+
+
             }
         });
 
@@ -194,7 +247,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                presenter.setAvaliacao(voluntariado,(float)notaAvaliacao);
             }
 
         });
@@ -230,6 +283,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void poeMarcadoresEnderecos() throws IOException {
+
+        mMap.clear();
 
         int height = 200;
         int width = 200;
@@ -347,6 +402,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void setaVoluntario(Voluntario voluntario){
         this.voluntario = voluntario;
+    }
+
+    @Override
+    public void atualizaNotaMediaLocal(){
+        float notaLocal = this.voluntariado.getLocal().getMediaNota();
+        mediaNota.setText((Float.toString(notaLocal)));
+        if(notaLocal>0.0){
+            linearNota.setVisibility(View.VISIBLE);
+        } else {
+            linearNota.setVisibility(View.GONE);
+        }
     }
 }
 
