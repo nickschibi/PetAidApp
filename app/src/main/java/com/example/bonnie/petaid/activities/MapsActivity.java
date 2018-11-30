@@ -66,6 +66,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LinearLayout linearNota;
     private boolean flagAcaoVolutariar = true;
     private Voluntariado voluntariado;
+    private TextView facebookTextView;
+    private TextView siteTextView;
+    private TextView instagramTextView;
     private Button btnSearch;
     private int filtroOng = 1;
 
@@ -93,6 +96,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         razaoSocialTextView = findViewById(R.id.razaoSocialTextView);
         necessidadesTextView = findViewById(R.id.necessidadesTextView);
         observaçaoTextView = findViewById(R.id.observacaoTextView);
+        facebookTextView = findViewById(R.id.facebookTextView);
+        siteTextView = findViewById(R.id.siteTextView);
+        instagramTextView = findViewById(R.id.instagramTextView);
         btn = findViewById(R.id.btn);
         btnVoluntariarse = findViewById(R.id.btnVoluntariar);
         btnAvaliar = findViewById(R.id.btnAvaliar);
@@ -329,10 +335,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void setaOrganizacaoSlidingPanel(String nomeFantasia, String descricao, String razaoSocial, float notaLocal) {
+    public void setaOrganizacaoSlidingPanel(String nomeFantasia, String descricao, String razaoSocial, float notaLocal, String site, String facebook,String instagram ) {
         nomeFantasiaTextView.setText(nomeFantasia);
         descricaoTextView.setText(descricao);
         razaoSocialTextView.setText(razaoSocial);
+        siteTextView.setText(site);
+        facebookTextView.setText(facebook);
+        instagramTextView.setText(instagram);
         mediaNota.setText((Float.toString(notaLocal)));
         if(notaLocal>0.0){
             linearNota.setVisibility(View.VISIBLE); // Só funciona na primeira vez que clica, verificar isso.
