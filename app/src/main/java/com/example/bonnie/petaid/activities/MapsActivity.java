@@ -353,6 +353,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void setaNecessidades(ArrayList<NecessidadeLocal> necessidadesLocal) {
+        observaçaoTextView.setText("");
         if (necessidadesLocal.size() == 0) {
             necessidadesTextView.setText("Não possuimos nenhuma necessidade especifica no momento");
         } else {

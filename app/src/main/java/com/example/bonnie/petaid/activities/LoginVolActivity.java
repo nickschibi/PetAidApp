@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.bonnie.petaid.PetAidApplication;
 import com.example.bonnie.petaid.R;
+import com.example.bonnie.petaid.presenter.SplashScreenPresenter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -17,17 +18,19 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 
-public class LoginVolActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginVolActivity extends AppCompatActivity implements View.OnClickListener, SplashScreenPresenter.View{
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "LoginVol";
+    private SplashScreenPresenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_vol);
         getSupportActionBar().hide();
 
+        this.presenter = new SplashScreenPresenter(this,this);
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
@@ -66,9 +69,17 @@ public class LoginVolActivity extends AppCompatActivity implements View.OnClickL
 
             // Signed in successfully, show authenticated UI.
             ((PetAidApplication) LoginVolActivity.this.getApplication()).setEmailSignUser(account.getEmail());
-            Intent i = new Intent(LoginVolActivity.this, QuestionUserActivity.class);
-            startActivity(i);
-
+            String tipoUsuario = presenter.verificaUsuario(account.getEmail());
+            if (tipoUsuario.equals("vol") || tipoUsuario.equals("ong")) { // verifica se o usuario é cadastrado pelo email
+                ((PetAidApplication) LoginVolActivity.this.getApplication()).setTypeUser(tipoUsuario);
+                Intent i = new Intent(LoginVolActivity.this, MapsActivity.class); // se sim, vai para a tela principal
+                startActivity(i);
+            } else if(tipoUsuario.equals("nada")) {
+                Intent i = new Intent(LoginVolActivity.this, QuestionUserActivity.class); // se não, vai para a tela de cadastro
+                startActivity(i);
+            } else { //erro
+                runOnUiThread(()->Toast.makeText(LoginVolActivity.this,"Erro ao conectar-se com servidor", Toast.LENGTH_LONG).show());
+            }
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
